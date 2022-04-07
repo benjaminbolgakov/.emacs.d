@@ -9,6 +9,8 @@
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
+
+
 ;; Line numbering
 (global-linum-mode t)
 
@@ -102,6 +104,10 @@
 (eval-when-compile
   (require 'use-package))
 
+;;Theme
+(use-package exotica-theme
+    :config (load-theme 'exotica t))
+
 (use-package pdf-tools
   :ensure t
   :config
@@ -137,7 +143,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (counsel-projectile grails-projectile-mode pdf-tools use-package))))
+    (exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
