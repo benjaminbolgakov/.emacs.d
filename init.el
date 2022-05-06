@@ -68,12 +68,12 @@
 ; Cachea filträdet för projektet (=projectile-find-file blir snabb som attan)
 (setq projectile-enable-caching t)
 ; C-p p för att välja ett projekt under denna sökväg
-(setq projectile-project-search-path '("~/Documents/Development"))
+(setq projectile-project-search-path '("~/Documents/workspace/"))
 
 
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
 
-(setq initial-buffer-choice "~/Documents/Development")
+(setq initial-buffer-choice "~/Documents/workspace")
 
 (setq tab-width 4)        ;; set your desired tab width
 (setq indent-tabs-mode t) ;; use tabs for indentation
