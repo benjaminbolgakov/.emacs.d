@@ -106,7 +106,8 @@
 
 ;;Theme
 (use-package exotica-theme
-    :config (load-theme 'exotica t))
+  :config (load-theme 'exotica t))
+
 
 (use-package pdf-tools
   :ensure t
@@ -136,6 +137,7 @@
 
 (global-linum-mode t)
 
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -147,6 +149,7 @@
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
+ ;; Your init file should contain only one such instance.s
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-comment-delimiter-face ((t (:foreground "green" :slant normal))))
+ '(font-lock-comment-face ((t (:foreground "green" :slant normal)))))
