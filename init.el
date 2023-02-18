@@ -1,3 +1,5 @@
+;; This solves the error about retrieving marmalade "incomprehensible buffer"
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -9,6 +11,10 @@
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
+
+
+;; Key bindings (General)
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 
 ;; Line numbering
@@ -45,13 +51,22 @@
 (setq fast-but-imprecise-scrolling nil)
 (setq jit-lock-defer-time 0)
 
+;; [Org-mode] Language support
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((C . t)))
+
+;; Required for projectile-search-replace
+(require 'subr-x)
+
 ;; M-x package-refresh-contents
 ;; M-x package-install <RET> ivy
 ;; M-x package-install <RET> ivy-rich
 ;; M-x package-install <RET> swiper
 ;; M-x package-install <RET> counsel
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 ;; ---------------------------------------------------
 (package-initialize)
 (ivy-mode 1)
@@ -92,9 +107,10 @@
 ;;; Initialize 'use-package'.
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; Marmalade is defunct?
+;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -107,7 +123,6 @@
 ;;Theme
 (use-package exotica-theme
   :config (load-theme 'exotica t))
-
 
 (use-package pdf-tools
   :ensure t
@@ -134,6 +149,7 @@
 (setq inhibit-splash-screen t)
 
 (setq ada-indent 4)
+(setq python-indent-offset 4)
 
 (global-linum-mode t)
 
@@ -143,13 +159,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   (quote
+    ("~/Documents/workspace/resources/emacs/org_mode/org_mode_todo.org" "~/Documents/workspace/resources/emacs/org_mode/agendatest.org")))
  '(package-selected-packages
    (quote
-    (exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
+    (magit auto-complete jupyter exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.s
+ ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(font-lock-comment-delimiter-face ((t (:foreground "green" :slant normal))))
  '(font-lock-comment-face ((t (:foreground "green" :slant normal)))))
