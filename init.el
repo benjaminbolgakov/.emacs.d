@@ -13,6 +13,12 @@
 
 
 
+
+;; sh-mode...
+
+
+
+
 ;; Key bindings (General)
 (global-set-key (kbd "C-c a") 'org-agenda)
 
