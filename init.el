@@ -1,3 +1,11 @@
+;; TODO:
+;; 1. Separate package-specific settings into separate files: ivy-init.el etc..
+;; 2. autocompletion for lisp, inside this doc for example
+;; 3. Debugging lisp: Running for example "eval-buffer" and recieving an error:
+;;    "eval-buffer: Invalid read syntax: ")" [2 times]" - how to get more info etc?
+;;    REF: https://www.youtube.com/watch?v=LfwSc-lfFxM and https://www.gnu.org/software/emacs/manual/html_node/elisp/Debugging.html
+
+
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
 (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
@@ -10,12 +18,6 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
-
-
-
-
-;; sh-mode...
-
 
 
 
@@ -57,7 +59,14 @@
 (setq fast-but-imprecise-scrolling nil)
 (setq jit-lock-defer-time 0)
 
-;; [Org-mode] Language support
+;; Org-Mode
+(use-package org-bullets
+  :ensure t)
+
+
+
+
+;; Language support
 ;; active Babel languages
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -72,10 +81,51 @@
 ;; M-x package-install <RET> swiper
 ;; M-x package-install <RET> counsel
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; ---------------------------------------------------
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
-(ivy-mode 1)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;;[M1]:
+(eval-when-compile
+  (require 'use-package))
+(setq use-package-always-ensure t) ;; Maybe remove!
+;;[M2]:
+;;(require 'use-package)
+;;(setq use-package-always-ensure t)
+
+;; -------------------------------------------------------------------------
+
+;; [M1]
+(use-package ivy
+  :bind (:map global-map
+              ("C-x c" . ivy-resume))
+  :config
+  (ivy-mode 1))
+
+;; [M2]
+;; (use-package ivy
+;;   :bind ((("C-x c" . ivy-resume))
+;; 		 :config)
+;; (ivy-mode 1) ;; only having this is sufficient for ivy to work?
+
+;; Dashboard on startup
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
+(setq dashboard-banner-logo-title "Benzel")
+(setq dashboard-startup-banner "~/.emacs.d/emacs_logo.png")
+(setq dashboard-center-content t)
+(setq dashboard-week-agenda t)
+
+
 (global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 
@@ -89,15 +139,20 @@
 ; Cachea filträdet för projektet (=projectile-find-file blir snabb som attan)
 (setq projectile-enable-caching t)
 ; C-p p för att välja ett projekt under denna sökväg
-(setq projectile-project-search-path '("~/Documents/workspace/"))
+(setq projectile-project-search-path '("~/"))
 
 
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
 
-(setq initial-buffer-choice "~/Documents/workspace")
+(setq initial-buffer-choice "~/")
 
 (setq tab-width 4)        ;; set your desired tab width
 (setq indent-tabs-mode t) ;; use tabs for indentation
+
+;; Shell/Bash settings
+;;  ("\\.bash\\'" . sh-mode)
+;; (add-to-list 'auto-mode-alist '("\\.bash_aliases\\." . sh-mode))
+;; # -*- mode: shell-script -*-
 
 ;; C/C++ settings
 (setq c-default-style "bsd")
@@ -111,20 +166,28 @@
 ;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;;; Initialize 'use-package'.
-(require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; Marmalade is defunct?
-;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(package-initialize)
+;; (require 'package)
+;; (setq package-enable-at-startup nil)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; ;; Marmalade is defunct?
+;; ;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+;; (package-initialize)
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
+;; (eval-when-compile
+;;   (require 'use-package))
+
+;; All-The-Icons
+(use-package all-the-icons
+  :if (display-graphic-p))
+
+;; Page-break
+
+
 
 ;;Theme
 (use-package exotica-theme
@@ -165,12 +228,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   (quote
-    ("~/Documents/workspace/resources/emacs/org_mode/org_mode_todo.org" "~/Documents/workspace/resources/emacs/org_mode/agendatest.org")))
+ '(org-agenda-files (quote ("~/Documents/agenda_org")))
  '(package-selected-packages
    (quote
-    (magit auto-complete jupyter exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
+    (org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
