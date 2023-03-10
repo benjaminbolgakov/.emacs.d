@@ -1,11 +1,33 @@
 # -*- mode: gitignore; -*-
+*.elc
+*.eld
+*~
+.\#*
+.cache/
+.dap-breakpoints
+.extension/
+.lsp-session*
+.mc-lists.el
+.org-id-locations
+/elpa/
+/eshell/
+/transient/
+\#*\#
+anaconda-mode/
+eln-cache/
+melpa
+network-security.data
+projectile.cache
+projects
+recentf
+session.*
+tramp
+tutorial/
+var/
+workspace/
+url/
+yaml-mode.el
+bookmarks
 
-#Ignore everything
-*
-
-#Except:
-!.gitignore
-!init.el
-!/settings/
-!/snippets/
-!install-deps.sh
+# Ignore API keys stored in secret.el
+settings/secret.el
