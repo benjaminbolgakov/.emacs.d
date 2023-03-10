@@ -9,7 +9,7 @@
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Systems (hostname of my machines)
-(defun mainmint ()
+(defun at-mainmint ()
   (string= (system-name) "mainmint"))
 ;; laptop
 ;; benzelserver?
@@ -77,10 +77,11 @@
 (require 'ivy-init)
 (require 'docker-init)
 (require 'lsp-init)
+(require 'flycheck-init)
 (require 'c++-init)
 (require 'elisp-init)
 (require 'projectile-init)
-(require 'compile-init)
+;;(require 'compile-init)
 (require 'org-init)
 (require 'js-init)
 (require 'misc-init)
@@ -88,6 +89,7 @@
 (require 'python-init)
 (require 'eshell-init)
 (require 'dired-init)
+(require 'yas-init)
 (require 'pdf-init)
 (require 'latex-init)
 (require 'avy-init)

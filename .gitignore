@@ -6,6 +6,6 @@
 #Except:
 !.gitignore
 !init.el
-!settings/
-!snippets/
+!/settings/
+!/snippets/
 !install-deps.sh
