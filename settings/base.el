@@ -9,7 +9,7 @@
 (setq inhibit-splash-screen t)
 
 ;; Start maximized
-;;(add-hook 'emacs-startup-hook 'toggle-frame-maximized)
+(add-hook 'emacs-startup-hook 'toggle-frame-maximized)
 
 ;; set your desired tab width
 ;;(setq tab-width 4)

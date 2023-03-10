@@ -1,3 +1,4 @@
+;; Movemint thingy...
 (use-package avy
   :ensure t
   :bind (:map global-map

@@ -1,17 +1,18 @@
 (use-package ivy
   :bind (:map global-map
               ("C-x c" . ivy-resume))
-  :config
+  :config)
+;;  (setq ivy-use-virtual-buffers t) ;; Add recent files and/or bookmarks to ivy-switch-buffer.
+;;  (setq enable-recursive-minibuffers t)) ;; Allow minibuffer commands while in minibuffer.
   (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t) ;; Add recent files and/or bookmarks to ivy-switch-buffer.
-  (setq enable-recursive-minibuffers t)) ;; Allow minibuffer commands while in minibuffer.
+
 
 ;; Better ivy interface
 (use-package ivy-rich
   :ensure t
   :after ivy
   :config
-  (setq ivy-rich-parse-remote-buffer nil) ; Make tramp SNAP!
+  ;;(setq ivy-rich-parse-remote-buffer nil) ; Make tramp SNAP!
   (ivy-rich-mode 1))
 
 ;; Interactive ivy interface to workspace symbol functionality from lsp-mode.

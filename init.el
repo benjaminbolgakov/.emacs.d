@@ -18,11 +18,11 @@
 ;; ??????
 ;; (setq create-lockfiles nil)
 
-;; Start emacs server
-(server-start)
+;; TODO Start emacs server
+;; (server-start)
 
 ;; set startup dir
-(setq default-directory "~/")
+(setq default-directory "~/.emacs.d/")
 
 ;; set initial buffer at startup
 ;; (setq initial-buffer-choice "~/")
@@ -70,6 +70,10 @@
 ;;(require 'use-package)
 ;;(setq use-package-always-ensure t)
 
+
+;; Required for projectile-search-replace
+(require 'subr-x)
+
 ;; Key-binding assistant:
 (require 'bind-key)
 ;; Load settings
@@ -82,7 +86,7 @@
 (require 'elisp-init)
 (require 'projectile-init)
 ;;(require 'compile-init)
-(require 'org-init)
+;;(require 'org-init)
 (require 'js-init)
 (require 'misc-init)
 (require 'cmake-init)
@@ -100,6 +104,8 @@
 
 
 
+
+
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide
 ;; which packages are no longer needed. Can be used to (re)install packages on other machines
@@ -110,10 +116,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/Documents/agenda_org")))
+ '(org-agenda-files '("~/Documents/agenda_org"))
  '(package-selected-packages
-   (quote
-	(modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))))
+   '(google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

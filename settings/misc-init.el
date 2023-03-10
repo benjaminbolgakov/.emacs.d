@@ -32,10 +32,17 @@
   :config
   (customize-set-variable 'hl-todo-highlight-punctuation ":!.")
   ;; Change these:
+  (add-to-list 'hl-todo-keyword-faces '("CHANGE" . "#cc9393"))
   (add-to-list 'hl-todo-keyword-faces '("WARNING" . "#cc0000"))
   (add-to-list 'hl-todo-keyword-faces '("BEWARE" . "#aa0000"))
   (add-to-list 'hl-todo-keyword-faces '("DEPRECATED" . "#aa0000"))
   (add-to-list 'hl-todo-keyword-faces '("REFACTOR" . "#cc9393")))
+
+
+;; Translator
+;; TODO Is this correctly used? How to use it?
+(use-package google-translate
+  :ensure t)
 
 
 ;; Helps define and maintain consistent coding styles between editors/IDE's

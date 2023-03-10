@@ -1,9 +1,7 @@
 ;; Load theme
 ;; First, install the theme using package-manager
 (load-theme 'exotica t)
-
-;; (use-package exotica-theme
-;;   :config (load-theme 'exotica t))
+;;(load-theme 'modus-vivendi-tinted t)
 
 ;; Provides utilities for displaying elements of the mode-line as tabs and ribbons.
 (use-package moody
