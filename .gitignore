@@ -1,8 +1,11 @@
+# -*- mode: gitignore; -*-
+
 #Ignore everything
 *
 
 #Except:
 !.gitignore
 !init.el
-
-
+!settings/
+!snippets/
+!install-deps.sh
