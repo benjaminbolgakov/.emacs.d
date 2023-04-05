@@ -1,17 +1,28 @@
-;; Requires lsp-mode??
-(use-package lsp-pyright
-  :ensure t)
-
 ;; Major mode for editing pip requirements files
 (use-package pip-requirements
   :ensure t)
 
-;; Python formatter
-(use-package python-black
-  :after python
+(use-package python-mode
   :ensure t
-  :hook (python-mode . python-black-on-save-mode-enable-dwim))
+  :custom
+  (python-shell-interpreter "/usr/local/bin/python3"))
 
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map (kbd "<C-backspace>") 'backward-kill-word)))
+;; Requires lsp-mode??
+;;(use-package lsp-pyright
+;;  :ensure t)
+
+;; Python formatter
+;; (use-package python-black
+;;   :after python
+;;   :ensure t
+;;   :hook (python-mode . python-black-on-save-mode-enable-dwim))
+
+;;(setq python-python-command "/usr/local/bin/python3")
+;;(setq python-shell-interpreter "/usr/local/bin/python3")
 
 (provide 'python-init)
 

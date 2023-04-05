@@ -44,6 +44,9 @@
 (add-to-list 'load-path functions-dir)
 (add-to-list 'load-path load-dir)
 
+
+
+
 ;; load base-settings
 (require 'base)
 
@@ -77,6 +80,7 @@
 ;; Key-binding assistant:
 (require 'bind-key)
 ;; Load settings
+(require 'magit-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)
@@ -86,7 +90,7 @@
 (require 'elisp-init)
 (require 'projectile-init)
 ;;(require 'compile-init)
-;;(require 'org-init)
+(require 'org-init)
 (require 'js-init)
 (require 'misc-init)
 (require 'cmake-init)
@@ -106,6 +110,7 @@
 
 
 
+
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide
 ;; which packages are no longer needed. Can be used to (re)install packages on other machines
@@ -118,7 +123,8 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files '("~/Documents/agenda_org"))
  '(package-selected-packages
-   '(google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package)))
+   '(python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
+ '(python-shell-interpreter "/usr/local/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
