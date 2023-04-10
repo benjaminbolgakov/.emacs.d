@@ -47,12 +47,12 @@
 ;;   (dap-gdb-lldb-setup))
 
 
-(use-package lsp-mode
-  :hook
-  ((python-mode . lsp)))
+;; (use-package lsp-mode
+;;   :hook
+;;   ((python-mode . lsp)))
 
-  (use-package lsp-ui
-    :commands lsp-ui-mode)
+;; (use-package lsp-ui
+;;   :commands lsp-ui-mode)
 
 
 
