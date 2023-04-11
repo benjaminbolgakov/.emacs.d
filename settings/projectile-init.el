@@ -1,22 +1,22 @@
 ;; Required for projectile-search-replace???
 ;; (require 'subr-x)
 
-;; (use-package magit
-;;   :ensure t)
-;; (provide 'magit-init)
-
 (use-package magit
-  :ensure t
-  :init
-  (when (at-mainmint)
-    (setq git-commit-summary-max-length 50
-          git-commit-fill-column 72
-          git-commit-style-convention-checks '('non-empty-second-line
-                                               'overlong-summary-line))))
+  :ensure t)
+(provide 'magit-init)
 
-(use-package magit-svn
-  :ensure t
-  :after magit)
+;; (use-package magit
+;;   :ensure t
+;;   :init
+;;   (when (at-mainmint)
+;;     (setq git-commit-summary-max-length 50
+;;           git-commit-fill-column 72
+;;           git-commit-style-convention-checks '('non-empty-second-line
+;;                                                'overlong-summary-line))))
+
+;; (use-package magit-svn
+;;   :ensure t
+;;   :after magit)
 
 ;; Shows gitstatus live in emacs.
 ;; Uncommited changes are highlighted on the side by the line-numbers.
@@ -54,9 +54,11 @@
 ;; (call-interactively (if (projectile-project-p) 'projectile-replace
 ;; 'tags-query-replace)))
 
-;; (use-package projectile-ripgrep
-;;   :ensure t
-;;   :after projectile)
+(use-package projectile-ripgrep
+  :ensure t
+  :after projectile)
+
+
 
 
 (provide 'projectile-init)
