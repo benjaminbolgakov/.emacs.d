@@ -33,8 +33,26 @@
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
 
-(use-package projectile-ripgrep
-  :ensure t
-  :after projectile)
+
+;; (use-package projectile
+;;   :diminish projectile-mode
+;;   :config (projectile-mode)
+;;   :bind-keymap
+;;   ("C-c p" . projectile-command-map)
+;;   :init
+;;   (setq projectile-switch-project-action #'projectile-dired))
+
+;; ## hook/wrapper/function = run projectile-replace if in project,
+;; ## run tags-query-replace otherwise instead ##
+;; if I were defining that, I might name it something like (defun
+;; benni_b/projectile-or-tag-replace () "Call projectile-replace in
+;; projectile projects, tags-query-replace otherwise." (interactive)
+;; (call-interactively (if (projectile-project-p) 'projectile-replace
+;; 'tags-query-replace)))
+
+;; (use-package projectile-ripgrep
+;;   :ensure t
+;;   :after projectile)
+
 
 (provide 'projectile-init)
