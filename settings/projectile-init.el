@@ -1,6 +1,10 @@
 ;; Required for projectile-search-replace???
 ;; (require 'subr-x)
 
+;; (use-package magit
+;;   :ensure t)
+;; (provide 'magit-init)
+
 (use-package magit
   :ensure t
   :init
