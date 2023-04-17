@@ -5,12 +5,31 @@
 (use-package python-mode
   :ensure t
   :custom
-  (python-shell-interpreter "/usr/local/bin/python3"))
+  (python-shell-interpreter "/usr/bin/python"))
 
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
+
+;; Python bindings
+(defun my/python-mode-hook ()
+  (local-set-key (kbd "C-c C-z") 'run-python)
+  (local-set-key (kbd "C-c C-c") 'python-shell-send-buffer)
+  (local-set-key (kbd "C-c C-r") 'python-shell-send-region)
+  (lambda ()
+    (define-key python-mode-map (kbd "<C-backspace>") 'backward-kill-word)))
+
+(defun my/pyvenv-mode-hook ()
+  (local-set-key (kbd "C-c C-z") 'run-python)
+  (local-set-key (kbd "C-c C-c") 'python-shell-send-buffer)
+  (local-set-key (kbd "C-c C-r") 'python-shell-send-region)
+  (lambda ()
+    (define-key pyvenv-mode-map (kbd "<C-backspace>") 'backward-kill-word)))
 
 (add-hook 'python-mode-hook
           (lambda ()
-            (define-key python-mode-map (kbd "<C-backspace>") 'backward-kill-word)))
+            (define-key python-mode-map (kbd "<C-backspace>") 'backward-kill-word)
+            (define-key pyvenv-mode-map (kbd "<C-backspace>") 'backward-kill-word)))
 ;; Requires lsp-mode??
 ;;(use-package lsp-pyright
 ;;  :ensure t)
@@ -23,6 +42,9 @@
 
 ;;(setq python-python-command "/usr/local/bin/python3")
 ;;(setq python-shell-interpreter "/usr/local/bin/python3")
+
+(add-hook 'python-mode-hook 'my/python-mode-hook)
+(add-hook 'pyvenv-mode-hook 'my/pyvenv-mode-hook)
 
 (provide 'python-init)
 

@@ -20,6 +20,8 @@
 ;; Template for displaying title-bar of visible frames.
 (setq frame-title-format `("%b@emacs" ,(number-to-string emacs-major-version)))
 
+
+
 ;;(set-face-attribute 'default t :font
 
 ;; (set-face-attribute 'default nil

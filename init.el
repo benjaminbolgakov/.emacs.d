@@ -22,7 +22,7 @@
 ;; (server-start)
 
 ;; set startup dir
-(setq default-directory "~/.emacs.d/")
+(setq default-directory "~/")
 
 ;; set initial buffer at startup
 ;; (setq initial-buffer-choice "~/")
@@ -45,7 +45,11 @@
 (add-to-list 'load-path load-dir)
 
 
-
+(set-face-attribute 'default nil
+                    :family "Fira Code"
+                    :height 102
+                    :weight 'normal
+                    :width 'normal)
 
 ;; load base-settings
 (require 'base)
@@ -80,7 +84,7 @@
 ;; Key-binding assistant:
 (require 'bind-key)
 ;; Load settings
-(require 'magit-init)
+;;(require 'magit-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)
@@ -98,7 +102,7 @@
 (require 'eshell-init)
 (require 'dired-init)
 (require 'yas-init)
-(require 'pdf-init)
+;;(require 'pdf-init)
 (require 'latex-init)
 (require 'avy-init)
 (require 'bash-init)
@@ -121,11 +125,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/Documents/agenda_org"))
+ '(custom-safe-themes
+   '("3263bd17a7299449e6ffe118f0a14b92373763c4ccb140f4a30c182a85516d7f" "f681100b27d783fefc3b62f44f84eb7fa0ce73ec183ebea5903df506eb314077" default))
+ '(org-agenda-files nil)
  '(org-image-actual-width '(500))
  '(package-selected-packages
-   '(python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
- '(python-shell-interpreter "/usr/local/bin/python3" t))
+   '(pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
+ '(python-shell-interpreter "/usr/bin/python"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

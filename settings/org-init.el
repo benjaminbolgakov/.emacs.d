@@ -19,7 +19,7 @@
    (shell . t)
    (python . t)))
 ;;Ensure using the correct interpreter
-(setq org-babel-python-command "/usr/local/bin/python3")
+(setq org-babel-python-command "/usr/bin/python")
 
 ;; Also bound to C-'.
 (define-key org-mode-map (kbd "C-,") nil)
