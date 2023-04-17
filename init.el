@@ -1,176 +1,137 @@
+;; TODO:
+;; autocompletion for lisp, inside this doc for example
+;; Debugging lisp: Running for example "eval-buffer" and recieving an error:
+;; "eval-buffer: Invalid read syntax: ")" [2 times]" - how to get more info etc?
+
+
+
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-;; Remove GUI bloat
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-splash-screen t)
+;; Systems (hostname of my machines)
+(defun at-mainmint ()
+  (string= (system-name) "mainmint"))
+;; laptop
+;; benzelserver?
 
 
+;; ??????
+;; (setq create-lockfiles nil)
+
+;; TODO Start emacs server
+;; (server-start)
+
+;; set startup dir
+(setq default-directory "~/")
+
+;; set initial buffer at startup
+;; (setq initial-buffer-choice "~/")
 
 
-;; sh-mode...
+;; = Paths =
+;; Settings dir
+(setq settings-dir
+	  (expand-file-name "settings" user-emacs-directory))
+;; Functions dir
+(setq functions-dir
+	  (expand-file-name "functions" user-emacs-directory))
+;; List of dirs where separate .el files are stored
+(setq load-dir
+	  (expand-file-name "load" user-emacs-directory))
 
 
+(add-to-list 'load-path settings-dir)
+(add-to-list 'load-path functions-dir)
+(add-to-list 'load-path load-dir)
 
 
-;; Key bindings (General)
-(global-set-key (kbd "C-c a") 'org-agenda)
+(set-face-attribute 'default nil
+                    :family "Fira Code"
+                    :height 102
+                    :weight 'normal
+                    :width 'normal)
+
+;; load base-settings
+(require 'base)
 
 
-;; Line numbering
-(global-linum-mode t)
-
-;; Disable ear damage
-(setq visible-bell t)
-
-;; Autofollow symlinks
-(setq vc-follow-symlinks t)
-
-;; Disable autosaving
-(setq auto-save-default nil)
-
-;; Use spaces instead of tabs.
-(setq-default indent-tabs-mode nil)
-
-;; Enable highlighting of matching parenteses.
-(show-paren-mode 1)
-
-;; Enable undo/redo for window modifications.
-(winner-mode)
-
-;; Kill trailing whitespace on save.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Save system clipboard to kill ring before kill.
-(setq save-interprogram-paste-before-kill t)
-
-;; Disable scroll acceleration.
-(setq mouse-wheel-progressive-speed t)
-
-;; Always redraw while scrolling.
-(setq fast-but-imprecise-scrolling nil)
-(setq jit-lock-defer-time 0)
-
-;; [Org-mode] Language support
-;; active Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((C . t)))
-
-;; Required for projectile-search-replace
-(require 'subr-x)
-
-;; M-x package-refresh-contents
-;; M-x package-install <RET> ivy
-;; M-x package-install <RET> ivy-rich
-;; M-x package-install <RET> swiper
-;; M-x package-install <RET> counsel
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; ---------------------------------------------------
-(package-initialize)
-(ivy-mode 1)
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-
-;; package-install projectile-mode
-;; package-install projectile-ripgrep
-(projectile-mode 1)
-(counsel-projectile-mode)
-; bind C-c p som ett prefix för alla projectile-kommandon
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-
-; Cachea filträdet för projektet (=projectile-find-file blir snabb som attan)
-(setq projectile-enable-caching t)
-; C-p p för att välja ett projekt under denna sökväg
-(setq projectile-project-search-path '("~/Documents/workspace/"))
-
-
-(add-hook 'emacs-startup-hook 'toggle-frame-maximized)
-
-(setq initial-buffer-choice "~/Documents/workspace")
-
-(setq tab-width 4)        ;; set your desired tab width
-(setq indent-tabs-mode t) ;; use tabs for indentation
-
-;; C/C++ settings
-(setq c-default-style "bsd")
-(setq c-basic-offset 4)
-(setq-default indent-tabs-mode)
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;;C/C++
-;(setq c-default-style "bsd")
-;(setq c-basic-offset 2)
-;(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-
-;;; Initialize 'use-package'.
+;; init use-package
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;; Marmalade is defunct?
-;;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
+
+;; M-x package-refresh-contents
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
+;;[M1]:
 (eval-when-compile
   (require 'use-package))
-
-;;Theme
-(use-package exotica-theme
-  :config (load-theme 'exotica t))
-
-(use-package pdf-tools
-  :ensure t
-  :config
-  ;; Clear the incompatible modes list to remove nag about
-  ;; global-linum-mode. linum-mode is being disabled for pdf-view-mode
-  ;; a few lines down.
-  (setq pdf-view-incompatible-modes nil)
-  (pdf-loader-install)
-  (defun my/pdf-view-mode-hook ()
-    ;; Disable line numbering in pdf-view-mode.
-    (linum-mode -1))
-
-  (add-hook 'pdf-view-mode-hook 'my/pdf-view-mode-hook))
-
-(use-package pdf-view
-  :ensure nil
-  :after pdf-tools
-  :bind (:map pdf-view-mode-map
-              ;; swiper does not work in pdf-view-mode, use original
-              ;; isearch-forward instead.
-              ("C-s" . isearch-forward)))
-
-(setq inhibit-splash-screen t)
-
-(setq ada-indent 4)
-(setq python-indent-offset 4)
-
-(global-linum-mode t)
+(setq use-package-always-ensure t) ;; Maybe remove!
+;;[M2]:
+;;(require 'use-package)
+;;(setq use-package-always-ensure t)
 
 
+;; Required for projectile-search-replace
+(require 'subr-x)
+
+;; Key-binding assistant:
+(require 'bind-key)
+;; Load settings
+;;(require 'magit-init)
+(require 'theme-init)
+(require 'ivy-init)
+(require 'docker-init)
+(require 'lsp-init)
+(require 'flycheck-init)
+(require 'c++-init)
+(require 'elisp-init)
+(require 'projectile-init)
+;;(require 'compile-init)
+(require 'org-init)
+(require 'js-init)
+(require 'misc-init)
+(require 'cmake-init)
+(require 'python-init)
+(require 'eshell-init)
+(require 'dired-init)
+(require 'yas-init)
+;;(require 'pdf-init)
+(require 'latex-init)
+(require 'avy-init)
+(require 'bash-init)
+(require 'key-bindings)
+
+
+
+
+
+
+
+
+;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
+;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide
+;; which packages are no longer needed. Can be used to (re)install packages on other machines
+;; by running: 'package-install-selected-packages'
+;; Check if package is contained in this list by running: 'package--user-selected-p'
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files
-   (quote
-    ("~/Documents/workspace/resources/emacs/org_mode/org_mode_todo.org" "~/Documents/workspace/resources/emacs/org_mode/agendatest.org")))
+ '(custom-safe-themes
+   '("3263bd17a7299449e6ffe118f0a14b92373763c4ccb140f4a30c182a85516d7f" "f681100b27d783fefc3b62f44f84eb7fa0ce73ec183ebea5903df506eb314077" default))
+ '(org-agenda-files nil)
+ '(org-image-actual-width '(500))
  '(package-selected-packages
-   (quote
-    (magit auto-complete jupyter exotica-theme counsel-projectile grails-projectile-mode pdf-tools use-package))))
+   '(pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
+ '(python-shell-interpreter "/usr/bin/python"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

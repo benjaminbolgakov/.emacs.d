@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: include_relative
+# key: #"
+# --
+#include "${}"
+$0
