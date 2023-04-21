@@ -44,6 +44,8 @@
 ;; Save system clipboard to kill ring before kill.
 (setq save-interprogram-paste-before-kill t)
 
+
+(setq scroll-margin 0)
 ;; Disable scroll acceleration.
 (setq mouse-wheel-progressive-speed t)
 

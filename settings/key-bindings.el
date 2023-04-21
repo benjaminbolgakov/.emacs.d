@@ -5,6 +5,9 @@
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
 
+(global-set-key (kbd "C-c r") 'comment-region)
+(global-set-key (kbd "C-c u") 'uncomment-region)
+
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode

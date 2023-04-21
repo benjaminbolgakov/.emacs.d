@@ -8,6 +8,8 @@
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
+(server-start)
+
 ;; Systems (hostname of my machines)
 (defun at-mainmint ()
   (string= (system-name) "mainmint"))
@@ -130,7 +132,7 @@
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
  '(package-selected-packages
-   '(pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
+   '(company pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
  '(python-shell-interpreter "/usr/bin/python"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
