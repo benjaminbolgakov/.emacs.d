@@ -1,0 +1,24 @@
+* Hooks
+** View my keybindings
+- Somehow echo the content of 'keybindings.org' in perhaps
+  a minibuffer? Or simply bring up 'keybindings.org' in a
+  new buffer.
+  #+begin_src elisp
+    (defun insert-text-from-file (file-path)
+    "Insert the contents of a text file at FILE-PATH into the minibuffer."
+    (interactive "fEnter path to text file: ")
+    (when (file-readable-p file-path)
+      (with-temp-buffer
+        (insert-file-contents file-path)
+        (let ((text (buffer-string)))
+          (minibuffer-message "Text from file: %s" text)))))
+
+    (global-set-key (kbd "C-c i") 'insert-text-from-file)
+  #+end_src
+
+
+** Insert code block
+- A hook that performs 'org-insert-structure-template'
+  and selects '[s] src' to insert a code block:
+  1. C-c C-,
+  2. s

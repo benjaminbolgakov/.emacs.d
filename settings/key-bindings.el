@@ -1,9 +1,10 @@
-;; Org-mode agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (global-set-key (kbd "C-c p m") 'create-project)
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
+
+(global-set-key (kbd "C-c p r") 'query-replace)
 
 (global-set-key (kbd "C-c r") 'comment-region)
 
