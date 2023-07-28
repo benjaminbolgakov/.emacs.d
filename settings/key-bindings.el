@@ -1,3 +1,4 @@
+;; General
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (global-set-key (kbd "C-c p m") 'create-project)
@@ -9,6 +10,11 @@
 (global-set-key (kbd "C-c r") 'comment-region)
 
 (global-set-key (kbd "C-c u") 'uncomment-region)
+
+(global-set-key (kbd "C-x C-z") 'suspend-frame)
+
+;; Hook bindings
+(global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
 
 (use-package which-key
   :init (which-key-mode)

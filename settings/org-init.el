@@ -21,7 +21,6 @@
 ;;Ensure using the correct interpreter
 (setq org-babel-python-command "/usr/bin/python")
 
-;; Also bound to C-'.
 (define-key org-mode-map (kbd "C-,") nil)
 
 

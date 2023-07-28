@@ -83,9 +83,10 @@
 
 ;; Key-binding assistant:
 (require 'bind-key)
+
 ;; Load settings
-;;(require 'magit-init)
 (require 'theme-init)
+(require 'general)
 (require 'ivy-init)
 (require 'docker-init)
 (require 'lsp-init)
@@ -93,7 +94,6 @@
 (require 'c++-init)
 (require 'elisp-init)
 (require 'projectile-init)
-;;(require 'compile-init)
 (require 'org-init)
 (require 'js-init)
 (require 'misc-init)
@@ -102,12 +102,13 @@
 (require 'eshell-init)
 (require 'dired-init)
 (require 'yas-init)
-;;(require 'pdf-init)
 (require 'latex-init)
 (require 'avy-init)
 (require 'bash-init)
 (require 'key-bindings)
-
+;;(require 'magit-init)
+;;(require 'compile-init)
+;;(require 'pdf-init)
 
 
 
