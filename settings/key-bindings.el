@@ -1,4 +1,4 @@
-;; Org-mode agenda
+;; General
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (global-set-key (kbd "C-c p m") 'create-project)
@@ -14,7 +14,6 @@
 (global-set-key (kbd "C-x C-z") 'suspend-frame)
 
 (global-set-key (kbd "C-c c") 'org-insert-structure-template)
-
 
 ;; Hook bindings
 (global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)

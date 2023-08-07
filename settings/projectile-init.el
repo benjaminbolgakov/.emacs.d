@@ -37,6 +37,7 @@
   (projectile-mode +1))
 
 
+
 ;; (use-package projectile
 ;;   :diminish projectile-mode
 ;;   :config (projectile-mode)
