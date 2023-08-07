@@ -6,3 +6,12 @@
         (message "File already exists")
       (write-region "" nil file-path)
       (message "File created: %s" file-path))))
+
+
+(defun my-confirm-kill-emacs ()
+  "Ask for confirmation before killing Emacs, even with no unsaved buffers."
+  (interactive)
+  (if (y-or-n-p "Do you want to exit Emacs? ")
+      (save-buffers-kill-terminal)))
+
+(provide 'general)

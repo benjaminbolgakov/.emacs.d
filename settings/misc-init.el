@@ -8,6 +8,9 @@
 (setq dashboard-startup-banner "~/.emacs.d/emacs_logo.png")
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
+(setq dashboard-items '((recents . 5)
+                        (bookmarks . 5)
+                        (projects . 5)))
 
 
 ;; All-The-Icons

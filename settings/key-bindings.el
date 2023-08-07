@@ -5,8 +5,19 @@
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
 
+(global-set-key (kbd "C-c p r") 'query-replace)
+
 (global-set-key (kbd "C-c r") 'comment-region)
+
 (global-set-key (kbd "C-c u") 'uncomment-region)
+
+(global-set-key (kbd "C-x C-z") 'suspend-frame)
+
+(global-set-key (kbd "C-c c") 'org-insert-structure-template)
+
+
+;; Hook bindings
+(global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
 
 (use-package which-key
   :init (which-key-mode)

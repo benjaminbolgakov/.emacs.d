@@ -6,7 +6,7 @@
 
 (use-package python-mode
   :ensure t
-  :hook (python-mode . lsp-deferred)
+  ;;:hook (python-mode . lsp-deferred)
   :custom
   (python-shell-interpreter "/usr/bin/python"))
 
