@@ -59,8 +59,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
+;; (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
+;; (add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 
 ;; M-x package-refresh-contents
@@ -105,6 +105,7 @@
 (require 'latex-init)
 (require 'avy-init)
 (require 'bash-init)
+(require 'robot-mode)
 (require 'key-bindings)
 ;;(require 'magit-init)
 ;;(require 'compile-init)
@@ -132,7 +133,7 @@
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
  '(package-selected-packages
-   '(company pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
+   '(robot-mode company pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
  '(python-shell-interpreter "/usr/bin/python"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

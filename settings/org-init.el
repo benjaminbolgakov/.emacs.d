@@ -21,7 +21,9 @@
 ;;Ensure using the correct interpreter
 (setq org-babel-python-command "/usr/bin/python")
 
+;; Unbind the binding from org-mode-map to be used for something else
 (define-key org-mode-map (kbd "C-,") nil)
+
 
 
 ;; ;; Prettify symbols.

@@ -4,9 +4,6 @@
 ;; The target is used in the prompt for file copy, rename etc..
 (setq dired-dwim-target t)
 
-(use-package all-the-icons-dired
-  :ensure t
-  :after all-the-icons)
 
 
 (provide 'dired-init)

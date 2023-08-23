@@ -1,31 +1,32 @@
-|--------------+-------------------------------|
-| _*Global*_   |                               |
-|--------------+-------------------------------|
-| C-h b        | describe-bindings             |
-| C-c a        | org-agenda                    |
-| C-c C-,      | org-insert-structure-template |
-| C-c C-c      | org-ctrl-c-ctrl-c (exec code) |
-| C-c C-v b    | org-babel-execute-buffer      |
-| C-c p m      | create-project                |
-| C-c e        | eval-buffer                   |
-| C-c p r      | query-replace                 |
-| C-c r        | comment-region                |
-| C-c u        | uncomment-region              |
-|--------------+-------------------------------|
-| _*Local*_    |                               |
-|--------------+-------------------------------|
-| ...          |                               |
-|--------------+-------------------------------|
-| _*Packages*_ |                               |
-|--------------+-------------------------------|
-| C-'          | avy-goto-char                 |
-| M-g M-g      | avy-goto-line                 |
-| C-c p        | projectile-command-map        |
-| C-c C-z      | run-python                    |
-| C-c C-c      | python-shell-send-buffer      |
-| C-c C-r      | python-shell-send-region      |
-|              |                               |
-|--------------+-------------------------------|
+|--------------+-----------------------------------------|
+| _*Global*_   |                                         |
+|--------------+-----------------------------------------|
+| C-h b        | describe-bindings                       |
+| C-c a        | org-agenda                              |
+| C-c s        | org-insert-structure-template           |
+| C-c t        | org-table-create-or-convert-from-region |
+| C-c C-c      | org-ctrl-c-ctrl-c (exec code)           |
+| C-c C-v b    | org-babel-execute-buffer                |
+| C-c p m      | create-project                          |
+| C-c e        | eval-buffer                             |
+| C-c p r      | query-replace                           |
+| C-c r        | comment-region                          |
+| C-c u        | uncomment-region                        |
+|--------------+-----------------------------------------|
+| _*Local*_    |                                         |
+|--------------+-----------------------------------------|
+| ...          |                                         |
+|--------------+-----------------------------------------|
+| _*Packages*_ |                                         |
+|--------------+-----------------------------------------|
+| C-'          | avy-goto-char                           |
+| M-g M-g      | avy-goto-line                           |
+| C-c p        | projectile-command-map                  |
+| C-c C-z      | run-python                              |
+| C-c C-c      | python-shell-send-buffer                |
+| C-c C-r      | python-shell-send-region                |
+|              |                                         |
+|--------------+-----------------------------------------|
 
 #+begin_src python3
   print("asd")

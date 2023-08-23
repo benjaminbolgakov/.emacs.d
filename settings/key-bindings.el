@@ -13,7 +13,17 @@
 
 (global-set-key (kbd "C-x C-z") 'suspend-frame)
 
-(global-set-key (kbd "C-c c") 'org-insert-structure-template)
+(global-set-key (kbd "C-c s") 'org-insert-structure-template)
+
+(global-set-key (kbd "C-c d") 'org-insert-drawer)
+
+(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
+
+(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
+
+(global-set-key (kbd "M-z") 'eval-expression)
+
+(global-set-key (kbd "C-c _") 'artist-mode)
 
 ;; Hook bindings
 (global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
