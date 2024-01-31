@@ -8,6 +8,10 @@
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
+;; NOTE: This might be fucking with lots of major modes indentation.
+;;       Consider disabling it globally like this:
+;; (electric-indent-local-mode -1)
+
 ;; Start maximized
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
 

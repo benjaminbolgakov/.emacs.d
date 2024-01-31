@@ -4,8 +4,18 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-banner-logo-title "Benzel")
-(setq dashboard-startup-banner "~/.emacs.d/emacs_logo.png")
+;; (setq dashboard-banner-logo-title (concat "Host: " () (system-name)))
+(setq dashboard-banner-logo-title
+      (cond
+       ((at-mainfedora-p)
+        (propertize "== Welcome home, Benzel =="
+                    'face '(:family "Fira Code" :weight bold :italic t)))
+       ((at-mainwindows-p) "== Welcome home, Benzel ==")
+       ((at-work-p)
+        (propertize "== Welcome to work, Benjamin =="
+                    'face '(:family "Fira Code" :weight bold :italic t)))
+       (t "Running on an unknown system")))
+(setq dashboard-startup-banner (concat (config-dir) "assets/emacs_logo.png"))
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
 (setq dashboard-items '((recents . 5)
