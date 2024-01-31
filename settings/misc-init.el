@@ -4,7 +4,17 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-banner-logo-title "Benzel")
+;; (setq dashboard-banner-logo-title (concat "Host: " () (system-name)))
+(setq dashboard-banner-logo-title
+      (cond
+       ((at-mainfedora-p)
+        (propertize "== Welcome home, Benzel =="
+                    'face '(:family "Fira Code" :weight bold :italic t)))
+       ((at-mainwindows-p) "== Welcome home, Benzel ==")
+       ((at-work-p)
+        (propertize "== Welcome to work, Benjamin =="
+                    'face '(:family "Fira Code" :weight bold :italic t)))
+       (t "Running on an unknown system")))
 (setq dashboard-startup-banner "~/.emacs.d/emacs_logo.png")
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
@@ -62,6 +72,14 @@
   :ensure t
   :config
   (exec-path-from-shell-initialize))
+
+;;;; For Windows systems::
+;; (use-package exec-path-from-shell
+;;   :ensure t
+;;   :if (memq window-system '(mac ns x))
+;;   :config
+;;   (setq exec-path-from-shell-variables '("PATH", "GOPATH"))
+;;   (exec-path-from-shell-initialize))
 
 
 (provide 'misc-init)

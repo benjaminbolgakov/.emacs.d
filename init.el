@@ -8,27 +8,43 @@
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
-;; Systems (hostname of my machines)
-(defun at-mainmint ()
-  (string= (system-name) "mainmint"))
-;; laptop
-;; benzelserver?
+;; Current machine's hostname
+(setq sysname (system-name))
 
+;; TODO System identifiers (machine hostname)
+(defun at-mainfedora-p ()
+  (string= (system-name) "???"))
 
-;; ??????
-;; (setq create-lockfiles nil)
+(defun at-mainwindows-p ()
+  (string= (system-name) "???"))
 
-;; TODO Start emacs server
-;; (server-start)
+(defun at-work-p ()
+  (string= (system-name) "0000L1HF2260GT2"))
+
+;;;; Remove??
+(setq gc-cons-threshold (* 128 1024 1024))
+
+;; disable creating backup files
+(setq make-backup-files nil)
+
+;; disable creating "lockfiles" (.#)
+(setq create-lockfiles nil)
+
+;; Start emacs server
+(server-start)
 
 ;; set startup dir
 (setq default-directory "~/")
 
-;; set initial buffer at startup
-;; (setq initial-buffer-choice "~/")
+;; set emacs conf dir
+(setq config-dir
+      (if (eq system-type 'windows-nt)
+          (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d")
+        (concat (getenv "HOME") "/.emacs.d")))
 
-
-;; = Paths =
+;; ================
+;; ==== Paths =====
+;; ================
 ;; Settings dir
 (setq settings-dir
 	  (expand-file-name "settings" user-emacs-directory))
@@ -84,6 +100,10 @@
 ;; Key-binding assistant:
 (require 'bind-key)
 
+;; Keybinding descriptor
+;; (require 'helm-descbinds)
+;; (helm-descbinds-mode)
+
 ;; Load settings
 (require 'theme-init)
 (require 'general)
@@ -107,10 +127,9 @@
 (require 'bash-init)
 (require 'robot-mode)
 (require 'key-bindings)
-;;(require 'magit-init)
+(require 'magit-init)
 ;;(require 'compile-init)
 ;;(require 'pdf-init)
-
 
 
 
