@@ -1,7 +1,36 @@
 ;; Load theme
-;; First, install the theme using package-manager
-(load-theme 'exotica t)
-;;(load-theme 'modus-vivendi-tinted t)
+(use-package exotica-theme
+  ;; :ensure t  ; Install the package if not already installed
+  :defer t
+  :init
+  (unless (custom-theme-p 'exotica)
+    (package-install 'exotica-theme))
+  ;; Load the theme
+  (load-theme 'exotica t))
+
+;; Load fonts
+(let ((h (system-name)))
+  (cond ((at-main-fedora-p)
+         (validate-font def-sys-font)
+         (set-face-attribute 'default nil
+                             :family def-sys-font
+                             :height 102
+                             :weight 'normal
+                             :width 'normal))
+        ((at-main-windows-p)
+         (validate-font def-sys-font)
+         (set-face-attribute 'default nil
+                             :family def-sys-font
+                             :height 102
+                             :weight 'normal
+                             :width 'normal))
+        ((at-work-p)
+         (validate-font def-sys-font)
+         (set-face-attribute 'default nil
+                             :family def-sys-font
+                             :height 102
+                             :weight 'normal
+                             :width 'normal))))
 
 ;; Provides utilities for displaying elements of the mode-line as tabs and ribbons.
 (use-package moody

@@ -8,18 +8,16 @@
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
+;; Global variables
+;; (setq def-sys-font "Fira Code")
+;; (setq alt-sys-font "Office Code Pro")
+
 ;; Current machine's hostname
-(setq sysname (system-name))
+;; (setq sysname (system-name))
 
-;; TODO System identifiers (machine hostname)
-(defun at-mainfedora-p ()
-  (string= (system-name) "???"))
-
-(defun at-mainwindows-p ()
-  (string= (system-name) "???"))
-
-(defun at-work-p ()
-  (string= (system-name) "0000L1HF2260GT2"))
+;; ==========================================================================
+;; ======== System config ===================================================
+;; ==========================================================================
 
 ;;;; Remove??
 (setq gc-cons-threshold (* 128 1024 1024))
@@ -33,18 +31,11 @@
 ;; Start emacs server
 (server-start)
 
-;; set startup dir
-(setq default-directory "~/")
 
-;; set emacs conf dir
-(setq config-dir
-      (if (eq system-type 'windows-nt)
-          (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\")
-        (concat (getenv "HOME") "/.emacs.d/")))
+;; ==========================================================================
+;; ======== Load Emacs config-paths =========================================
+;; ==========================================================================
 
-;; ================
-;; ==== Paths =====
-;; ================
 ;; Settings dir
 (setq settings-dir
 	  (expand-file-name "settings" user-emacs-directory))
@@ -60,12 +51,27 @@
 (add-to-list 'load-path functions-dir)
 (add-to-list 'load-path load-dir)
 
+;; load user-defined variables
+(require 'vars)
 
-(set-face-attribute 'default nil
-                    :family "Fira Code"
-                    :height 102
-                    :weight 'normal
-                    :width 'normal)
+;; set startup dir
+;; (setq default-directory (working-dir))
+(setq default-directory working-dir)
+
+;; ;; set emacs conf dir
+;; (setq config-dir
+;;       (if (eq system-type 'windows-nt)
+;;           (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\")
+;;         (concat (getenv "HOME") "/.emacs.d/")))
+
+;; ;; get conf-dir variable value
+;; (defun get-config-dir ()
+;;   config-dir)
+
+
+;; ==========================================================================
+;; ======== Load Emacs configs ==============================================
+;; ==========================================================================
 
 ;; load base-settings
 (require 'base)
@@ -100,9 +106,15 @@
 ;; Key-binding assistant:
 (require 'bind-key)
 
+;; Keybinding descriptor
+;; (require 'helm-descbinds)
+;; (helm-descbinds-mode)
+
+;; Load functions
+(require 'general)
+
 ;; Load settings
 (require 'theme-init)
-(require 'general)
 (require 'ivy-init)
 (require 'docker-init)
 (require 'lsp-init)
@@ -123,7 +135,6 @@
 (require 'bash-init)
 (require 'robot-mode)
 (require 'key-bindings)
-(require 'magit-init)
 ;;(require 'compile-init)
 ;;(require 'pdf-init)
 
@@ -146,11 +157,14 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("3263bd17a7299449e6ffe118f0a14b92373763c4ccb140f4a30c182a85516d7f" "f681100b27d783fefc3b62f44f84eb7fa0ce73ec183ebea5903df506eb314077" default))
+ '(elpy-rpc-python-command
+   "C:\\\\Users\\\\cid14168\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python311\\\\python.exe")
+ '(max-lisp-eval-depth 1500)
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
  '(package-selected-packages
-   '(robot-mode company pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter exotica-theme grails-projectile-mode pdf-tools use-package))
- '(python-shell-interpreter "/usr/bin/python"))
+   '(helm-descbinds elpy robot-mode company pyvenv pyenv-mode darcula-theme gruvbox-theme dracula-theme lsp-ivy python-mode google-translate modus-themes org-bullets auctex dashboard all-the-icons page-break-lines magit auto-complete jupyter grails-projectile-mode pdf-tools use-package))
+ '(python-shell-interpreter "/usr/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

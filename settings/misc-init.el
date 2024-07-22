@@ -1,21 +1,33 @@
+
+
+;; Set default face attributes
+;; (set-face-attribute 'default nil
+;;                     :family "Fira Code"
+;;                     :height 102
+;;                     :weight 'normal
+;;                     :width 'normal)
+
+
 ;; Dashboard on startup
 (use-package dashboard
   :ensure t
   :config
   (dashboard-setup-startup-hook))
 
-;; (setq dashboard-banner-logo-title (concat "Host: " () (system-name)))
 (setq dashboard-banner-logo-title
       (cond
-       ((at-mainfedora-p)
+       ((at-main-fedora-p)
         (propertize "== Welcome home, Benzel =="
                     'face '(:family "Fira Code" :weight bold :italic t)))
-       ((at-mainwindows-p) "== Welcome home, Benzel ==")
+       ((at-main-windows-p)
+        (propertize "== Welcome home, Benzel =="
+                    'face '(:family "Fira Code" :weight bold :italic t)))
        ((at-work-p)
         (propertize "== Welcome to work, Benjamin =="
                     'face '(:family "Fira Code" :weight bold :italic t)))
        (t "Running on an unknown system")))
-(setq dashboard-startup-banner (concat (config-dir) "assets/emacs_logo.png"))
+
+(setq dashboard-startup-banner emacs-banner)
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
 (setq dashboard-items '((recents . 5)
@@ -68,10 +80,21 @@
 ;; 'shell-command', 'compile' and similar work as expected.
 ;; Also allows other environment variables to be retrieved from the
 ;; shell, so that Emacs will see the same values you get in a terminal.
+
+;;;; Linux:
 (use-package exec-path-from-shell
   :ensure t
+  :unless (memq system-type '(windows-nt ms-dos))
   :config
   (exec-path-from-shell-initialize))
+
+;;;; Windows:
+;; (use-package exec-path-from-shell
+;;   :ensure t
+;;   :if (memq window-system '(mac ns x))
+;;   :config
+;;   (setq exec-path-from-shell-variables '("PATH", "GOPATH"))
+;;   (exec-path-from-shell-initialize))
 
 
 (provide 'misc-init)

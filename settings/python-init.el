@@ -1,4 +1,4 @@
-(setq python-shell-completion-native-disabled-interpreters 'nil)
+;; (setq python-shell-completion-native-disabled-interpreters 'nil)
 
 ;; Major mode for editing pip requirements files
 (use-package pip-requirements
@@ -8,17 +8,24 @@
   :ensure t
   ;;:hook (python-mode . lsp-deferred)
   :custom
-  (python-shell-interpreter "/usr/bin/python"))
+  (python-shell-interpreter "/usr/bin/python3"))
 
 ;; (use-package python-black
 ;;   :after python
 ;;   :ensure t
 ;;   :hook (python-mode . python-black-on-save-mode-enable-dwim))
 
+
+
 (use-package pyvenv
   :config
   (pyvenv-mode 1))
 
+
+;; (use-package elpy
+;;   :ensure t
+;;   :init
+;;   (elpy-enable))
 
 ;; Python bindings
 (defun my/python-mode-hook ()

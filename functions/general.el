@@ -1,3 +1,29 @@
+;;;; Font verifier
+(defun validate-font(font-name)
+  (unless (find-font (font-spec :family font-name))
+    (message "Font not installed, installing now")
+    (shell-command (concat (get-config-dir) "scripts/inst_font.sh"))))
+;; (if (my-font-is-missing-p) (shell-command "/path/to/scripts/install-font.sh"))
+
+;; Example usage:
+;; (ensure-font-installed "Fira Code" ".emacs.d/assets/fira_code.zip")
+;; (defun ensure-font-installed (font-name zip-path)
+;;   "Ensure that the specified font is installed.
+;; If the font is not available, extract it from the zip file and install."
+;;   (unless (find-font (font-spec :family font-name))
+;;     (message "Font %s is not installed. Installing..." font-name)
+;;     (let* ((zip-file (expand-file-name zip-path user-emacs-directory))
+;;            (font-dir (expand-file-name font-name user-emacs-directory)))
+;;       ;; Extract the font files from the zip archive
+;;       (unless (file-exists-p font-dir)
+;;         (make-directory font-dir))
+;;       (dolist (file (directory-files zip-file t "\\.\\(otf\\|ttf\\)$"))
+;;         (copy-file file (expand-file-name (file-name-nondirectory file) font-dir) t))
+;;       ;; Register the new font directory
+;;       (add-to-list 'default-frame-alist `(font . ,(concat font-name "-10"))))
+;;     (message "Font %s is now installed." font-name)))
+
+
 ;; Create projectile project-file in current dir
 (defun create-project()
   (interactive)
@@ -13,5 +39,45 @@
   (interactive)
   (if (y-or-n-p "Do you want to exit Emacs? ")
       (save-buffers-kill-terminal)))
+
+;; (defun my-find-definition (search-term)
+;;   "Run `rgrep` with '*.robot' wildcard and '~/MarineAutomaticTesting' as the base directory."
+;;   (interactive "sSearch term: ")
+;;   (rgrep search-term "*.robot" "~/MarineAutomaticTesting/Common/EVC"))
+
+(defun my-find-definition ()
+  "Run `rgrep` with '*.robot' wildcard and '~/Marine' as the base directory using the text from the current line as the search term."
+  (interactive)
+  (let ((search-term (thing-at-point 'line t)))
+    (rgrep (format "\"%s\"" search-term) "*.robot" "~/MarineAutomaticTesting")))
+
+(defun my-insert-image ()
+  (interactive)
+  (insert "[[~/resources/org_imgs/"))
+
+(defun tab-region ()
+  "Insert a tab at the start of each selected line."
+  (interactive)
+  (save-excursion
+    (let ((beg (region-beginning))
+          (end (region-end)))
+      (goto-char beg)
+      (while (< (point) end)
+        (beginning-of-line)
+        (insert "\t")
+        (forward-line 1)))))
+
+(defun detab-region ()
+  "Remove one tab (or whitespace characters) from the start of each selected line."
+  (interactive)
+  (save-excursion
+    (let ((beg (region-beginning))
+          (end (region-end)))
+      (goto-char beg)
+      (while (< (point) end)
+        (beginning-of-line)
+        (when (looking-at "\t") ; Check if the line starts with a tab
+          (delete-char 1))     ; Remove one character (tab)
+        (forward-line 1)))))
 
 (provide 'general)

@@ -1,4 +1,6 @@
 ;; General
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 (global-set-key (kbd "C-c p m") 'create-project)
@@ -19,14 +21,17 @@
 
 (global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
 
-(global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
-
 (global-set-key (kbd "M-z") 'eval-expression)
 
 (global-set-key (kbd "C-c _") 'artist-mode)
 
 ;; Hook bindings
 (global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
+
+;;;; TODO ---------------------------------------
+;;(global-set-key (kbd "C-c TAB") 'tab-region)
+
+;;(global-set-key (kbd "C-c TAB") 'detab-region)
 
 (use-package which-key
   :init (which-key-mode)

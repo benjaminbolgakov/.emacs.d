@@ -8,6 +8,7 @@
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 
+
 ;; NOTE: This might be fucking with lots of major modes indentation.
 ;;       Consider disabling it globally like this:
 ;; (electric-indent-local-mode -1)
@@ -25,7 +26,11 @@
 (setq-default indent-tabs-mode nil)
 
 ;; Line numbering
-(global-linum-mode t)
+;; Emacs >= 27
+(global-display-line-numbers-mode)
+
+;; Emacs < 27:
+;; (global-linum-mode t)
 
 ;; Disable ear damage
 (setq visible-bell t)
@@ -60,5 +65,10 @@
 ;; Skip the step of writing "yes <return>" and settle with writing "y" instead
 ;; for yes/no prompts.
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+;; One Ring to rule them all, One Ring to find them,
+;; One Ring to bring them all and in the darkness bind them.
+;; Ash nazg durbatulûk, ash nazg gimbatul,
+;; Ash nazg thrakatulûk agh burzum-ishi krimpatul.
 
 (provide 'base)

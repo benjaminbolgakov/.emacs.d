@@ -1,11 +1,33 @@
-;;;; ==== TODO ==== ;;;;
-;; 1. Fix "ENTER" behaviour when i.e writing in a [Documentation] section
-;;    and pressing "ENTER" to get a newline, it unindents the previous line.
-
-(require 'align)
 ;; # C-c C-a = align region
 ;; # C-c C-j = split continuation
 ;; # C-c C-SPC = add argument (indent)
+;; -----------------------------
+;; -- speace separated format --
+;; -----------------------------
+;; *** Settings ***
+;; Documentation     Example using the space separated format.
+;; Library           OperatingSystem
+
+;; ---------------------------
+;; -- pipe separated format --
+;; ---------------------------
+;; | *** Settings ***   |
+;; | Documentation      | Example using the pipe separated format.
+;; | Library            | OperatingSystem
+
+;; -----------------------
+;; -- reStructured Text --
+;; -----------------------
+;; This text is outside code blocks and thus ignored.
+
+;; .. code:: robotframework
+
+;;    *** Settings ***
+;;    Documentation    Example using the reStructuredText format.
+;;    Library          OperatingSystem
+
+(require 'align)
+
 (defgroup robot nil
   "Major mode for robotframework files"
   :prefix "robot-mode-"
@@ -48,72 +70,41 @@
     (modify-syntax-entry ?\n ">")
     (syntax-table)))
 
-;; ==== Define keymap for robot-mode ====
-(defvar robot-mode-map (make-sparse-keymap)
-  "Keymap definitions")
+;; (defvar robot-mode-map
+;;   (let ((map (make-sparse-keymap)))
+;;     (define-key map (kbd "C-c C-a") #'robot-mode-align-region-or-defun)
+;;     (define-key map (kbd "C-c C-j") #'robot-mode-split-continuation)
+;;     (define-key map (kbd "C-c C-SPC") #'robot-mode-add-argument)
+;;     (define-key map (kbd "TAB") #'robot-mode-indent)
+;;     map)
+;;   "Key map for Robot mode.")
 
+;; ==== Define keymap for robot-mode ===
+(defvar robot-mode-map (make-sparse-keymap)
+  "Keymap")
+
+;; Aligning content
 (define-key robot-mode-map (kbd "C-c C-a")
   (lambda ()
     (interactive)
     (robot-mode-align-region-or-defun)
-    (message "ALIGNING")))
-
-(define-key robot-mode-map (kbd "C-c C-j")
-  (lambda ()
-    (interactive)
-    (robot-mode-split-continuation)
-    (message "CONTINUATION")))
-
-(define-key robot-mode-map (kbd "C-c C-SPC")
-  (lambda ()
-    (interactive)
-    (robot-mode-add-argument)
-    (message "ADD_ARGUMENT")))
+    (message "ALIGNING REGION")))
 
 (define-key robot-mode-map (kbd "TAB")
   (lambda ()
     (interactive)
-    (robot-mode-indent)
-    (message "INDENT")))
+    (robot-mode-indent)x
+    (message "INDENTING")))
 
-(define-key robot-mode-map (kbd "<backtab>")
-  (lambda ()
-    (interactive)
-    (robot-mode-unindent)))
 
-(define-key robot-mode-map (kbd "RET")
-  (lambda ()
-    (interactive)
-    (newline-and-indent-same-level)))
-
-;; ==== Functions ====
 (defun robot-mode-indent ()
-  "Indent from cursor"
+  "Call `robot-mode-align' if region is active, otherwise `robot-mode-align-defun'."
   (interactive)
-  ;; (delete-horizontal-space)
-  (insert (make-string robot-mode-argument-separator ? )))
+  (if (region-active-p)
+      (robot-mode-align (region-beginning) (region-end))
+    (robot-mode-align-defun)))
 
-;; (defun robot-mode-unindent ()
-;;   "Unindent from cursor"
-;;   (interactive)
-;;   (save-excursion
-;;     (save-match-data
-;;       (beginning-of-line)
-;;       ;; get rid of tabs at beginning of line
-;;       (when (looking-at "^\\s-+")
-;;         (untabify (match-beginning 0) (match-end 0)))
-;;       (when (looking-at "^    ")
-;;         (replace-match "")))))
-
-(defun robot-mode-unindent ()
-  "Unindent by four spaces if possible."
-  (interactive)
-  (save-excursion
-    (beginning-of-line)
-    (when (looking-at "^    ")
-      (delete-char 4))))
-
-
+;; ????
 (defun robot-mode-syntax-propertize (start end)
   "Propertize text between START and END."
   (funcall
@@ -129,18 +120,7 @@
   (re-search-backward "^\\s-*[^#[:space:][:cntrl:]]+" nil t)
   (back-to-indentation))
 
-;; Define behaviour of RET
-(defun newline-and-indent-same-level ()
-  "Insert a newline, then indent to the same column as the current line."
-  (interactive)
-  (let ((col (save-excursion
-               (back-to-indentation)
-               (current-column))))
-    (newline)
-    (indent-to-column col)))
-
-
-;; Define behaviour of TAB
+;; == Define behaviour of TAB ==
 (defun robot-mode-indent-line ()
   "Indent current line in Robot mode.
 
@@ -288,7 +268,7 @@ Prefix the continuation with indentation, ellipsis and spacing."
     (beginning-of-line)
     (newline)
     (forward-line -1))
-  (insert "......")
+  (insert ".....")
   (insert (make-string robot-mode-argument-separator ? ))
   (indent-region (line-beginning-position) (line-end-position)))
 
@@ -297,11 +277,6 @@ Prefix the continuation with indentation, ellipsis and spacing."
   (interactive)
   (delete-horizontal-space)
   (insert (make-string robot-mode-argument-separator ? )))
-
-(defun remove-electric-indent-mode ()
-  (electric-indent-local-mode -1))
-;; Disable electric indent, causing issues.
-(add-hook 'robot-mode-electric-indent-hook 'remove-electric-indent-mode)
 
 ;;;; Possible fix for indentation varying between keyword->variable
 ;;;; Dynamicaly calculates the indentation needed to align the variables:
@@ -339,9 +314,7 @@ Prefix the continuation with indentation, ellipsis and spacing."
   ;; literal spaces. This fixes the isearch-forward for strings containing
   ;; spaces.
   (setq-local search-whitespace-regexp "\\(\\s-\\| \\)+")
-  (setq-local outline-regexp "^\\*\\|^\\sw")
-
-  (run-hooks 'robot-mode-electric-indent-hook))
+  (setq-local outline-regexp "^\\*\\|^\\sw"))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.\\(robot\\|resource\\)\\'" . robot-mode))

@@ -1,6 +1,11 @@
 (use-package org-bullets
   :ensure t)
 
+(setq org-agenda-files (list "~/org/work.org"))
+
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 ;; Defined keywords for TODO's
 (setq org-todo-keywords
       '((sequence "TODO" "CHANGE" "|" "DONE")))
