@@ -26,6 +26,8 @@ tutorial/
 var/
 workspace/
 url/
+
+org-clock-save.el
 yaml-mode.el
 bookmarks
 
