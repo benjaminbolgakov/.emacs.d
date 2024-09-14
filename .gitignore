@@ -26,6 +26,7 @@ tutorial/
 var/
 workspace/
 url/
+server/
 
 org-clock-save.el
 yaml-mode.el

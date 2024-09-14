@@ -80,4 +80,8 @@
           (delete-char 1))     ; Remove one character (tab)
         (forward-line 1)))))
 
+(defun python-insert-main ()
+  (interactive)
+  (insert "if __name__ == \"__main__\":\n"))
+
 (provide 'general)
