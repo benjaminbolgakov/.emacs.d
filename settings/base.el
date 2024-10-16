@@ -29,6 +29,9 @@
 ;; Emacs >= 27
 (global-display-line-numbers-mode)
 
+;; Disable bookmark icon
+(setq bookmark-set-fringe-mark nil)
+
 ;; Emacs < 27:
 ;; (global-linum-mode t)
 
