@@ -24,11 +24,11 @@
   :ensure t
   :after magit
   :init
-  (setq projectile-project-search-path '("~/")
+  (setq projectile-project-search-path '("~/workbench")
         projectile-enable-caching t)
   :config
   (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c C-p") 'projectile-command-map))
 
 
 

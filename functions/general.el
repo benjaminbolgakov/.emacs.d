@@ -53,7 +53,7 @@
 
 (defun my-insert-image ()
   (interactive)
-  (insert "[[~/resources/org_imgs/"))
+  (insert "[[./img/"))
 
 (defun tab-region ()
   "Insert a tab at the start of each selected line."
