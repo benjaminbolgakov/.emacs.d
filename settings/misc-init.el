@@ -1,12 +1,4 @@
-
-
-;; Set default face attributes
-;; (set-face-attribute 'default nil
-;;                     :family "Fira Code"
-;;                     :height 102
-;;                     :weight 'normal
-;;                     :width 'normal)
-
+;; ==== Package Configurations ====
 
 ;; Dashboard on startup
 (use-package dashboard
@@ -14,19 +6,8 @@
   :config
   (dashboard-setup-startup-hook))
 
-(setq dashboard-banner-logo-title
-      (cond
-       ((at-main-fedora-p)
-        (propertize "== Welcome home, Benzel =="
-                    'face '(:family "Fira Code" :weight bold :italic t)))
-       ((at-main-windows-p)
-        (propertize "== Welcome home, Benzel =="
-                    'face '(:family "Fira Code" :weight bold :italic t)))
-       ((at-work-p)
-        (propertize "== Welcome to work, Benjamin =="
-                    'face '(:family "Fira Code" :weight bold :italic t)))
-       (t "Running on an unknown system")))
-
+(setq dashboard-navigation-cycle t)
+(setq dashboard-banner-logo-title HST-quote)
 (setq dashboard-startup-banner emacs-banner)
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
@@ -34,6 +15,16 @@
                         (bookmarks . 5)
                         (projects . 5)))
 
+(setq dashboard-startupify-list '(dashboard-insert-banner
+				  dashboard-insert-newline
+				  dashboard-insert-banner-title
+				  dashboard-insert-newline
+				  dashboard-insert-navigator
+				  dashboard-insert-newline
+				  dashboard-insert-init-info
+				  dashboard-insert-items
+				  dashboard-insert-newline
+				  dashboard-insert-footer))
 
 ;; All-The-Icons
 (use-package all-the-icons
@@ -98,6 +89,28 @@
 
 
 (provide 'misc-init)
+
+;; ==== LEGACY ====
+
+;; (setq dashboard-banner-logo-title
+;;       (cond
+;;        ((at-main-fedora-p)
+;;         (propertize "== Welcome home, Benzel =="
+;;                     'face '(:family "Fira Code" :weight bold :italic t)))
+;;        ((at-main-windows-p)
+;;         (propertize "== Welcome home, Benzel =="
+;;                     'face '(:family "Fira Code" :weight bold :italic t)))
+;;        ((at-work-p)
+;;         (propertize "== Welcome to work, Benjamin =="
+;;                     'face '(:family "Fira Code" :weight bold :italic t)))
+;;        (t "Running on an unknown system")))
+
+;; Set default face attributes
+;; (set-face-attribute 'default nil
+;;                     :family "Fira Code"
+;;                     :height 102
+;;                     :weight 'normal
+;;                     :width 'normal)
 
 
 ;; *Emacs 27 supports this natively.. dont use this if version > 27*

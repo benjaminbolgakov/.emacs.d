@@ -11,6 +11,9 @@
       '((sequence "TODO" "CHANGE" "|" "DONE")))
 (setq org-log-done 'time)
 
+;; Collapse headings on startup
+(setq org-startup-folded 'folded)
+
 ;; Language support
 ;; active Babel languages
 ;; (org-babel-do-load-languages

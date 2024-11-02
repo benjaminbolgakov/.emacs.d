@@ -44,8 +44,10 @@
 	  (expand-file-name "functions" user-emacs-directory))
 ;; List of dirs where separate .el files are stored
 (setq load-dir
-	  (expand-file-name "load" user-emacs-directory))
+      (expand-file-name "load" user-emacs-directory))
 
+
+(load "~/.emacs.d/settings/variables.el")
 
 (add-to-list 'load-path settings-dir)
 (add-to-list 'load-path functions-dir)
