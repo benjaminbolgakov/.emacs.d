@@ -6,6 +6,7 @@
   :config
   (dashboard-setup-startup-hook))
 
+;; Variable configurations for dashboard
 (setq dashboard-navigation-cycle t)
 (setq dashboard-banner-logo-title HST-quote)
 (setq dashboard-startup-banner emacs-banner)
@@ -25,6 +26,9 @@
 				  dashboard-insert-items
 				  dashboard-insert-newline
 				  dashboard-insert-footer))
+;; Must use projectile backend if emacs version is < 28
+(when (< emacs-major-version 28)
+  (setq dashboard-projects-backend 'projectile))
 
 ;; All-The-Icons
 (use-package all-the-icons

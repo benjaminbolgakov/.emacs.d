@@ -24,7 +24,10 @@
   :ensure t
   :after magit
   :init
-  (setq projectile-project-search-path '("~/workbench")
+  (setq projectile-project-search-path
+        (if (file-directory-p "~/workbench")
+            '("~/workbench")
+          '("~/"))
         projectile-enable-caching t)
   :config
   (projectile-mode +1)
