@@ -81,7 +81,22 @@
         (forward-line 1)))))
 
 (defun python-insert-main ()
+  "Insert the boilerplate python main code"
   (interactive)
   (insert "if __name__ == \"__main__\":\n"))
+
+(defun bash-insert-template ()
+  "Insert the template bash script"
+  (interactive)
+  (insert "#!/bin/bash\n\n"
+          "#### Arguments ####\n"
+          "args=(\"$@\");\n"
+          "nmb_args=$#;\n"
+          "threshold=2;\n\n"
+          "#### Variables #####\n"
+          "node_start=\"NODE = \"\n\n"
+          "#### Functions ####\n"
+          "ex(){\n\n}\n\n"
+          "#### -- Main-- ####\n"))
 
 (provide 'general)
