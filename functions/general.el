@@ -1,8 +1,7 @@
 ;;;; Font verifier
 (defun validate-font(font-name)
   (unless (find-font (font-spec :family font-name))
-    (message "Font not installed, installing now")
-    (shell-command (concat (get-config-dir) "scripts/inst_font.sh"))))
+    (message "Font not installed! Install it manually (Fira Code?)")))
 ;; (if (my-font-is-missing-p) (shell-command "/path/to/scripts/install-font.sh"))
 
 ;; Example usage:

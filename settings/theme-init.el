@@ -1,6 +1,5 @@
 ;; Load theme
 (use-package exotica-theme
-  ;; :ensure t  ; Install the package if not already installed
   :defer t
   :init
   (unless (custom-theme-p 'exotica)

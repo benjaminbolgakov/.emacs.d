@@ -29,7 +29,7 @@
 (setq create-lockfiles nil)
 
 ;; Start emacs server
-(server-start)
+;;(server-start)
 
 
 ;; ==========================================================================
@@ -60,16 +60,6 @@
 ;; (setq default-directory (working-dir))
 (setq default-directory working-dir)
 
-;; ;; set emacs conf dir
-;; (setq config-dir
-;;       (if (eq system-type 'windows-nt)
-;;           (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\")
-;;         (concat (getenv "HOME") "/.emacs.d/")))
-
-;; ;; get conf-dir variable value
-;; (defun get-config-dir ()
-;;   config-dir)
-
 
 ;; ==========================================================================
 ;; ======== Load Emacs configs ==============================================
@@ -78,8 +68,7 @@
 ;; load base-settings
 (require 'base)
 
-
-;; init use-package
+;; add package repositories
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -139,10 +128,6 @@
 (require 'key-bindings)
 ;;(require 'compile-init)
 ;;(require 'pdf-init)
-
-
-
-
 
 
 

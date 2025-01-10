@@ -31,14 +31,17 @@
 (setq def-sys-font "Fira Code")
 (setq alt-sys-font "Office Code Pro")
 
+;; Set startup-buffer to dashboard for robustness
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+
 
 ;; ==========================================================================
 ;; ======== Getters =========================================================
 ;; ==========================================================================
 
-;; get conf-dir variable value
-;;(defun get-config-dir ()
-;;  config-dir)
+;; get emacs-dir variable value
+(defun get-emacs-dir ()
+  emacs-dir)
 
 
 (provide 'vars)
