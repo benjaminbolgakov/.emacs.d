@@ -84,6 +84,19 @@
   (interactive)
   (insert "if __name__ == \"__main__\":\n"))
 
+;; Inserts template code for python files
+(defun python-insert-template ()
+  (interactive)
+  (insert "\"\"\"\n"
+          "Version:\n"
+          "\"\"\"\n\n"
+          "#### Imports ####\n\n"
+          "#### Global Variables ####\n\n"
+          "#### Functions ####\n\n"
+          "#### Main ####\n"
+          "if __name__ == \"__main__\":\n"))
+
+;; Inserts template code for bash scripts
 (defun bash-insert-template ()
   "Insert the template bash script"
   (interactive)
