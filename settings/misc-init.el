@@ -8,7 +8,7 @@
 
 ;; Variable configurations for dashboard
 (setq dashboard-navigation-cycle t)
-(setq dashboard-banner-logo-title HST-quote)
+;; (setq dashboard-banner-logo-title HST-quote)
 (setq dashboard-startup-banner emacs-banner)
 (setq dashboard-center-content t)
 (setq dashboard-week-agenda t)
@@ -18,7 +18,7 @@
 
 (setq dashboard-startupify-list '(dashboard-insert-banner
 				  dashboard-insert-newline
-				  dashboard-insert-banner-title
+				  ;;dashboard-insert-banner-title
 				  dashboard-insert-newline
 				  dashboard-insert-navigator
 				  dashboard-insert-newline
