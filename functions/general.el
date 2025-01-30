@@ -79,6 +79,18 @@
           (delete-char 1))     ; Remove one character (tab)
         (forward-line 1)))))
 
+(defun insert-template ()
+  "Insert boilerplate code"
+  (interactive)
+  (let ((choice (completing-read "Choose template: " '("python" "bash"))))
+    (cond
+     ((string-equal choice "python")
+      (python-insert-template))
+     ((string-equal choice "bash")
+      (bash-insert-template))
+     (t
+      (message "Invalid choice")))))
+
 (defun python-insert-main ()
   "Insert the boilerplate python main code"
   (interactive)
