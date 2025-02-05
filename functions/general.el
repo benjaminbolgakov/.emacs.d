@@ -82,12 +82,14 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash" "gitignore"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
      ((string-equal choice "bash")
       (bash-insert-template))
+     ((string-equal choice "gitignore")
+      (gitignore-insert-template))
      (t
       (message "Invalid choice")))))
 
@@ -122,5 +124,23 @@
           "#### Functions ####\n"
           "ex(){\n\n}\n\n"
           "#### -- Main-- ####\n"))
+
+;; Inserts template .gitignore
+(defun gitignore-insert-template ()
+  "Insert the template .gitignore content"
+  (interactive)
+  (insert "# -*- mode: gitignore; -*-\n"
+          "__pycache__\n"
+          "*~\n"
+          "nmb_args=$#;\n\n"
+          "venv/\n"
+          "temp/\n\n"
+          "# Distribution / packaging\n"
+          "bin/\n"
+          "build/\n"
+          "dist/\n"
+          "lib/\n"
+          "lib64/\n"
+          "var/\n"))
 
 (provide 'general)
