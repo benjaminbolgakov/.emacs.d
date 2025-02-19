@@ -82,12 +82,14 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash" "gitignore"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash" "cpp" "gitignore"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
      ((string-equal choice "bash")
       (bash-insert-template))
+     ((string-equal choice "cpp")
+      (cpp-insert-template))
      ((string-equal choice "gitignore")
       (gitignore-insert-template))
      (t
@@ -142,5 +144,16 @@
           "lib/\n"
           "lib64/\n"
           "var/\n"))
+
+;; Inserts template .gitignore
+(defun cpp-insert-template ()
+  (interactive)
+  (insert "#include<iostream>\n"
+          "using namespace std;\n\n"
+          "int main(int argc, char* argv[]) {\n"
+          "\n"
+          "    return 0;\n"
+          "}\n"))
+
 
 (provide 'general)
