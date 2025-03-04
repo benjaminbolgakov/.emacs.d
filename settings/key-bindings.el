@@ -35,6 +35,10 @@
 
 ;;(global-set-key (kbd "C-c TAB") 'detab-region)
 
+
+;; Unbinds
+(global-unset-key (kbd "C-M-,"))
+
 (use-package which-key
   :init (which-key-mode)
   :diminish which-key-mode
