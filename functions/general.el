@@ -124,8 +124,27 @@
           "#### Variables #####\n"
           "node_start=\"NODE = \"\n\n"
           "#### Functions ####\n"
-          "ex(){\n\n}\n\n"
+          "verify_root(){\n"
+          "    # Ensure the script runs as root\n"
+          "    if [[ $EUID -ne 0 ]]; then\n"
+          "        echo \"This script must be run as root (or with sudo).\"\n"
+          "        exit 1\n"
+          "    fi\n\n"
+          "}\n\n"
           "#### -- Main-- ####\n"))
+;; (defun bash-insert-template ()
+;;   "Insert the template bash script"
+;;   (interactive)
+;;   (insert "#!/bin/bash\n\n"
+;;           "#### Arguments ####\n"
+;;           "args=(\"$@\");\n"
+;;           "nmb_args=$#;\n"
+;;           "threshold=2;\n\n"
+;;           "#### Variables #####\n"
+;;           "node_start=\"NODE = \"\n\n"
+;;           "#### Functions ####\n"
+;;           "ex(){\n\n}\n\n"
+;;           "#### -- Main-- ####\n"))
 
 ;; Inserts template .gitignore
 (defun gitignore-insert-template ()

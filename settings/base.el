@@ -17,13 +17,17 @@
 (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
 
 ;; set your desired tab width
-;;(setq tab-width 4)
+;; (setq tab-width 4)
+(setq-default tab-width 4)
 
 ;; use tabs for indentation
 ;; (setq indent-tabs-mode t)
 
 ;; use spaces for indentation
 (setq-default indent-tabs-mode nil)
+
+;; use tabs instead of spaces
+(setq-default indent-tabs-mode t)
 
 ;; Line numbering
 ;; Emacs >= 27
