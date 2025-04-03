@@ -152,8 +152,7 @@
   (interactive)
   (insert "# -*- mode: gitignore; -*-\n"
           "__pycache__\n"
-          "*~\n"
-          "nmb_args=$#;\n\n"
+          "*~\n\n"
           "venv/\n"
           "temp/\n\n"
           "# Distribution / packaging\n"
