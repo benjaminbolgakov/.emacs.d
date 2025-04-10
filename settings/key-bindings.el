@@ -25,7 +25,7 @@
 
 (global-set-key (kbd "C-c _") 'artist-mode)
 
-(global-set-key (kbd "C-c C-x i") 'my-insert-image)
+(global-set-key (kbd "C-c i") 'my-insert-image)
 
 ;; Hook bindings
 (global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
