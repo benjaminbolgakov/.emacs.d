@@ -154,7 +154,8 @@
   (interactive)
   (insert "# -*- mode: gitignore; -*-\n"
           "__pycache__\n"
-          "*~\n\n"
+          "*~\n"
+          "*.o\n\n"
           "venv/\n"
           "temp/\n\n"
           "# Distribution / packaging\n"
