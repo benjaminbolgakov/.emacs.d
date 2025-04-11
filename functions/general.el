@@ -82,7 +82,7 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash" "c" "cpp" "gitignore"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash" "c" "cpp" "gitignore" "readme"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
@@ -94,6 +94,8 @@
       (c-insert-template))
      ((string-equal choice "gitignore")
       (gitignore-insert-template))
+     ((string-equal choice "readme")
+      (readme-insert-template))
      (t
       (message "Invalid choice")))))
 
@@ -165,6 +167,34 @@
           "lib/\n"
           "lib64/\n"
           "var/\n"))
+
+;; Insert README.md
+(defun readme-insert-template ()
+  (interactive)
+  (insert "# Title\n\n"
+          "## Header\n"
+          "### Sub-Heading 1\n"
+          "#### Sub-Heading 2\n\n"
+          "*italic text*\n"
+          "**bold text**\n\n"
+          "### Unordered list\n"
+          "* Item 1\n"
+          "* Item 2\n\n"
+          "### Ordered list\n"
+          "1. Item 1\n"
+          "2. Item 2\n\n"
+          "### Images\n"
+          "![Some alt text.](/images/sample.png)\n\n"
+          "### Links\n"
+          "[Link Text](<url>)\n\n"
+          "### Blockquotes\n"
+          "> Text to display in blockquote\n\n"
+          "### Code Blocks\n"
+          "```\n"
+          "int a = 1;\n"
+          "```\n\n"
+          "### Inline Code\n"
+          "Here is some code: `print(a);`\n"))
 
 ;; Insert template .c
 (defun c-insert-template ()
