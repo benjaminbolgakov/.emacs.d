@@ -52,6 +52,11 @@
  (front-context-string . "auto-save-list\n ")
  (rear-context-string . "96 Oct 17 09:07 ")
  (position . 254))
+("benzel_network.org"
+ (filename . "~/resources/network/benzel_network.org")
+ (front-context-string . "* Homenetwork\n")
+ (rear-context-string)
+ (position . 1))
 ("resources"
  (filename . "~/resources/")
  (front-context-string . "bash\n  -rw-r--r-")
