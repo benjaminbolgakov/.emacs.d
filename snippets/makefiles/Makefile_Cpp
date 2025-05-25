@@ -1,0 +1,126 @@
+CXX=g++
+CXXFLAGS=-g -Wall -Wextra -std=c++17 -Iinclude
+CFLAGS=-fPIC
+LDFLAGS=-shared
+
+##########
+# Naming #
+##########
+APPNAME=appname
+TESTSNAME=test_$(APPNAME)
+SUBMITNAME=$(APPNAME).zip
+
+###############
+# Directories #
+###############
+SRCDIR=src
+OBJDIR=obj
+LIBDIR=lib
+INCDIR=include
+TESTDIR=tests
+TESTOBJDIR=testobj
+BINDIR=bin
+
+################
+# Source files #
+################
+SRCS=$(wildcard $(SRCDIR)/*.cpp) # All .cpp files found in src/
+OBJS=$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS)) # Object files are source files with .o extension
+TESTSRCS=$(wildcard $(TESTDIR)/*.cpp) # All .cpp files found in tests/
+TESTOBJS=$(patsubst $(TESTDIR)/%.cpp, $(TESTOBJDIR)/%.o, $(TESTSRCS)) # Object files for tests are source files for tests with .o extension
+
+############
+# Binaries #
+############
+BIN=$(BINDIR)/$(APPNAME)
+TESTBIN=$(BINDIR)/$(TESTNAME)
+
+#############
+# Libraries #
+#############
+STATICLIB=$(LIB)/$(APPNAME).a
+SHAREDLIB=$(LIB)/$(APPNAME).so
+
+##################
+# Default target #
+##################
+all: $(BIN)
+
+############
+# Binaries #
+############
+# Main binary - Rebuilds '.o' files if changed. Ensures 'bin/' exists.
+$(BIN): $(OBJS) | $(BINDIR)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
+
+# Tests binary - As above. Filter out possible 'main.o' file.
+$(TESTBIN): $(OBJS) $(TESTOBJS) | $(BINDIR)
+	$(CXX) $(CXXFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) $(TESTOBJS) -o $@
+
+#############
+# Libraries #
+#############
+# Create a static library file - Filter out possible 'main.o' file.
+$(STATICLIB): $(OBJS) | $(LIBDIR)
+	ar rcs $@ $(filter-out $(OBJDIR)/main.o, $(OBJS))
+
+# Create a shared library file - Filter out possible 'main.o' file.
+$(SHAREDLIB): $(OBJS) | $(LIBDIR)
+	$(CXX) $(CFLAGS) $(LDFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) -o $@
+
+##############
+# File rules #
+##############
+# Object file rules
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(TESTOBJDIR)/%.o: $(TESTDIR)/%.cpp | $(TESTOBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+############################
+# Directories verification #
+############################
+$(BINDIR) $(OBJDIR) $(TESTOBJDIR) $(LIBDIR):
+	mkdir -p $@
+
+#######################
+# Compilation options #
+#######################
+# Compile and run main binary
+run: $(BIN)
+	./$(BIN)
+
+# Compile and run test binary
+test: $(TESTBIN)
+	./$(TESTBIN)
+
+# Compile as a static library
+staticlib: $(STATICLIB)
+
+# Compile as a shared library
+sharedlib: $(SHAREDLIB)
+
+# Clean up binary & object files
+clean:
+	$(RM) $(BINDIR)/* $(OBJDIR)/* $(TESTOBJDIR)/* $(LIBDIR)/*
+
+# Submit to archive file
+submit:
+	$(RM) $(SUBMITNAME)
+	zip $(SUBMITNAME) $(BIN)
+
+#######################
+# Notes/Documentation #
+#######################
+# - Shared Library -
+# 1. Compile source files into position-independent object files:
+# $ gcc -c -fPIC mylib.cpp -o mylib.o
+# 2. Create the library file 'libmylib.so' from the object file:
+# $ gcc -shared -o libmylib.so mylib.o
+# 3. Link the library file to the target program when compiling it:
+# $ gcc main.cpp -L. -lmylib -o myprogram
+# 6. Ensure the library is in the library path:
+# $ HOW?
+# 6b. Possible to set the path with:
+# $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../myprogram

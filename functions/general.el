@@ -82,7 +82,7 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash" "c" "cpp" "gitignore" "readme"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash" "cpp" "c" "gitignore" "readme" "makefile"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
@@ -96,6 +96,16 @@
       (gitignore-insert-template))
      ((string-equal choice "readme")
       (readme-insert-template))
+     ((string-equal choice "makefile")
+      ;; Second input prompt for which language specific Makefile to import:
+      (let ((langchoice (completing-read "Choose language specific Makefile: " '("C" "C++"))))
+        (cond
+         ((string-equal langchoice "C")
+          (c-makefile-insert-template))
+         ((string-equal langchoice "C++")
+          (cpp-makefile-insert-template))
+         (t
+          (message "Invalid choice")))))
      (t
       (message "Invalid choice")))))
 
@@ -206,13 +216,34 @@
 
 ;; Inserts template .cpp
 (defun cpp-insert-template ()
+  "Insert sample C boilerplate with a forward-declared function"
   (interactive)
   (insert "#include<iostream>\n"
           "using namespace std;\n\n"
-          "int main(int argc, char* argv[]) {\n"
-          "\n"
+          "void log(const string& msg);\n\n"
+          "int main(int argc, char* argv[])\n"
+          "{\n"
+          "    if (argc > 1) { cout << argv[1] << \"\\n\"; }\n"
+          "    log(\"Log:\");\n"
           "    return 0;\n"
-          "}\n"))
+          "}\n\n"
+          "void log(const string& msg) { cout << msg << \"\\n\"; }\n"))
 
+
+;; Insert template C++ makefile content from file "snippets/makefiles/Makefile_Cpp"
+(defun cpp-makefile-insert-template ()
+  (interactive)
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_Cpp")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Makefile_Cpp not found or not readable."))))
+
+;; Insert template C makefile content from file "snippets/makefiles/Makefile_C"
+(defun c-makefile-insert-template ()
+  (interactive)
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_C")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Makefile_C not found or not readable."))))
 
 (provide 'general)
