@@ -1,8 +1,14 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("emacs_ref.org"
+(("work_documentation.org"
+ (filename . "~/resources/work/work_documentation.org")
+ (front-context-string . "ser Info\n** CPAC")
+ (rear-context-string . "artgit\nqgit\n\n* U")
+ (position . 128)
+ (last-modified 26649 43403 71993 725000))
+("emacs_ref.org"
  (filename . "~/resources/emacs/emacs_ref.org")
  (front-context-string . "* TODO\n** Emacs ")
  (rear-context-string)
