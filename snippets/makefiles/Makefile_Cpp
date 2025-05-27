@@ -1,6 +1,5 @@
 CXX=g++
-CXXFLAGS=-g -Wall -Wextra -std=c++17 -Iinclude
-CFLAGS=-fPIC
+CXXFLAGS=-g -Wall -Wextra -std=c++17 -fPIC -Iinclude
 LDFLAGS=-shared
 
 ##########
@@ -38,8 +37,8 @@ TESTBIN=$(BINDIR)/$(TESTSNAME)
 #############
 # Libraries #
 #############
-STATICLIB=$(LIB)/$(APPNAME).a
-SHAREDLIB=$(LIB)/$(APPNAME).so
+STATICLIB=$(LIBDIR)/$(APPNAME).a
+SHAREDLIB=$(LIBDIR)/$(APPNAME).so
 
 ##################
 # Default target #
@@ -66,7 +65,7 @@ $(STATICLIB): $(OBJS) | $(LIBDIR)
 
 # Create a shared library file - Filter out possible 'main.o' file.
 $(SHAREDLIB): $(OBJS) | $(LIBDIR)
-	$(CXX) $(CFLAGS) $(LDFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) -o $@
+	$(CXX) $(LDFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) -o $@
 
 ##############
 # File rules #

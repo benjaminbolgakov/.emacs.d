@@ -1,6 +1,5 @@
 CC=gcc
-FLAGS=-g -Wall -Iinclude
-CFLAGS=-fPIC
+FLAGS=-g -Wall -fPIC -Iinclude
 LDFLAGS=-shared
 
 ##########
@@ -38,8 +37,8 @@ TESTBIN=$(BINDIR)/$(TESTSNAME)
 #############
 # Libraries #
 #############
-STATICLIB=$(LIB)/$(APPNAME).a
-SHAREDLIB=$(LIB)/$(APPNAME).so
+STATICLIB=$(LIBDIR)/$(APPNAME).a
+SHAREDLIB=$(LIBDIR)/$(APPNAME).so
 
 ##################
 # Default target #
@@ -66,7 +65,7 @@ $(STATICLIB): $(OBJS) | $(LIBDIR)
 
 # Create a shared library file - Filter out possible 'main.o' file.
 $(SHAREDLIB): $(OBJS) | $(LIBDIR)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) -o $@
+	$(CC) $(LDFLAGS) $(filter-out $(OBJDIR)/main.o, $(OBJS)) -o $@
 
 ##############
 # File rules #
