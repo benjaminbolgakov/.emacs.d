@@ -33,7 +33,7 @@ TESTOBJS=$(patsubst $(TESTDIR)/%.cpp, $(TESTOBJDIR)/%.o, $(TESTSRCS)) # Object f
 # Binaries #
 ############
 BIN=$(BINDIR)/$(APPNAME)
-TESTBIN=$(BINDIR)/$(TESTNAME)
+TESTBIN=$(BINDIR)/$(TESTSNAME)
 
 #############
 # Libraries #
