@@ -1,0 +1,21 @@
+# -*- mode: gitignore; -*-
+
+# Distribution / packaging
+bin/
+obj/
+build/
+dist/
+lib/
+lib64/
+var/
+
+# Misc directories
+__pycache__
+venv/
+.virts/
+temp/
+
+# Misc files
+*~
+*.o
+pip-log.txt

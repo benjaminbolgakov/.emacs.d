@@ -164,19 +164,28 @@
 (defun gitignore-insert-template ()
   "Insert the template .gitignore content"
   (interactive)
-  (insert "# -*- mode: gitignore; -*-\n"
-          "__pycache__\n"
-          "*~\n"
-          "*.o\n\n"
-          "venv/\n"
-          "temp/\n\n"
-          "# Distribution / packaging\n"
-          "bin/\n"
-          "build/\n"
-          "dist/\n"
-          "lib/\n"
-          "lib64/\n"
-          "var/\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/gitignore")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "gitignore file not found."))))
+
+;; (defun gitignore-insert-template ()
+;;   "Insert the template .gitignore content"
+;;   (interactive)
+;;   (interactive)
+;;   (insert "# -*- mode: gitignore; -*-\n"
+;;           "__pycache__\n"
+;;           "*~\n"
+;;           "*.o\n\n"
+;;           "venv/\n"
+;;           "temp/\n\n"
+;;           "# Distribution / packaging\n"
+;;           "bin/\n"
+;;           "build/\n"
+;;           "dist/\n"
+;;           "lib/\n"
+;;           "lib64/\n"
+;;           "var/\n"))
 
 ;; Insert README.md
 (defun readme-insert-template ()
