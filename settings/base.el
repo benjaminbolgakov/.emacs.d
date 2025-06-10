@@ -23,6 +23,9 @@
 ;; use tabs for indentation
 ;; (setq indent-tabs-mode t)
 
+;; Disable to fix auto indentation in .h files when pressing Enter
+(setq-default electric-indent-mode nil)
+
 ;; use spaces for indentation
 (setq-default indent-tabs-mode nil)
 

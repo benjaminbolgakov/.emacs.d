@@ -1,3 +1,23 @@
+;; Environment setup based on host system-name
+(defun setup-home-fedora()
+  (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
+  (setq config (expand-file-name (concat (getenv "HOME") "/.emacs.d/config/home-fedora.el")))
+  (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
+  (setq working-dir "~/workbench"))
+
+(defun setup-home-win()
+  (setq emacs-dir (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\"))
+  (setq config (expand-file-name (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\config\\home-win.el")))
+  (setq emacs-banner (expand-file-name
+                      (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\assets\\img\\emacs_logo.png")))
+  (setq working-dir (concat (getenv "USERPROFILE") "\\")))
+
+(defun setup-work()
+  (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
+  (setq config (expand-file-name (concat (getenv "HOME") "/.emacs.d/config/work.el")))
+  (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
+  (setq working-dir "~/workbench"))
+
 ;;;; Font verifier
 (defun validate-font(font-name)
   (unless (find-font (font-spec :family font-name))

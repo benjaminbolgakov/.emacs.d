@@ -4,7 +4,7 @@
 
 ;; System identifiers (machine hostname)
 (defun at-main-fedora-p ()
-  (string= (system-name) "main-fedora"))
+  (string= (system-name) "barbro-fedora"))
 
 (defun at-main-windows-p ()
   (string= (system-name) "main-windows"))
