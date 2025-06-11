@@ -2,38 +2,23 @@
 ;; ======== Defines =========================================================
 ;; ==========================================================================
 
-;; System identifiers (machine hostname)
-(defun at-main-fedora-p ()
-  (string= (system-name) "barbro-fedora"))
+;; System specifics
+(setq system-home (getenv "HOME"))
+;;(setq default-directory (getenv "HOME"))
 
-(defun at-main-windows-p ()
-  (string= (system-name) "main-windows"))
-
-(defun at-work-p ()
-  (string= (system-name) "0000L1HF2260GT2"))
-
-;; Set OS-specific variables
-(cond
- ((eq system-type 'gnu/linux)
-  (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
-  (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
-  (setq working-dir "~/"))
- ((eq system-type 'windows-nt)
-  (setq emacs-dir (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\"))
-  (setq emacs-banner (expand-file-name
-                      (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\assets\\img\\emacs_logo.png")))
-  (setq working-dir (concat (getenv "USERPROFILE") "\\")))
- (t
-  (setq emacs-dir (expand-file-name "default/emacs/directory" ""))
-  (setq working-dir (expand-file-name "default/default-directory" ""))))
+;; Assets
+(setq emacs-assets (expand-file-name "assets/" user-emacs-directory))
+(setq emacs-banner (expand-file-name "img/emacs_logo.png" emacs-assets))
 
 ;; Fonts
 (setq def-sys-font "Fira Code")
 (setq alt-sys-font "Office Code Pro")
 
+;; Working directory
+(setq working-dir (expand-file-name (concat system-home "workbench")))
+
 ;; Set startup-buffer to dashboard for robustness
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-
 
 ;; ==========================================================================
 ;; ======== Getters =========================================================

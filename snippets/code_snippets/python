@@ -1,0 +1,10 @@
+(defun python-insert-template ()
+  (interactive)
+  (insert "\"\"\"\n"
+          "Version:\n"
+          "\"\"\"\n\n"
+          "#### Imports ####\n\n"
+          "#### Global Variables ####\n\n"
+          "#### Functions ####\n\n"
+          "#### Main ####\n"
+          "if __name__ == \"__main__\":\n"))

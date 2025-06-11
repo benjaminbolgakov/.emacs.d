@@ -1,0 +1,5 @@
+(defun c-insert-template ()
+  (interactive)
+  (insert "int main() {\n"
+          "    return 0;\n"
+          "}\n"))

@@ -1,29 +1,6 @@
-;; Get current machine name and load the main configuration file accordingly
-(cond
- ((at-home-fedora-p)
-  'setup-home-fedora)
- ((at-home-win-p)
-  'setup-home-win)
- ((at-work-p)
-  'setup-work))
-
-;; (defun at-main-fedora-p ()
-;;   (string= (system-name) "barbro-fedora"))
-
-;; (defun at-main-windows-p ()
-;;   (string= (system-name) "main-windows"))
-
-;; (defun at-work-p ()
-;;   (string= (system-name) "0000L1HF2260GT2"))
-
-;; (when (at-main-fedora-p)
-;;   (load "~/.emacs.d/configs/home-fedora.el"))
-
-;; (when (at-main-fedora-p)
-;;   (load "~/.emacs.d/configs/home-fedora.el"))
-
-;; (when (at-main-fedora-p)
-;;   (load "~/.emacs.d/configs/home-fedora.el"))
+;; Initialize system-specific configuration
+(setq config-loader (expand-file-name "config-loader.el" user-emacs-directory))
+(load config-loader 'noerror)
 
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide

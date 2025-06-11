@@ -9,14 +9,14 @@
 
 ;; Load fonts
 (let ((h (system-name)))
-  (cond ((at-main-fedora-p)
+  (cond ((at-home-fedora-p)
          (validate-font def-sys-font)
          (set-face-attribute 'default nil
                              :family def-sys-font
                              :height 102
                              :weight 'normal
                              :width 'normal))
-        ((at-main-windows-p)
+        ((at-home-win-p)
          (validate-font def-sys-font)
          (set-face-attribute 'default nil
                              :family def-sys-font

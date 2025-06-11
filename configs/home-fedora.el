@@ -3,8 +3,6 @@
 ;; Debugging lisp: Running for example "eval-buffer" and recieving an error:
 ;; "eval-buffer: Invalid read syntax: ")" [2 times]" - how to get more info etc?
 
-
-
 ;; This solves the error about retrieving marmalade "incomprehensible buffer"
 ;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
@@ -14,6 +12,24 @@
 
 ;; Current machine's hostname
 ;; (setq sysname (system-name))
+
+
+
+;; Set OS-specific variables
+;; (cond
+;;  ((eq system-type 'gnu/linux)
+;;   (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
+;;   (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
+;;   (setq working-dir "~/"))
+;;  ((eq system-type 'windows-nt)
+;;   (setq emacs-dir (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\"))
+;;   (setq emacs-banner (expand-file-name
+;;                       (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\assets\\img\\emacs_logo.png")))
+;;   (setq working-dir (concat (getenv "USERPROFILE") "\\")))
+;;  (t
+;;   (setq emacs-dir (expand-file-name "default/emacs/directory" ""))
+;;   (setq working-dir (expand-file-name "default/default-directory" ""))))
+
 
 ;; ==========================================================================
 ;; ======== System config ===================================================
@@ -42,23 +58,14 @@
 ;; Functions dir
 (setq functions-dir
 	  (expand-file-name "functions" user-emacs-directory))
-;; List of dirs where separate .el files are stored
-(setq load-dir
-      (expand-file-name "load" user-emacs-directory))
-
 
 (load "~/.emacs.d/settings/variables.el")
 
 (add-to-list 'load-path settings-dir)
 (add-to-list 'load-path functions-dir)
-(add-to-list 'load-path load-dir)
 
 ;; load user-defined variables
 (require 'vars)
-
-;; set startup dir
-;; (setq default-directory (working-dir))
-(setq default-directory working-dir)
 
 
 ;; ==========================================================================

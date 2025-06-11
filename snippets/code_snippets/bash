@@ -1,0 +1,37 @@
+# -*- mode: shell-script -*-
+#!/bin/bash
+
+#### Arguments ####
+args=("$@");
+nmb_args=$#;
+threshold=2;
+
+#### Variables #####
+node_start="NODE = "
+
+#### Functions ####
+verify_root(){
+    # Ensure the script runs as root
+    if [[ $EUID -ne 0 ]]; then
+        echo "This script must be run as root (or with sudo)."
+        exit 1
+    fi
+}
+
+func_args(){
+    arg1=$1
+    arg2=$2
+}
+
+func_return(){
+    echo "RETURNVALUE"
+}
+
+#### -- Main-- ####
+if [ $nmb_args -gt $threshold ]; then
+    for (( i=0;i<$nmb_args; i++ )); do
+        usr_input+="${args[${i}]} "
+    done
+fi
+func_args "$arg1" "$arg2"
+retvalue=$(func_return)

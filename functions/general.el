@@ -1,23 +1,3 @@
-;; Environment setup based on host system-name
-(defun setup-home-fedora()
-  (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
-  (setq config (expand-file-name (concat (getenv "HOME") "/.emacs.d/config/home-fedora.el")))
-  (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
-  (setq working-dir "~/workbench"))
-
-(defun setup-home-win()
-  (setq emacs-dir (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\"))
-  (setq config (expand-file-name (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\config\\home-win.el")))
-  (setq emacs-banner (expand-file-name
-                      (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\assets\\img\\emacs_logo.png")))
-  (setq working-dir (concat (getenv "USERPROFILE") "\\")))
-
-(defun setup-work()
-  (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
-  (setq config (expand-file-name (concat (getenv "HOME") "/.emacs.d/config/work.el")))
-  (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
-  (setq working-dir "~/workbench"))
-
 ;;;; Font verifier
 (defun validate-font(font-name)
   (unless (find-font (font-spec :family font-name))
@@ -137,48 +117,19 @@
 ;; Inserts template code for python files
 (defun python-insert-template ()
   (interactive)
-  (insert "\"\"\"\n"
-          "Version:\n"
-          "\"\"\"\n\n"
-          "#### Imports ####\n\n"
-          "#### Global Variables ####\n\n"
-          "#### Functions ####\n\n"
-          "#### Main ####\n"
-          "if __name__ == \"__main__\":\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/python")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
 
 ;; Inserts template code for bash scripts
 (defun bash-insert-template ()
   "Insert the template bash script"
   (interactive)
-  (insert "#!/bin/bash\n\n"
-          "#### Arguments ####\n"
-          "args=(\"$@\");\n"
-          "nmb_args=$#;\n"
-          "threshold=2;\n\n"
-          "#### Variables #####\n"
-          "node_start=\"NODE = \"\n\n"
-          "#### Functions ####\n"
-          "verify_root(){\n"
-          "    # Ensure the script runs as root\n"
-          "    if [[ $EUID -ne 0 ]]; then\n"
-          "        echo \"This script must be run as root (or with sudo).\"\n"
-          "        exit 1\n"
-          "    fi\n\n"
-          "}\n\n"
-          "#### -- Main-- ####\n"))
-;; (defun bash-insert-template ()
-;;   "Insert the template bash script"
-;;   (interactive)
-;;   (insert "#!/bin/bash\n\n"
-;;           "#### Arguments ####\n"
-;;           "args=(\"$@\");\n"
-;;           "nmb_args=$#;\n"
-;;           "threshold=2;\n\n"
-;;           "#### Variables #####\n"
-;;           "node_start=\"NODE = \"\n\n"
-;;           "#### Functions ####\n"
-;;           "ex(){\n\n}\n\n"
-;;           "#### -- Main-- ####\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/bash")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
 
 ;; Inserts template .gitignore
 (defun gitignore-insert-template ()
@@ -189,74 +140,44 @@
         (insert-file-contents template-path)
       (message "gitignore file not found."))))
 
-;; (defun gitignore-insert-template ()
-;;   "Insert the template .gitignore content"
-;;   (interactive)
-;;   (interactive)
-;;   (insert "# -*- mode: gitignore; -*-\n"
-;;           "__pycache__\n"
-;;           "*~\n"
-;;           "*.o\n\n"
-;;           "venv/\n"
-;;           "temp/\n\n"
-;;           "# Distribution / packaging\n"
-;;           "bin/\n"
-;;           "build/\n"
-;;           "dist/\n"
-;;           "lib/\n"
-;;           "lib64/\n"
-;;           "var/\n"))
 
 ;; Insert README.md
 (defun readme-insert-template ()
   (interactive)
-  (insert "# Title\n\n"
-          "## Header\n"
-          "### Sub-Heading 1\n"
-          "#### Sub-Heading 2\n\n"
-          "*italic text*\n"
-          "**bold text**\n\n"
-          "### Unordered list\n"
-          "* Item 1\n"
-          "* Item 2\n\n"
-          "### Ordered list\n"
-          "1. Item 1\n"
-          "2. Item 2\n\n"
-          "### Images\n"
-          "![Some alt text.](/images/sample.png)\n\n"
-          "### Links\n"
-          "[Link Text](<url>)\n\n"
-          "### Blockquotes\n"
-          "> Text to display in blockquote\n\n"
-          "### Code Blocks\n"
-          "```\n"
-          "int a = 1;\n"
-          "```\n\n"
-          "### Inline Code\n"
-          "Here is some code: `print(a);`\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/readme")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
+
 
 ;; Insert template .c
 (defun c-insert-template ()
   (interactive)
-  (insert "int main() {\n"
-          "    return 0;\n"
-          "}\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/c")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
 
 
 ;; Inserts template .cpp
 (defun cpp-insert-template ()
   "Insert sample C boilerplate with a forward-declared function"
   (interactive)
-  (insert "#include<iostream>\n"
-          "using namespace std;\n\n"
-          "void log(const string& msg);\n\n"
-          "int main(int argc, char* argv[])\n"
-          "{\n"
-          "    if (argc > 1) { cout << argv[1] << \"\\n\"; }\n"
-          "    log(\"Log:\");\n"
-          "    return 0;\n"
-          "}\n\n"
-          "void log(const string& msg) { cout << msg << \"\\n\"; }\n"))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/cpp")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
+  ;; (interactive)
+  ;; (insert "#include<iostream>\n"
+  ;;         "using namespace std;\n\n"
+  ;;         "void log(const string& msg);\n\n"
+  ;;         "int main(int argc, char* argv[])\n"
+  ;;         "{\n"
+  ;;         "    if (argc > 1) { cout << argv[1] << \"\\n\"; }\n"
+  ;;         "    log(\"Log:\");\n"
+  ;;         "    return 0;\n"
+  ;;         "}\n\n"
+  ;;         "void log(const string& msg) { cout << msg << \"\\n\"; }\n"))
 
 
 ;; Insert template C++ makefile content from file "snippets/makefiles/Makefile_Cpp"
@@ -265,7 +186,7 @@
   (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_Cpp")))
     (if (file-readable-p template-path)
         (insert-file-contents template-path)
-      (message "Makefile_Cpp not found or not readable."))))
+      (message "Snippet not found or not readable."))))
 
 ;; Insert template C makefile content from file "snippets/makefiles/Makefile_C"
 (defun c-makefile-insert-template ()
@@ -273,6 +194,6 @@
   (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_C")))
     (if (file-readable-p template-path)
         (insert-file-contents template-path)
-      (message "Makefile_C not found or not readable."))))
+      (message "Snippet not found or not readable."))))
 
 (provide 'general)
