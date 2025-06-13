@@ -50,7 +50,7 @@
   (let ((search-term (thing-at-point 'line t)))
     (rgrep (format "\"%s\"" search-term) "*.robot" "~/MarineAutomaticTesting")))
 
-(defun my-insert-image ()
+(defun insert-image ()
   (interactive)
   (insert "[[./img/"))
 

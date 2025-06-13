@@ -20,33 +20,8 @@
 ;; Set startup-buffer to dashboard for robustness
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 
-;; ==========================================================================
-;; ======== Getters =========================================================
-;; ==========================================================================
-
-;; get emacs-dir variable value
-(defun get-emacs-dir ()
-  emacs-dir)
+;; Strings
+(defvar HST-quote "There he goes. One of God's own prototypes.\nA high-powered mutant of some kind never even considered for mass production.\nToo weird to live, and too rare to die.")
 
 
 (provide 'vars)
-
-;; (let ((h (system-name)))
-;;   (cond ((at-home-p)
-;;          (set-face-attribute 'default nil
-;;                              :family "Iosevka"
-;;                              :height 110
-;;                              :weight 'normal
-;;                              :width 'normal))
-;;         ((at-thinkpad-p)
-;;          (set-face-attribute 'default nil
-;;                               :family "Iosevka"
-;;                               :height 100
-;;                               :weight 'bold
-;;                               :width 'normal))
-;;          ((at-work-p)
-;;           (set-face-attribute 'default nil
-;;                               :family "JetBrains Mono"
-;;                               :height 90
-;;                               :weight 'normal
-;;                               :width 'normal))))
