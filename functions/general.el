@@ -79,6 +79,38 @@
           (delete-char 1))     ; Remove one character (tab)
         (forward-line 1)))))
 
+;; Comment-derived heading insertion
+(defun insert-heading (text)
+  "Insert a comment-derived heading at current cursor position"
+  (interactive "sEnter heading: ")
+  (let* ((inner (format "# %s #" text))
+         (border (make-string (length inner) ?#)))
+    (save-excursion
+      (insert (format "%s\n%s\n%s\n" border inner border)))))
+;; ----------------------------------------------------------------------------------
+;; Version of 'insert-heading' that determines what type of file it will
+;; insert into and adjusts the comment character accordingly (e.g '#', '//', ';' etc)
+;; Ref: https://chatgpt.com/c/684f05a6-00f0-8002-b053-7e4b02b013a6
+;; ----------------------------------------------------------------------------------
+;; (defun insert-heading (text)
+;;   "Insert a context-aware banner with TEXT at point.
+;; Uses comment syntax appropriate for the current major mode."
+;;   (interactive "sEnter banner text: ")
+;;   (let* ((comment-style 'aligned)
+;;          (comment-start (or comment-start ""))
+;;          (comment-end (or comment-end ""))
+;;          (content (format " %s " text))
+;;          (inner (concat comment-start "#" content "#" comment-end))
+;;          (border (concat comment-start
+;;                          (make-string (length content) ?#)
+;;                          "###"
+;;                          comment-end)))
+;;     (save-excursion
+;;       (insert (format "%s\n%s\n%s\n" border inner border)))))
+
+
+
+
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
