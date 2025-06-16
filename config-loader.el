@@ -16,10 +16,14 @@
 
 (cond
  ((at-home-fedora-p)
+  (setq bookmark-default-file (expand-file-name "configs/home-fedora/bookmarks" user-emacs-directory))
   (load config-home-fedora))
  ((at-home-win-p)
+  (setq bookmark-default-file (expand-file-name "configs/home-win/bookmarks" user-emacs-directory))
   (load config-home-win))
  ((at-work-p)
+  (setq bookmark-default-file (expand-file-name "configs/work/bookmarks" user-emacs-directory))
   (load config-work))
  (t
+  (setq bookmark-default-file (expand-file-name "configs/unknown/bookmarks" user-emacs-directory))
   (load config-unknown)))

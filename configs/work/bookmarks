@@ -1,0 +1,70 @@
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("emacs_ref.org"
+ (filename . "~/resources/emacs/emacs_ref.org")
+ (front-context-string . "* TODO\n** Emacs ")
+ (rear-context-string)
+ (position . 1))
+("org_ref.org"
+ (filename . "~/resources/emacs/org_mode/org_ref.org")
+ (front-context-string . "* Headlines\n** V")
+ (rear-context-string)
+ (position . 1))
+("unix_ref.org"
+ (filename . "~/resources/unix/unix_ref.org")
+ (front-context-string . "* References\n** ")
+ (rear-context-string)
+ (position . 1))
+("python_ref.org"
+ (filename . "~/resources/python_ref/python_ref.org")
+ (front-context-string . "* Virtual Enviro")
+ (rear-context-string)
+ (position . 1))
+("cref.org"
+ (filename . "~/resources/c_ref/cref.org")
+ (front-context-string . "* Project Struct")
+ (rear-context-string)
+ (position . 1))
+("magit_ref.org"
+ (filename . "~/resources/git_ref/magit_ref.org")
+ (front-context-string)
+ (rear-context-string)
+ (position . 1))
+("git_ref.org"
+ (filename . "~/resources/git_ref/git_ref.org")
+ (front-context-string . "* TODO\n** Flags\n")
+ (rear-context-string)
+ (position . 1))
+("bash_ref.org"
+ (filename . "~/resources/bash/bash_ref.org")
+ (front-context-string . "\n#+end_src\n\n* Va")
+ (rear-context-string . "\"${args[${i}]} \"")
+ (position . 1020))
+("bash_aliases"
+ (filename . "~/.bashrc.d/bash_aliases")
+ (front-context-string . "# -*- mode: shel")
+ (rear-context-string)
+ (position . 1))
+("work_documentation"
+ (filename . "~/resources/work/work_documentation.org")
+ (front-context-string . "* To-Do")
+ (rear-context-string)
+ (position . 1))
+(".emacs.d"
+ (filename . "~/.emacs.d/")
+ (front-context-string . "auto-save-list\n ")
+ (rear-context-string . "96 Oct 17 09:07 ")
+ (position . 254))
+("benzel_network.org"
+ (filename . "~/resources/network/benzel_network.org")
+ (front-context-string . "* Homenetwork\n")
+ (rear-context-string)
+ (position . 1))
+("resources"
+ (filename . "~/resources/")
+ (front-context-string . "bash\n  -rw-r--r-")
+ (rear-context-string . "96 Oct 11 08:59 ")
+ (position . 255))
+)
