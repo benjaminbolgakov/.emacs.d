@@ -12,6 +12,7 @@
 (setq config-home-fedora (expand-file-name "configs/home-fedora.el" user-emacs-directory))
 (setq config-home-win (expand-file-name "configs/home-win.el" user-emacs-directory))
 (setq config-work (expand-file-name "configs/work.el" user-emacs-directory))
+(setq config-unknown (expand-file-name "configs/unknown.el" user-emacs-directory))
 
 (cond
  ((at-home-fedora-p)
@@ -19,4 +20,6 @@
  ((at-home-win-p)
   (load config-home-win))
  ((at-work-p)
-  (load config-work)))
+  (load config-work))
+ (t
+  (load config-unknown)))
