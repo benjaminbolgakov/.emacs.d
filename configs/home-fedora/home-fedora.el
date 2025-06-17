@@ -14,23 +14,6 @@
 ;; (setq sysname (system-name))
 
 
-
-;; Set OS-specific variables
-;; (cond
-;;  ((eq system-type 'gnu/linux)
-;;   (setq emacs-dir (concat (getenv "HOME") "/.emacs.d/"))
-;;   (setq emacs-banner (expand-file-name (concat (getenv "HOME") "/.emacs.d/assets/img/emacs_logo.png")))
-;;   (setq working-dir "~/"))
-;;  ((eq system-type 'windows-nt)
-;;   (setq emacs-dir (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\"))
-;;   (setq emacs-banner (expand-file-name
-;;                       (concat (getenv "USERPROFILE") "\\AppData\\Roaming\\.emacs.d\\assets\\img\\emacs_logo.png")))
-;;   (setq working-dir (concat (getenv "USERPROFILE") "\\")))
-;;  (t
-;;   (setq emacs-dir (expand-file-name "default/emacs/directory" ""))
-;;   (setq working-dir (expand-file-name "default/default-directory" ""))))
-
-
 ;; ==========================================================================
 ;; ======== System config ===================================================
 ;; ==========================================================================
@@ -68,7 +51,7 @@
 
 ;; ==========================================================================
 ;; ======== Load Emacs configs ==============================================
-;; ==========================================================================
+;; ==========================================================================)
 
 ;; load base-settings
 (require 'base)

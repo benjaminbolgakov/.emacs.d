@@ -14,8 +14,12 @@
 (setq def-sys-font "Fira Code")
 (setq alt-sys-font "Office Code Pro")
 
-;; Working directory
-(setq working-dir (expand-file-name (concat system-home "workbench")))
+;; Working directory - Set to "workbench" if it exists, else set it to home directory
+(setq default-directory
+      (let ((target-dir (expand-file-name (concat system-home "/workbench/"))))
+        (if (file-exists-p target-dir)
+            target-dir
+          (expand-file-name "~/"))))
 
 ;; Set startup-buffer to dashboard for robustness
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
