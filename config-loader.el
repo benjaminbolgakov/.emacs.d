@@ -14,16 +14,33 @@
 (setq config-work (expand-file-name "configs/work/work.el" user-emacs-directory))
 (setq config-unknown (expand-file-name "configs/unknown/unknown.el" user-emacs-directory))
 
-(cond
- ((at-home-fedora-p)
+;; Configuration loading functions
+(defun load-config-home-fedora ()
+  (setq dashboard-banner-logo-title "Loaded configuration: home-fedora")
   (setq bookmark-default-file (expand-file-name "configs/home-fedora/bookmarks" user-emacs-directory))
   (load config-home-fedora))
- ((at-home-win-p)
+
+(defun load-config-home-win ()
+  (setq dashboard-banner-logo-title "Loaded configuration: home-win")
   (setq bookmark-default-file (expand-file-name "configs/home-win/bookmarks" user-emacs-directory))
   (load config-home-win))
- ((at-work-p)
+
+(defun load-config-work ()
+  (setq dashboard-banner-logo-title "Loaded configuration: work")
   (setq bookmark-default-file (expand-file-name "configs/work/bookmarks" user-emacs-directory))
   (load config-work))
- (t
+
+(defun load-config-unknown ()
+  (setq dashboard-banner-logo-title "Loaded configuration: unknown")
   (setq bookmark-default-file (expand-file-name "configs/unknown/bookmarks" user-emacs-directory))
-  (load config-unknown)))
+  (load config-unknown))
+
+(cond
+ ((at-home-fedora-p)
+  (load-config-home-fedora))
+ ((at-home-win-p)
+  (load-config-home-win))
+ ((at-work-p)
+  (load-config-work))
+ (t
+  (load-config-unknown)))

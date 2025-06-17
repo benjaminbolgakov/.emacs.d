@@ -18,7 +18,7 @@
 
 (setq dashboard-startupify-list '(dashboard-insert-banner
 				  dashboard-insert-newline
-				  ;;dashboard-insert-banner-title
+				  dashboard-insert-banner-title
 				  dashboard-insert-newline
 				  dashboard-insert-navigator
 				  dashboard-insert-newline
