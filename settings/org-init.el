@@ -1,18 +1,19 @@
 (use-package org-bullets
   :ensure t)
 
-(setq org-agenda-files (list "~/org/work.org"))
-
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+
+;; Org-mode working directory - stores agenda files etc.
+(setq org-directory (expand-file-name (concat user-emacs-directory "org")))
+
+;; Collapse headings on startup
+(setq org-startup-folded 'fold)
 
 ;; Defined keywords for TODO's
 (setq org-todo-keywords
       '((sequence "TODO" "CHANGE" "|" "DONE")))
 (setq org-log-done 'time)
-
-;; Collapse headings on startup
-(setq org-startup-folded 'folded)
 
 ;; Language support
 ;; active Babel languages

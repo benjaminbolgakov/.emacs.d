@@ -18,6 +18,7 @@
 (defun load-config-home-fedora ()
   (setq dashboard-banner-logo-title "Loaded configuration: home-fedora")
   (setq bookmark-default-file (expand-file-name "configs/home-fedora/bookmarks" user-emacs-directory))
+  (setq org-agenda-files (list "benzel-agenda.org"))
   (load config-home-fedora))
 
 (defun load-config-home-win ()

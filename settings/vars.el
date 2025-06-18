@@ -6,6 +6,9 @@
 (setq system-home (getenv "HOME"))
 ;;(setq default-directory (getenv "HOME"))
 
+;; Shorthand for emacs home directory
+(setq emacs-home user-emacs-directory)
+
 ;; Assets
 (setq emacs-assets (expand-file-name "assets/" user-emacs-directory))
 (setq emacs-banner (expand-file-name "img/emacs_logo.png" emacs-assets))
@@ -26,6 +29,13 @@
 
 ;; Strings
 (defvar HST-quote "There he goes. One of God's own prototypes.\nA high-powered mutant of some kind never even considered for mass production.\nToo weird to live, and too rare to die.")
+
+
+;; ==========================================================================
+;; ======== Getters =========================================================
+;; ==========================================================================
+;; Todo...
+
 
 
 (provide 'vars)
