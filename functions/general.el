@@ -193,7 +193,6 @@
 
 ;; Inserts template .cpp
 (defun cpp-insert-template ()
-  "Insert sample C boilerplate with a forward-declared function"
   (interactive)
   (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/cpp")))
     (if (file-readable-p template-path)

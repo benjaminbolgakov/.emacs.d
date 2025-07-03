@@ -1,13 +1,18 @@
-(defun cpp-insert-template ()
-  "Insert sample C boilerplate with a forward-declared function"
-  (interactive)
-  (insert "#include<iostream>\n"
-          "using namespace std;\n\n"
-          "void log(const string& msg);\n\n"
-          "int main(int argc, char* argv[])\n"
-          "{\n"
-          "    if (argc > 1) { cout << argv[1] << \"\\n\"; }\n"
-          "    log(\"Log:\");\n"
-          "    return 0;\n"
-          "}\n\n"
-          "void log(const string& msg) { cout << msg << \"\\n\"; }\n"))
+#include "fname.h"
+
+#include <iostream>
+
+using namespace std;
+
+constexpr int T = 1;
+
+void log(const string& msg);
+
+int main(int argc, char* argv[])
+{
+    if (argc > 1) { cout << argv[1] << \"\\n\"; }
+    log(\"Log:\");
+    return 0;
+}
+
+void log(const string& msg) { cout << msg << \"\\n\"; }

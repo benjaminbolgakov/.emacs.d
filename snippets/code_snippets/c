@@ -1,5 +1,19 @@
-(defun c-insert-template ()
-  (interactive)
-  (insert "int main() {\n"
-          "    return 0;\n"
-          "}\n"))
+#include "example.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define T0 10
+const int T1 = 1;
+
+// ===================================
+// ======== Helper functions =========
+// ===================================
+void tablecreate() {
+
+}
+
+int main() {
+    tablecreate();
+    return 0;
+}
