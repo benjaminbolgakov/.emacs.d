@@ -42,8 +42,8 @@
  (front-context-string . "\n#+end_src\n\n* Va")
  (rear-context-string . "\"${args[${i}]} \"")
  (position . 1020))
-("bash_aliases"
- (filename . "~/.bashrc.d/bash_aliases")
+("aliases.bash"
+ (filename . "~/.bashrc.d/aliases.bash")
  (front-context-string . "# -*- mode: shel")
  (rear-context-string)
  (position . 1))
