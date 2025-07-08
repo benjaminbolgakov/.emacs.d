@@ -52,7 +52,11 @@
 
 (defun insert-image ()
   (interactive)
-  (insert "[[./img/"))
+  (insert "#+caption: <text>\n")
+  (insert "#+name: <name>\n")
+  (insert "#+attr_html: :width <pixel-width>\n")
+  (insert "#+attr_html: :align left\n")
+  (insert "[[./img/a.png]]"))
 
 (defun tab-region ()
   "Insert a tab at the start of each selected line."
