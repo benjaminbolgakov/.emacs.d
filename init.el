@@ -14,8 +14,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("3263bd17a7299449e6ffe118f0a14b92373763c4ccb140f4a30c182a85516d7f"
-     "f681100b27d783fefc3b62f44f84eb7fa0ce73ec183ebea5903df506eb314077"
-     default))
+	 "f681100b27d783fefc3b62f44f84eb7fa0ce73ec183ebea5903df506eb314077"
+	 default))
  '(elpy-rpc-python-command
    "C:\\\\Users\\\\cid14168\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python311\\\\python.exe")
  '(max-lisp-eval-depth 1500)

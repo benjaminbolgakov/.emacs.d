@@ -85,34 +85,39 @@
 
 ;; Comment-derived heading insertion
 (defun insert-heading (text)
-  "Insert a comment-derived heading at current cursor position"
+  "Insert a comment-derived heading at current cursor position based on the buffer's language."
   (interactive "sEnter heading: ")
-  (let* ((inner (format "# %s #" text))
-         (border (make-string (length inner) ?#)))
+  (let* ((lang-mode major-mode)
+         (heading (format " %s " text))
+         comment-char
+         border
+         inner)
+
+    ;; Determine comment style based on major mode
+    (cond
+     ;; Bash, Python, Shell
+     ((member lang-mode '(sh-mode python-mode))
+      (setq comment-char "#"
+            inner (format "%s%s%s" comment-char heading comment-char)
+            border (make-string (length inner) (string-to-char comment-char))))
+
+     ;; C, C++
+     ((member lang-mode '(c-mode c++-mode))
+      (setq comment-char "//"
+            inner (format "%s=%s=%s" comment-char heading comment-char))
+      (let* ((border-core-len (length inner)) ; Match inner line exactly
+             (equals (make-string (- border-core-len (length comment-char) 4) ?=))) ; subtract "//" and two '==' pairs
+        (setq border (format "%s==%s==" comment-char equals))))
+
+     ;; Default fallback
+     (t
+      (setq comment-char "#"
+            inner (format "%s%s%s" comment-char heading comment-char)
+            border (make-string (length inner) (string-to-char comment-char)))))
+
+    ;; Insert the heading
     (save-excursion
       (insert (format "%s\n%s\n%s\n" border inner border)))))
-;; ----------------------------------------------------------------------------------
-;; Version of 'insert-heading' that determines what type of file it will
-;; insert into and adjusts the comment character accordingly (e.g '#', '//', ';' etc)
-;; Ref: https://chatgpt.com/c/684f05a6-00f0-8002-b053-7e4b02b013a6
-;; ----------------------------------------------------------------------------------
-;; (defun insert-heading (text)
-;;   "Insert a context-aware banner with TEXT at point.
-;; Uses comment syntax appropriate for the current major mode."
-;;   (interactive "sEnter banner text: ")
-;;   (let* ((comment-style 'aligned)
-;;          (comment-start (or comment-start ""))
-;;          (comment-end (or comment-end ""))
-;;          (content (format " %s " text))
-;;          (inner (concat comment-start "#" content "#" comment-end))
-;;          (border (concat comment-start
-;;                          (make-string (length content) ?#)
-;;                          "###"
-;;                          comment-end)))
-;;     (save-excursion
-;;       (insert (format "%s\n%s\n%s\n" border inner border)))))
-
-
 
 
 (defun insert-template ()
@@ -232,3 +237,38 @@
       (message "Snippet not found or not readable."))))
 
 (provide 'general)
+
+;; ================
+;; ==== LEGACY ====
+;; ================
+
+;; ===========================================
+;; ==== Comment-derived heading insertion ====
+;; ===========================================
+;; (defun insert-heading (text)
+;;   "Insert a comment-derived heading at current cursor position"
+;;   (interactive "sEnter heading: ")
+;;   (let* ((inner (format "# %s #" text))
+;;          (border (make-string (length inner) ?#)))
+;;     (save-excursion
+;;       (insert (format "%s\n%s\n%s\n" border inner border)))))
+;; ----------------------------------------------------------------------------------
+;; Version of 'insert-heading' that determines what type of file it will
+;; insert into and adjusts the comment character accordingly (e.g '#', '//', ';' etc)
+;; Ref: https://chatgpt.com/c/684f05a6-00f0-8002-b053-7e4b02b013a6
+;; ----------------------------------------------------------------------------------
+;; (defun insert-heading (text)
+;;   "Insert a context-aware banner with TEXT at point.
+;; Uses comment syntax appropriate for the current major mode."
+;;   (interactive "sEnter banner text: ")
+;;   (let* ((comment-style 'aligned)
+;;          (comment-start (or comment-start ""))
+;;          (comment-end (or comment-end ""))
+;;          (content (format " %s " text))
+;;          (inner (concat comment-start "#" content "#" comment-end))
+;;          (border (concat comment-start
+;;                          (make-string (length content) ?#)
+;;                          "##"
+;;                          comment-end)))
+;;     (save-excursion
+;;       (insert (format "%s\n%s\n%s\n" border inner border)))))

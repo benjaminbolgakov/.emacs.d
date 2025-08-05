@@ -1,19 +1,37 @@
 ;; C/C++ settings
-(setq c-default-style "bsd")
-(setq c-basic-offset 4)
-(setq-default indent-tabs-mode)
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; C++ style settings
+(defun my-c++-mode-style ()
+  "Custom C++ indentation style."
+  (c-set-style "stroustrup")            ;; Base style
+  (setq c-basic-offset 4)               ;; Indent width
+  (c-set-offset 'access-label '-)       ;; Don't indent access specifiers
+  (c-set-offset 'inclass '++)           ;; Indent class members properly
+  (setq indent-tabs-mode nil))          ;; Use spaces, not tabs
 
-;; IDE-like features for CMake projects
-(use-package cmake-ide
-  :ensure t
-  :init
-  (setq cmake-ide-make-command "make --no-print-directory -j8")
-  :config
-  (cmake-ide-setup))
+(add-hook 'c++-mode-hook 'my-c++-mode-style)
+
+;; Associate .h and .hpp files with c++-mode
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 
 (provide 'c++-init)
 
+;; LEGACY ========================================================
+
+;; (setq c-default-style "bsd")
+;; (setq c-default-style "stroustrup"
+;;       c-basic-offset 4)
+;; (setq c-basic-offset 4)
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+
+;; IDE-like features for CMake projects
+;; (use-package cmake-ide
+;;   :ensure t
+;;   :init
+;;   (setq cmake-ide-make-command "make --no-print-directory -j8")
+;;   :config
+;;   (cmake-ide-setup))
 
 ;;   (local-set-key (kbd "M-o") 'ff-find-other-file)
 ;;   (local-set-key (kbd "M-O") 'my/ff-find-other-file-other-window)
