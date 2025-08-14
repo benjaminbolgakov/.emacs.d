@@ -22,12 +22,12 @@ multiline comment prefix."
   (add-pragma)
   (c++-comment-setup)
 
-  (setq c-default-style "bsd")
-  (setq c-default-style "stroustrup"
-        c-basic-offset 4)
-  (setq c-basic-offset 4)
-  ;; (setq c-basic-offset  4
-  ;;       c-default-style "linux")
+  ;; Base setup
+  (c-set-style "stroustrup")            ;; Base style
+  (setq c-basic-offset 4)               ;; Indent width
+  (c-set-offset 'access-label '-)       ;; Don't indent access specifiers
+  (c-set-offset 'inclass '++)           ;; Indent class members properly
+  (setq indent-tabs-mode nil)          ;; Use spaces, not tabs
   (column-number-mode)
 
   ;; Keybindings
@@ -52,6 +52,10 @@ multiline comment prefix."
 
 (add-hook 'c++-mode-hook 'c++-mode-hook)
 (add-hook 'c-mode-hook 'c++-mode-hook)
+
+;; Associate .h and .hpp files with c++-mode
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
 
 (provide 'c++-init)
 
