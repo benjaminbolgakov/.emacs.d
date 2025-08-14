@@ -1,24 +1,57 @@
 ;; C/C++ settings
-(setq c-default-style "bsd")
-(setq c-default-style "stroustrup"
-      c-basic-offset 4)
-(setq c-basic-offset 4)
+(defun add-pragma ()
+  "Add '#pragma once' to an empty file if its extension is '.hpp'"
+  (when (and (string= (file-name-extension (buffer-file-name)) "hpp")
+             (= (buffer-size) 0))
+    (insert "#pragma once\n")
+    (set-buffer-modified-p nil)))
 
-;; Associate .h and .hpp files with c++-mode
-(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+(defun c++-comment-setup ()
+  "Setup magic multiline C++ comments. M-j for newline with
+multiline comment prefix."
+  (interactive)
+  (setq-local comment-start "/**"
+              comment-end   " */"
+              comment-multi-line t
+              comment-padding nil
+              comment-style 'extra-line
+              comment-continue " * "
+              comment-empty-lines t))
 
-(add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
-(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(defun c++-mode-hook ()
+  (add-pragma)
+  (c++-comment-setup)
 
-;; https://emacs-lsp.github.io/lsp-ui/
-(use-package lsp-ui
-  :custom
-  (lsp-ui-sideline-update-mode t)
-  (lsp-ui-sideline-delay 2)
-  (lsp-ui-doc-enable t)
-  (lsp-ui-doc-position 'bottom))
+  (setq c-default-style "bsd")
+  (setq c-default-style "stroustrup"
+        c-basic-offset 4)
+  (setq c-basic-offset 4)
+  ;; (setq c-basic-offset  4
+  ;;       c-default-style "linux")
+  (column-number-mode)
 
+  ;; Keybindings
+  ;; (local-set-key (kbd "C-M-k") 'c-doc-comment)
+  ;; (local-set-key (kbd "C-M-j") 'c-block-comment)
+  ;; (local-set-key (kbd "C-c m") 'cmake-ide-compile)
+  ;; (local-set-key (kbd "C-c i") 'indent-buffer)
+  ;; Bind C-m to 'compile', <return> needs to be bound to
+  ;; 'newline' since it is bound to C-m by default.
+  ;; (cond (window-system
+  ;; 	 (local-set-key (kbd "<return>") 'newline)
+  ;; 	 (local-set-key (kbd "C-m") 'compile)))
+
+  ;; (flycheck-mode)
+  ;; (company-mode)
+  ;; (add-to-list 'company-backends 'company-lsp)
+  ;; (lsp)
+  ;; (lsp-mode))
+  ;; (lsp)
+  ;; (lsp-mode))
+  )
+
+(add-hook 'c++-mode-hook 'c++-mode-hook)
+(add-hook 'c-mode-hook 'c++-mode-hook)
 
 (provide 'c++-init)
 

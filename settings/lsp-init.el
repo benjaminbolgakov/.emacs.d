@@ -1,3 +1,11 @@
+;; https://emacs-lsp.github.io/lsp-ui/
+(use-package lsp-ui
+  :ensure t
+  :custom
+  (lsp-ui-sideline-update-mode t)
+  (lsp-ui-sideline-delay 2)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-position 'bottom))
 
 ;;(setq lsp-keymap-prefix "C-c l")
 ;; (use-package lsp-mode
