@@ -58,6 +58,9 @@
   (add-to-list 'hl-todo-keyword-faces '("DEPRECATED" . "#aa0000"))
   (add-to-list 'hl-todo-keyword-faces '("REFACTOR" . "#cc9393")))
 
+;; TLDR
+(use-package tldr
+  :ensure t)
 
 ;; Translator
 ;; TODO Is this correctly used? How to use it?

@@ -6,49 +6,10 @@
     (insert "#pragma once\n")
     (set-buffer-modified-p nil)))
 
-(defun c++-comment-setup ()
-  "Setup magic multiline C++ comments. M-j for newline with
-multiline comment prefix."
-  (interactive)
-  (setq-local comment-start "/**"
-              comment-end   " */"
-              comment-multi-line t
-              comment-padding nil
-              comment-style 'extra-line
-              comment-continue " * "
-              comment-empty-lines t))
-
 (defun c++-mode-hook ()
   (add-pragma)
-  (c++-comment-setup)
-
-  ;; Base setup
-  (c-set-style "stroustrup")            ;; Base style
-  (setq c-basic-offset 4)               ;; Indent width
-  (c-set-offset 'access-label '-)       ;; Don't indent access specifiers
-  (c-set-offset 'inclass '++)           ;; Indent class members properly
-  (setq indent-tabs-mode nil)          ;; Use spaces, not tabs
-  (column-number-mode)
-
-  ;; Keybindings
-  ;; (local-set-key (kbd "C-M-k") 'c-doc-comment)
-  ;; (local-set-key (kbd "C-M-j") 'c-block-comment)
-  ;; (local-set-key (kbd "C-c m") 'cmake-ide-compile)
-  ;; (local-set-key (kbd "C-c i") 'indent-buffer)
-  ;; Bind C-m to 'compile', <return> needs to be bound to
-  ;; 'newline' since it is bound to C-m by default.
-  ;; (cond (window-system
-  ;; 	 (local-set-key (kbd "<return>") 'newline)
-  ;; 	 (local-set-key (kbd "C-m") 'compile)))
-
-  ;; (flycheck-mode)
-  ;; (company-mode)
-  ;; (add-to-list 'company-backends 'company-lsp)
-  ;; (lsp)
-  ;; (lsp-mode))
-  ;; (lsp)
-  ;; (lsp-mode))
-  )
+  (setq c-default-style "stroustrup"
+      c-basic-offset 4))
 
 (add-hook 'c++-mode-hook 'c++-mode-hook)
 (add-hook 'c-mode-hook 'c++-mode-hook)
@@ -56,6 +17,9 @@ multiline comment prefix."
 ;; Associate .h and .hpp files with c++-mode
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.hpp\\'" . c++-mode))
+
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
 
 (provide 'c++-init)
 

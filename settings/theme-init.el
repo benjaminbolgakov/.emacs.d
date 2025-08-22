@@ -1,11 +1,19 @@
 ;; Load theme
-(use-package exotica-theme
+;; (use-package exotica-theme
+;;   :defer t
+;;   :init
+;;   (unless (custom-theme-p 'exotica)
+;;     (package-install 'exotica-theme))
+;;   ;; Load the theme
+;;   (load-theme 'exotica t))
+
+(use-package catppuccin-theme
   :defer t
   :init
-  (unless (custom-theme-p 'exotica)
-    (package-install 'exotica-theme))
-  ;; Load the theme
-  (load-theme 'exotica t))
+  (unless (custom-theme-p 'catppuccin)
+	(package-install 'catppuccin-theme))
+  (load-theme 'catppuccin :no-confirm)
+  (setq catppuccin-flavor 'mocha))
 
 ;; Load fonts
 (let ((h (system-name)))
@@ -32,12 +40,12 @@
                              :width 'normal))))
 
 ;; Provides utilities for displaying elements of the mode-line as tabs and ribbons.
-(use-package moody
-  :ensure t
-  :config
-  (setq x-underline-at-descent-line t)
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
+;; (use-package moody
+;;   :ensure t
+;;   :config
+;;   (setq x-underline-at-descent-line t)
+;;   (moody-replace-mode-line-buffer-identification)
+;;   (moody-replace-vc-mode))
 
 ;; Implements a nested menu giving access to all minor modes.
 (use-package minions

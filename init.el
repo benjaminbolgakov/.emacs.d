@@ -19,7 +19,8 @@
  '(max-lisp-eval-depth 1500)
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(tldr catppuccin-theme yasnippet which-key wfnames use-package tide pyvenv python-mode projectile-ripgrep pip-requirements org-bullets moody minions magit lsp-ui lsp-ivy ivy-rich hl-todo highlight-indentation highlight-indent-guides google-translate exotica-theme exec-path-from-shell editorconfig dockerfile-mode docker-compose-mode dashboard counsel-tramp counsel-spotify counsel-projectile cmake-ide cmake-font-lock avy auctex all-the-icons))
  '(python-shell-interpreter "/usr/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
