@@ -95,6 +95,7 @@
 (require 'general)
 
 ;; Load settings
+(require 'json-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)

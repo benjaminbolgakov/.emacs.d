@@ -17,7 +17,7 @@
 
 ;; Load fonts
 (let ((h (system-name)))
-  (cond ((at-home-fedora-p)
+  (cond ((at-home-linux-p)
          (validate-font def-sys-font)
          (set-face-attribute 'default nil
                              :family def-sys-font

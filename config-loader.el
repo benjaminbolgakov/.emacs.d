@@ -1,6 +1,7 @@
 ;; Get current machine name and load the main configuration file accordingly
-(defun at-home-fedora-p ()
-  (string= (system-name) "barbro-fedora"))
+(defun at-home-linux-p ()
+  (string= (system-name) "barbro-linux")
+  (string= (system-name) "benzeldeb"))
 
 (defun at-home-win-p ()
   (string= (system-name) "main-windows"))
@@ -9,17 +10,17 @@
   (string= (system-name) "0000L1HF2260GT2"))
 
 ;; Configurations
-(setq config-home-fedora (expand-file-name "configs/home-fedora/home-fedora.el" user-emacs-directory))
+(setq config-home-linux (expand-file-name "configs/home-linux/home-linux.el" user-emacs-directory))
 (setq config-home-win (expand-file-name "configs/home-win/home-win.el" user-emacs-directory))
 (setq config-work (expand-file-name "configs/work/work.el" user-emacs-directory))
 (setq config-unknown (expand-file-name "configs/unknown/unknown.el" user-emacs-directory))
 
 ;; Configuration loading functions
-(defun load-config-home-fedora ()
-  (setq dashboard-banner-logo-title "Loaded configuration: home-fedora")
-  (setq bookmark-default-file (expand-file-name "configs/home-fedora/bookmarks" user-emacs-directory))
+(defun load-config-home-linux ()
+  (setq dashboard-banner-logo-title "Loaded configuration: home-linux")
+  (setq bookmark-default-file (expand-file-name "configs/home-linux/bookmarks" user-emacs-directory))
   (setq org-agenda-files (list "benzel-agenda.org"))
-  (load config-home-fedora))
+  (load config-home-linux))
 
 (defun load-config-home-win ()
   (setq dashboard-banner-logo-title "Loaded configuration: home-win")
@@ -37,8 +38,8 @@
   (load config-unknown))
 
 (cond
- ((at-home-fedora-p)
-  (load-config-home-fedora))
+ ((at-home-linux-p)
+  (load-config-home-linux))
  ((at-home-win-p)
   (load-config-home-win))
  ((at-work-p)
