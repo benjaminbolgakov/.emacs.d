@@ -1,7 +1,6 @@
 ;; Get current machine name and load the main configuration file accordingly
 (defun at-home-linux-p ()
-  (string= (system-name) "barbro-linux")
-  (string= (system-name) "benzeldeb"))
+  (string= (system-name) "benzel-main"))
 
 (defun at-home-win-p ()
   (string= (system-name) "main-windows"))
