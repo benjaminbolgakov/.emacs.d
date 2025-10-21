@@ -45,10 +45,12 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 ;; (add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
-(package-initialize)
+;; Only initialize if not already done
+(unless package--initialized
+  (package-initialize))
 
 ;; M-x package-refresh-contents
-
+;; (package-refresh-contents)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -76,7 +78,7 @@
 (require 'general)
 
 ;; Load settings
-;;(require 'json-init)
+(require 'json-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)
