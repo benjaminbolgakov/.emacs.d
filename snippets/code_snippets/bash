@@ -1,5 +1,5 @@
 # -*- mode: shell-script -*-
-#!/bin/bash
+#!/usr/bin/env bash
 
 #### Arguments ####
 args=("$@");
