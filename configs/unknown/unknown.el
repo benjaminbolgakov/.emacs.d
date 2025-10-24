@@ -73,6 +73,7 @@
 (require 'general)
 
 ;; Load settings
+(require 'treesit-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)
