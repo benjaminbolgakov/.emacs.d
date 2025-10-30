@@ -21,14 +21,7 @@
  '(max-lisp-eval-depth 1500)
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
- '(package-selected-packages
-   '(all-the-icons auctex avy catppuccin-theme cmake-font-lock
-				   counsel-projectile counsel-spotify counsel-tramp
-				   dashboard docker-compose-mode dockerfile-mode
-				   exec-path-from-shell google-translate hl-todo
-				   ivy-rich json-mode lsp-ivy lsp-ui magit minions
-				   org-bullets pip-requirements projectile-ripgrep
-				   python-mode pyvenv tide tldr yasnippet))
+ '(package-selected-packages nil)
  '(python-shell-interpreter "/usr/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
