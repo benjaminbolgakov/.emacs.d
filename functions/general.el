@@ -95,6 +95,12 @@
 
     ;; Determine comment style based on major mode
     (cond
+	 ;; Emacs Lisp (.el)
+     ((eq lang-mode 'emacs-lisp-mode)
+      (setq comment-char ";"
+            inner (format "%s%s%s" comment-char heading comment-char)
+            border (make-string (length inner) (string-to-char comment-char))))
+
      ;; Bash, Python, Shell
      ((member lang-mode '(sh-mode python-mode))
       (setq comment-char "#"
