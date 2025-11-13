@@ -1,3 +1,8 @@
+;; Load custom variables from a separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Initialize system-specific configuration
 (setq config-loader (expand-file-name "config-loader.el" user-emacs-directory))
 (load config-loader 'noerror)
