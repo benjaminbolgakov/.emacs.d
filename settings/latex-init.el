@@ -1,8 +1,8 @@
-;; (use-package tex
-;;   :ensure auctex)
+(use-package tex
+  :ensure auctex)
 
-(use-package auctex
-  :ensure t)
+;; (use-package auctex
+;;   :ensure t)
 
 ;; (use-package auctex
 ;;   :ensure t
