@@ -36,13 +36,13 @@
 ;;;;;;;;;;;;;;
 ; Catppuccin ;
 ;;;;;;;;;;;;;;
-;; (use-package catppuccin-theme
-;;   :defer t
-;;   :init
-;;   (unless (custom-theme-p 'catppuccin)
-;; 	(package-install 'catppuccin-theme))
-;;   (load-theme 'catppuccin :no-confirm)
-;;   (setq catppuccin-flavor 'mocha))
+(use-package catppuccin-theme
+  :defer t
+  :init
+  (unless (custom-theme-p 'catppuccin)
+	(package-install 'catppuccin-theme))
+  (load-theme 'catppuccin :no-confirm)
+  (setq catppuccin-flavor 'mocha))
 
 ;;;;;;;;;;;
 ; Loading ;
