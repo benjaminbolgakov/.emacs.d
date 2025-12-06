@@ -95,7 +95,7 @@
 (require 'general)
 
 ;; Load settings
-(require 'treesit-init)
+;; (require 'treesit-init)
 (require 'json-init)
 (require 'theme-init)
 (require 'ivy-init)
