@@ -5,8 +5,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("f9d423fcd4581f368b08c720f04d206ee80b37bfb314fa37e279f554b6f415e9"
-	 "aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
+   '("aec7b55f2a13307a55517fdf08438863d694550565dee23181d2ebd973ebd6b8"
 	 "7ec8fd456c0c117c99e3a3b16aaf09ed3fb91879f6601b1ea0eeaee9c6def5d9"
 	 "13096a9a6e75c7330c1bc500f30a8f4407bd618431c94aeab55c9855731a95e1"
 	 "22a0d47fe2e6159e2f15449fcb90bbf2fe1940b185ff143995cc604ead1ea171"
@@ -25,16 +24,16 @@
  '(org-agenda-files nil)
  '(org-image-actual-width '(500))
  '(package-selected-packages
-   '(yasnippet which-key wfnames use-package tree-sitter-langs tldr tide
-			   pyvenv python-mode projectile-ripgrep pip-requirements
-			   org-bullets moody minions magit lsp-ui lsp-ivy
-			   json-mode ivy-rich hl-todo highlight-indentation
-			   highlight-indent-guides google-translate exotica-theme
-			   exec-path-from-shell editorconfig doom-themes
-			   dockerfile-mode docker-compose-mode dashboard
-			   counsel-tramp counsel-spotify counsel-projectile
-			   cmake-ide cmake-font-lock catppuccin-theme avy auctex
-			   all-the-icons))
+   '(all-the-icons auctex avy catppuccin-theme cmake-font-lock cmake-ide
+				   counsel-projectile counsel-spotify counsel-tramp
+				   dashboard docker-compose-mode dockerfile-mode
+				   doom-themes editorconfig exec-path-from-shell
+				   exotica-theme google-translate
+				   highlight-indent-guides highlight-indentation
+				   hl-todo ivy-rich json-mode lsp-ivy lsp-ui magit
+				   minions moody org-bullets pip-requirements
+				   projectile-ripgrep python-mode pyvenv tide tldr
+				   use-package wfnames which-key yasnippet))
  '(python-shell-interpreter "/usr/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

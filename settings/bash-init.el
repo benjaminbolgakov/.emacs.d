@@ -28,13 +28,13 @@
 (add-to-list 'auto-mode-alist '("/bash\\."         . bash-ts-mode))
 
 ;; Mode-local settings
-(add-hook 'bash-ts-mode-hook
-          (lambda ()
-            (setq-local indent-tabs-mode nil)
-            (setq-local tab-width 4)
-            (setq-local treesit-simple-indent-rules
-                        '((bash
-                           ((match ".*" 0) parent-bol 4))))))
+;; (add-hook 'bash-ts-mode-hook
+;;           (lambda ()
+;;             (setq-local indent-tabs-mode nil)
+;;             (setq-local tab-width 4)
+;;             (setq-local treesit-simple-indent-rules
+;;                         '((bash
+;;                            ((match ".*" 0) parent-bol 4))))))
 
 
 (provide 'bash-init)
