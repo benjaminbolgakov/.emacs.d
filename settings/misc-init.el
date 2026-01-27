@@ -43,6 +43,8 @@
   :config
   (which-key-setup-side-window-bottom))
 
+(use-package highlight-indent-guides
+  :ensure t)
 
 ;; Enables highlighting of TODO and other keywords in comments and strings.
 (use-package hl-todo

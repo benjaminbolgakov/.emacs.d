@@ -7,6 +7,11 @@
 (setq config-loader (expand-file-name "config-loader.el" user-emacs-directory))
 (load config-loader 'noerror)
 
+;; Install all treesit grammar's defined if not already installed
+(dolist (lang (mapcar #'car treesit-language-source-alist))
+  (unless (treesit-language-available-p lang)
+    (treesit-install-language-grammar lang)))
+
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide
 ;; which packages are no longer needed. Can be used to (re)install packages on other machines
