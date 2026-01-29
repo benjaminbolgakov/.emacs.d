@@ -1,6 +1,9 @@
 # -*- mode: shell-script -*-
 #!/usr/bin/env bash
 
+# Ensure script safety
+set -Eeuo pipefail
+
 #### Arguments ####
 args=("$@");
 nmb_args=$#;

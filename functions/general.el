@@ -129,12 +129,14 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash" "cpp" "c" "gitignore" "readme" "makefile"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash-basic" "bash-full" "cpp" "c" "gitignore" "readme" "makefile"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
-     ((string-equal choice "bash")
-      (bash-insert-template))
+     ((string-equal choice "bash-basic")
+      (bash-basic-insert-template))
+     ((string-equal choice "bash-full")
+      (bash-full-insert-template))
      ((string-equal choice "cpp")
       (cpp-insert-template))
      ((string-equal choice "c")
@@ -169,11 +171,20 @@
         (insert-file-contents template-path)
       (message "Snippet not found or not readable."))))
 
-;; Inserts template code for bash scripts
-(defun bash-insert-template ()
-  "Insert the template bash script"
+;; Inserts basic template code for bash scripts
+(defun bash-basic-insert-template ()
+  "Insert the basic template bash script"
   (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/bash")))
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/bash-basic")))
+    (if (file-readable-p template-path)
+        (insert-file-contents template-path)
+      (message "Snippet not found or not readable."))))
+
+;; Inserts full template code for bash scripts
+(defun bash-full-insert-template ()
+  "Insert the full template bash script"
+  (interactive)
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/bash-full")))
     (if (file-readable-p template-path)
         (insert-file-contents template-path)
       (message "Snippet not found or not readable."))))
