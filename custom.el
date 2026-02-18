@@ -32,8 +32,9 @@
 				   highlight-indent-guides highlight-indentation
 				   hl-todo ivy-rich json-mode lsp-ivy lsp-ui magit
 				   minions moody org-bullets pip-requirements
-				   projectile-ripgrep python-mode pyvenv tide tldr
-				   use-package wfnames which-key yasnippet))
+				   projectile-ripgrep python-mode pyvenv rjsx-mode
+				   tide tldr tree-sitter-langs use-package wfnames
+				   which-key yasnippet))
  '(python-shell-interpreter "/usr/bin/python3"))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

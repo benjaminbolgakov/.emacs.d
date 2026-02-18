@@ -1,3 +1,40 @@
+;; Used for reloading current config based on changes in current buffer
+(defun reload-config ()
+  "Save current buffer (if needed) and reload its file if it's Emacs Lisp.
+- Intended for config files like ~/.emacs.d/settings/*.el.
+- If buffer isn't visiting a file: error.
+- If file isn't an .el file: error (prevents accidental reloads).
+- Saves the buffer if modified.
+- Reloads via `load-file` so top-level forms run like normal config.
+- On error, prints a clear message and re-signals the error (so you get a backtrace if `debug-on-error` is on)."
+  (interactive)
+  (let* ((file (buffer-file-name)))
+    (unless file
+      (user-error "Current buffer is not visiting a file"))
+    (unless (string-match-p "\\.el\\'" file)
+      (user-error "Not an Emacs Lisp file: %s" file))
+    (when (buffer-modified-p)
+      (save-buffer))
+    (message "Reloading %s..." file)
+    (condition-case err
+        (progn
+          ;; Load the file as config (runs top-level forms).
+          (load-file file)
+          (message "Reloaded %s" file)
+		  ;; Reload rjsx-mode only for now
+		  (reload-rjsx-mode))
+      (error
+       (message "Reload FAILED for %s: %s" file (error-message-string err))
+       (signal (car err) (cdr err))))))
+
+(defun reload-rjsx-mode ()
+  "Unload & reload rjsx-mode"
+  (interactive)
+	(when (featurep 'rjsx-mode)
+      (unload-feature 'rjsx-mode t))
+	(require 'rjsx-mode))
+
+
 ;;;; Font verifier
 (defun validate-font(font-name)
   (unless (find-font (font-spec :family font-name))
@@ -258,6 +295,20 @@
 ;; ================
 ;; ==== LEGACY ====
 ;; ================
+
+;; ==== Simpler version of reload-config function
+;; (defun reload-config ()
+;;   "Save current buffer (if needed) and reload its file if it's Emacs Lisp."
+;;   (interactive)
+;;   (let ((file (buffer-file-name)))
+;;     (unless file
+;;       (user-error "Current buffer is not visiting a file"))
+;;     (unless (string-match-p "\\.el\\'" file)
+;;       (user-error "Not an Emacs Lisp file"))
+;;     (when (buffer-modified-p)
+;;       (save-buffer))
+;;     (load-file file)
+;;     (message "Reloaded %s" file)))
 
 ;; ===========================================
 ;; ==== Comment-derived heading insertion ====

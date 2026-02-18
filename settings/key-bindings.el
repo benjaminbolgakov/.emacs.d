@@ -7,6 +7,9 @@
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
 
+;; Binding to special config-reloader function
+(global-set-key (kbd "C-c C-x e") #'reload-config)
+
 (global-set-key (kbd "C-c p r") 'query-replace)
 
 (global-set-key (kbd "C-c r") 'comment-region)
