@@ -22,6 +22,8 @@
 
 (global-set-key (kbd "C-c d") 'org-insert-drawer)
 
+(global-set-key (kbd "C-c m") 'insert-template)
+
 (global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
 
 (global-set-key (kbd "M-z") 'eval-expression)

@@ -93,6 +93,7 @@
 
 ;; Load functions
 (require 'general)
+(require 'snippets)
 
 ;; Load settings
 (require 'treesit-init)

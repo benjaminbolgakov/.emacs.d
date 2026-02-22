@@ -12,6 +12,8 @@
   (unless (treesit-language-available-p lang)
     (treesit-install-language-grammar lang)))
 
+(setq custom-safe-themes t)
+
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide
 ;; which packages are no longer needed. Can be used to (re)install packages on other machines
