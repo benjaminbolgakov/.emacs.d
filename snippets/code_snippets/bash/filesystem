@@ -1,0 +1,8 @@
+# Check if path is a file or directory
+if [ -f "$path" ]; then
+    echo "File"
+elif [ -d "$path" ]; then
+    echo "Directory"
+else
+    echo "Unknown"
+fi

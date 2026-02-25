@@ -1,6 +1,18 @@
+;; Load custom variables from a separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 ;; Initialize system-specific configuration
 (setq config-loader (expand-file-name "config-loader.el" user-emacs-directory))
 (load config-loader 'noerror)
+
+;; Install all treesit grammar's defined if not already installed
+(dolist (lang (mapcar #'car treesit-language-source-alist))
+  (unless (treesit-language-available-p lang)
+    (treesit-install-language-grammar lang)))
+
+(setq custom-safe-themes t)
 
 ;; 'package-selected-packages' = explicitly installed packages by user. Get's automatically
 ;; updated by Emacs when installing a new package. Used by 'package-autoremove' to decide

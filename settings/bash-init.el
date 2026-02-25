@@ -18,23 +18,23 @@
 
 
 ;; Associate bash-ts-mode with relevant file patterns
-(add-to-list 'auto-mode-alist '("\\.bash\\'"       . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bashrc\\'"     . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bash_profile\\'". bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bash_aliases\\'". bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.bash_login\\'".  bash-ts-mode))
-(add-to-list 'auto-mode-alist '("PKGBUILD"         . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.sh\\'"         . bash-ts-mode))
-(add-to-list 'auto-mode-alist '("/bash\\."         . bash-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.bash\\'"       . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bashrc\\'"     . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash_profile\\'". sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash_aliases\\'". sh-mode))
+(add-to-list 'auto-mode-alist '("\\.bash_login\\'".  sh-mode))
+(add-to-list 'auto-mode-alist '("PKGBUILD"         . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.sh\\'"         . sh-mode))
+(add-to-list 'auto-mode-alist '("/bash\\."         . sh-mode))
 
 ;; Mode-local settings
-(add-hook 'bash-ts-mode-hook
-          (lambda ()
-            (setq-local indent-tabs-mode nil)
-            (setq-local tab-width 4)
-            (setq-local treesit-simple-indent-rules
-                        '((bash
-                           ((match ".*" 0) parent-bol 4))))))
+;; (add-hook 'bash-ts-mode-hook
+;;           (lambda ()
+;;             (setq-local indent-tabs-mode nil)
+;;             (setq-local tab-width 4)
+;;             (setq-local treesit-simple-indent-rules
+;;                         '((bash
+;;                            ((match ".*" 0) parent-bol 4))))))
 
 
 (provide 'bash-init)

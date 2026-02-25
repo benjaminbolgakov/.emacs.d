@@ -36,39 +36,23 @@
 ;;;;;;;;;;;;;;
 ; Catppuccin ;
 ;;;;;;;;;;;;;;
-;; (use-package catppuccin-theme
-;;   :defer t
-;;   :init
-;;   (unless (custom-theme-p 'catppuccin)
-;; 	(package-install 'catppuccin-theme))
-;;   (load-theme 'catppuccin :no-confirm)
-;;   (setq catppuccin-flavor 'mocha))
+(use-package catppuccin-theme
+  :defer t
+  :init
+  (unless (custom-theme-p 'catppuccin)
+	(package-install 'catppuccin-theme))
+  (load-theme 'catppuccin :no-confirm)
+  (setq catppuccin-flavor 'mocha))
 
 ;;;;;;;;;;;
 ; Loading ;
 ;;;;;;;;;;;
-(let ((h (system-name)))
-  (cond ((at-home-linux-p)
-         (validate-font def-sys-font)
-         (set-face-attribute 'default nil
-                             :family def-sys-font
-                             :height 102
-                             :weight 'normal
-                             :width 'normal))
-        ((at-home-win-p)
-         (validate-font def-sys-font)
-         (set-face-attribute 'default nil
-                             :family def-sys-font
-                             :height 102
-                             :weight 'normal
-                             :width 'normal))
-        ((at-work-p)
-         (validate-font def-sys-font)
-         (set-face-attribute 'default nil
-                             :family def-sys-font
-                             :height 102
-                             :weight 'normal
-                             :width 'normal))))
+(validate-font def-sys-font)
+(set-face-attribute 'default nil
+                    :family def-sys-font
+                    :height 102
+                    :weight 'normal
+                    :width 'normal)
 
 ;; Provides utilities for displaying elements of the mode-line as tabs and ribbons.
 ;; (use-package moody

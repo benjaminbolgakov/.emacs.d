@@ -1,3 +1,28 @@
+;;;;;;;;;;;;;;;;;;;;;;
+; Base Configuration ;
+;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; TODO:
+;; autocompletion for lisp, inside this doc for example
+;; Debugging lisp: Running for example "eval-buffer" and recieving an error:
+;; "eval-buffer: Invalid read syntax: ")" [2 times]" - how to get more info etc?
+
+;; This solves the error about retrieving marmalade "incomprehensible buffer"
+;; (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+;; Global variables
+;; (setq def-sys-font "Fira Code")
+;; (setq alt-sys-font "Office Code Pro")
+
+;; Current machine's hostname
+;; (setq sysname (system-name))
+
+
+;; ==========================================================================
+;; ======== System config ===================================================
+;; ==========================================================================
+
 ;;;; Remove??
 (setq gc-cons-threshold (* 128 1024 1024))
 
@@ -31,7 +56,7 @@
 
 ;; ==========================================================================
 ;; ======== Load Emacs configs ==============================================
-;; ==========================================================================
+;; ==========================================================================)
 
 ;; load base-settings
 (require 'base)
@@ -42,10 +67,12 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 ;; (add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
-(package-initialize)
+;; Only initialize if not already done
+(unless package--initialized
+  (package-initialize))
 
 ;; M-x package-refresh-contents
-
+;; (package-refresh-contents)
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -71,19 +98,23 @@
 
 ;; Load functions
 (require 'general)
+(require 'snippets)
 
 ;; Load settings
 (require 'treesit-init)
+(require 'json-init)
 (require 'theme-init)
 (require 'ivy-init)
 (require 'docker-init)
 (require 'lsp-init)
+;;(require 'eglot-init)
 (require 'flycheck-init)
 (require 'c++-init)
 (require 'elisp-init)
 (require 'projectile-init)
 (require 'org-init)
 (require 'js-init)
+(require 'html-init)
 (require 'misc-init)
 (require 'cmake-init)
 (require 'python-init)

@@ -30,6 +30,7 @@ server/
 
 org-clock-save.el
 yaml-mode.el
+custom.el
 # bookmarks
 
 # Ignore API keys stored in secret.el

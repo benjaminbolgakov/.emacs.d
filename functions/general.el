@@ -1,3 +1,40 @@
+;; Used for reloading current config based on changes in current buffer
+(defun reload-config ()
+  "Save current buffer (if needed) and reload its file if it's Emacs Lisp.
+- Intended for config files like ~/.emacs.d/settings/*.el.
+- If buffer isn't visiting a file: error.
+- If file isn't an .el file: error (prevents accidental reloads).
+- Saves the buffer if modified.
+- Reloads via `load-file` so top-level forms run like normal config.
+- On error, prints a clear message and re-signals the error (so you get a backtrace if `debug-on-error` is on)."
+  (interactive)
+  (let* ((file (buffer-file-name)))
+    (unless file
+      (user-error "Current buffer is not visiting a file"))
+    (unless (string-match-p "\\.el\\'" file)
+      (user-error "Not an Emacs Lisp file: %s" file))
+    (when (buffer-modified-p)
+      (save-buffer))
+    (message "Reloading %s..." file)
+    (condition-case err
+        (progn
+          ;; Load the file as config (runs top-level forms).
+          (load-file file)
+          (message "Reloaded %s" file)
+		  ;; Reload rjsx-mode only for now
+		  (reload-rjsx-mode))
+      (error
+       (message "Reload FAILED for %s: %s" file (error-message-string err))
+       (signal (car err) (cdr err))))))
+
+(defun reload-rjsx-mode ()
+  "Unload & reload rjsx-mode"
+  (interactive)
+	(when (featurep 'rjsx-mode)
+      (unload-feature 'rjsx-mode t))
+	(require 'rjsx-mode))
+
+
 ;;;; Font verifier
 (defun validate-font(font-name)
   (unless (find-font (font-spec :family font-name))
@@ -125,128 +162,25 @@
     (save-excursion
       (insert (format "%s\n%s\n%s\n" border inner border)))))
 
-
-(defun insert-template ()
-  "Insert boilerplate code"
-  (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash" "cpp" "c" "gitignore" "readme" "makefile"))))
-    (cond
-     ((string-equal choice "python")
-      (python-insert-template))
-     ((string-equal choice "bash")
-      (bash-insert-template))
-     ((string-equal choice "cpp")
-      (cpp-insert-template))
-     ((string-equal choice "c")
-      (c-insert-template))
-     ((string-equal choice "gitignore")
-      (gitignore-insert-template))
-     ((string-equal choice "readme")
-      (readme-insert-template))
-     ((string-equal choice "makefile")
-      ;; Second input prompt for which language specific Makefile to import:
-      (let ((langchoice (completing-read "Choose language specific Makefile: " '("C" "C++"))))
-        (cond
-         ((string-equal langchoice "C")
-          (c-makefile-insert-template))
-         ((string-equal langchoice "C++")
-          (cpp-makefile-insert-template))
-         (t
-          (message "Invalid choice")))))
-     (t
-      (message "Invalid choice")))))
-
-(defun python-insert-main ()
-  "Insert the boilerplate python main code"
-  (interactive)
-  (insert "if __name__ == \"__main__\":\n"))
-
-;; Inserts template code for python files
-(defun python-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/python")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
-;; Inserts template code for bash scripts
-(defun bash-insert-template ()
-  "Insert the template bash script"
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/bash")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
-;; Inserts template .gitignore
-(defun gitignore-insert-template ()
-  "Insert the template .gitignore content"
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/gitignore")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "gitignore file not found."))))
-
-
-;; Insert README.md
-(defun readme-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/readme")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
-
-;; Insert template .c
-(defun c-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/c")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
-
-;; Inserts template .cpp
-(defun cpp-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/cpp")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-  ;; (interactive)
-  ;; (insert "#include<iostream>\n"
-  ;;         "using namespace std;\n\n"
-  ;;         "void log(const string& msg);\n\n"
-  ;;         "int main(int argc, char* argv[])\n"
-  ;;         "{\n"
-  ;;         "    if (argc > 1) { cout << argv[1] << \"\\n\"; }\n"
-  ;;         "    log(\"Log:\");\n"
-  ;;         "    return 0;\n"
-  ;;         "}\n\n"
-  ;;         "void log(const string& msg) { cout << msg << \"\\n\"; }\n"))
-
-
-;; Insert template C++ makefile content from file "snippets/makefiles/Makefile_Cpp"
-(defun cpp-makefile-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_Cpp")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
-;; Insert template C makefile content from file "snippets/makefiles/Makefile_C"
-(defun c-makefile-insert-template ()
-  (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/makefiles/Makefile_C")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
-
 (provide 'general)
 
 ;; ================
 ;; ==== LEGACY ====
 ;; ================
+
+;; ==== Simpler version of reload-config function
+;; (defun reload-config ()
+;;   "Save current buffer (if needed) and reload its file if it's Emacs Lisp."
+;;   (interactive)
+;;   (let ((file (buffer-file-name)))
+;;     (unless file
+;;       (user-error "Current buffer is not visiting a file"))
+;;     (unless (string-match-p "\\.el\\'" file)
+;;       (user-error "Not an Emacs Lisp file"))
+;;     (when (buffer-modified-p)
+;;       (save-buffer))
+;;     (load-file file)
+;;     (message "Reloaded %s" file)))
 
 ;; ===========================================
 ;; ==== Comment-derived heading insertion ====

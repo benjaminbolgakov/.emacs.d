@@ -1,30 +1,21 @@
-;; Get current machine name and load the main configuration file accordingly
-(defun at-home-linux-p ()
-  (string= (system-name) "benzel-main"))
-
-(defun at-home-win-p ()
-  (string= (system-name) "main-windows"))
-
-(defun at-work-p ()
-  (string= (system-name) "0000L1HF2260GT2"))
-
 ;; Configurations
-(setq config-home-linux (expand-file-name "configs/home-linux/home-linux.el" user-emacs-directory))
-(setq config-home-win (expand-file-name "configs/home-win/home-win.el" user-emacs-directory))
-(setq config-work (expand-file-name "configs/work/work.el" user-emacs-directory))
-(setq config-unknown (expand-file-name "configs/unknown/unknown.el" user-emacs-directory))
+(setq config-base (expand-file-name "configs/config-base.el" user-emacs-directory))
+(setq config-linux (expand-file-name "configs/linux/linux-conf.el" user-emacs-directory))
+(setq config-windows (expand-file-name "configs/windows/windows-conf.el" user-emacs-directory))
+(setq config-work (expand-file-name "configs/work/work-conf.el" user-emacs-directory))
+(setq config-unknown (expand-file-name "configs/unknown/unknown-conf.el" user-emacs-directory))
 
 ;; Configuration loading functions
-(defun load-config-home-linux ()
-  (setq dashboard-banner-logo-title "Loaded configuration: home-linux")
-  (setq bookmark-default-file (expand-file-name "configs/home-linux/bookmarks" user-emacs-directory))
+(defun load-config-linux ()
+  (setq dashboard-banner-logo-title "Loaded configuration: linux")
+  (setq bookmark-default-file (expand-file-name "configs/linux/bookmarks" user-emacs-directory))
   (setq org-agenda-files (list "benzel-agenda.org"))
-  (load config-home-linux))
+  (load config-linux))
 
-(defun load-config-home-win ()
-  (setq dashboard-banner-logo-title "Loaded configuration: home-win")
-  (setq bookmark-default-file (expand-file-name "configs/home-win/bookmarks" user-emacs-directory))
-  (load config-home-win))
+(defun load-config-windows ()
+  (setq dashboard-banner-logo-title "Loaded configuration: windows")
+  (setq bookmark-default-file (expand-file-name "configs/windows/bookmarks" user-emacs-directory))
+  (load config-windows))
 
 (defun load-config-work ()
   (setq dashboard-banner-logo-title "Loaded configuration: work")
@@ -36,12 +27,16 @@
   (setq bookmark-default-file (expand-file-name "configs/unknown/bookmarks" user-emacs-directory))
   (load config-unknown))
 
+;; Load general configuration
+(load config-base)
+
+;; Load system specific configurations
 (cond
- ((at-home-linux-p)
-  (load-config-home-linux))
- ((at-home-win-p)
-  (load-config-home-win))
- ((at-work-p)
-  (load-config-work))
+ ((eq system-type 'gnu/linux)
+  (if (string= system-name "0000L1HF2260GT2")
+      (load-config-work)
+    (load-config-linux)))
+ ((eq system-type 'windows-nt)
+  (load-config-windows))
  (t
   (load-config-unknown)))

@@ -1,31 +1,49 @@
-|-------------+--------------------------+-------------------------|
-| *Keystroke* | *Command*                | *Description*           |
-|-------------+--------------------------+-------------------------|
-| \\\\\\\\\   | \\\\\\\\\\\\\\\\\\\\\\   | \\\\\\\\\\\\\           |
-|-------------+--------------------------+-------------------------|
-| C-c         | *prefix*                 |                         |
-|-------------+--------------------------+-------------------------|
-| C-c r       | comment-region           |                         |
-| C-c u       | uncomment-region         |                         |
-| C-c p r     | query-replace            |                         |
-|-------------+--------------------------+-------------------------|
-| C-c &       | *prefix*                 |                         |
-|-------------+--------------------------+-------------------------|
-| C-c & C-n   | yas-new-snippet          |                         |
-| C-c & C-s   | yas-insert-snippet       |                         |
-| C-c & C-v   | yas-visit-snippet-file   |                         |
-|-------------+--------------------------+-------------------------|
-| C-j         | org-return-indent        |                         |
-| C-w         | kill-region              | cut marked text         |
-| M-w         | kill-ring-save           | copy marked text        |
-| C-y         | yank                     | paste text              |
-| C-s         | swiper                   | search text             |
-| M-x         | counsel-M-x              | run command             |
-|             |                          |                         |
-|-------------+--------------------------+-------------------------|
-| C-c C-x     | *prefix*                 | org-                    |
-|-------------+--------------------------+-------------------------|
-| C-c C-x C-v | org-toggle-inline-images | toggle image show/hide  |
-| C-c C-x i   | my-insert-image          | insert org image syntax |
-|             |                          |                         |
-|-------------+--------------------------+-------------------------|
+|-------------+-------------------------------+--------------------------------------|
+| *Keystroke* | *Command*                     | *Description*                        |
+|-------------+-------------------------------+--------------------------------------|
+|-------------+-------------------------------+--------------------------------------|
+|-------------+-------------------------------+--------------------------------------|
+| /////////// | *Movement*                    | //////////////////////////////////// |
+|-------------+-------------------------------+--------------------------------------|
+| M-v / C-v   |                               | move up/down pages                   |
+| C-p / C-n   |                               | move cursor up/down by char          |
+| C-f / C-b   |                               | move cursor right/left by char       |
+| M-f / M-b   |                               | move cursor right/left by word       |
+| C-a / C-e   |                               | move cursor to start/end of line     |
+| M-a / M-e   |                               | move cursor to start/end of sentence |
+| M-< / M->   |                               | move to start/end of file            |
+| C-l         |                               | reposition window to center cursor   |
+|-------------+-------------------------------+--------------------------------------|
+| /////////// | *Text Manipulation*           | ///////////////////////              |
+|-------------+-------------------------------+--------------------------------------|
+| C-c r       | comment-region                |                                      |
+| C-c u       | uncomment-region              |                                      |
+| C-c p r     | query-replace                 |                                      |
+|-------------+-------------------------------+--------------------------------------|
+| /////////// | *Insertions*                  | //////////////////////////////////// |
+|-------------+-------------------------------+--------------------------------------|
+| C-c m       | insert-template               | inserts template snippets            |
+| C-c s       | org-insert-structure-template | insert org-mode table                |
+| C-c d       | org-insert-drawer             | insert org-mode drawer               |
+| C-c i       | my-insert-image               | insert image template                |
+|-------------+-------------------------------+--------------------------------------|
+| /////////// | *yas-mode [C-c &]*            | //////////////////////////////////// |
+|-------------+-------------------------------+--------------------------------------|
+| C-c & C-n   | yas-new-snippet               |                                      |
+| C-c & C-s   | yas-insert-snippet            |                                      |
+| C-c & C-v   | yas-visit-snippet-file        |                                      |
+|-------------+-------------------------------+--------------------------------------|
+| C-j         | org-return-indent             |                                      |
+| C-w         | kill-region                   | cut marked text                      |
+| M-w         | kill-ring-save                | copy marked text                     |
+| C-y         | yank                          | paste text                           |
+| C-s         | swiper                        | search text                          |
+| M-x         | counsel-M-x                   | run command                          |
+|             |                               |                                      |
+|-------------+-------------------------------+--------------------------------------|
+| C-c C-x     | *prefix*                      | org-                                 |
+|-------------+-------------------------------+--------------------------------------|
+| C-c C-x C-v | org-toggle-inline-images      | toggle image show/hide               |
+| C-c C-x i   | my-insert-image               | insert org image syntax              |
+|             |                               |                                      |
+|-------------+-------------------------------+--------------------------------------|

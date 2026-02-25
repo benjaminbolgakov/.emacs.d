@@ -7,6 +7,9 @@
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
 
+;; Binding to special config-reloader function
+(global-set-key (kbd "C-c C-x e") #'reload-config)
+
 (global-set-key (kbd "C-c p r") 'query-replace)
 
 (global-set-key (kbd "C-c r") 'comment-region)
@@ -18,6 +21,8 @@
 (global-set-key (kbd "C-c s") 'org-insert-structure-template)
 
 (global-set-key (kbd "C-c d") 'org-insert-drawer)
+
+(global-set-key (kbd "C-c m") 'insert-template)
 
 (global-set-key (kbd "C-c t") 'org-table-create-or-convert-from-region)
 
