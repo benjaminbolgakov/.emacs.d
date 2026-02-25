@@ -1,3 +1,8 @@
+;;;;;;;;;;;;;;;;;;;;;;
+; Base Configuration ;
+;;;;;;;;;;;;;;;;;;;;;;
+
+
 ;; TODO:
 ;; autocompletion for lisp, inside this doc for example
 ;; Debugging lisp: Running for example "eval-buffer" and recieving an error:

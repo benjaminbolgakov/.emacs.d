@@ -1,5 +1,5 @@
 ;; Configurations
-(setq config-general (expand-file-name "configs/general-conf.el" user-emacs-directory))
+(setq config-base (expand-file-name "configs/config-base.el" user-emacs-directory))
 (setq config-linux (expand-file-name "configs/linux/linux-conf.el" user-emacs-directory))
 (setq config-windows (expand-file-name "configs/windows/windows-conf.el" user-emacs-directory))
 (setq config-work (expand-file-name "configs/work/work-conf.el" user-emacs-directory))
@@ -28,7 +28,7 @@
   (load config-unknown))
 
 ;; Load general configuration
-(load config-general)
+(load config-base)
 
 ;; Load system specific configurations
 (cond
