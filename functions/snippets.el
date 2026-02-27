@@ -36,19 +36,26 @@
 ;;;;;;;;;;;;;;;;;;;
 ; Python Snippets ;
 ;;;;;;;;;;;;;;;;;;;
-
-(defun python-insert-main ()
-  "Insert the boilerplate python main code"
-  (interactive)
-  (insert "if __name__ == \"__main__\":\n"))
+;; Paths
+(let ((python-base-path (expand-file-name "~/.emacs.d/snippets/code_snippets/python/base"))))
+(let ((python-argparse-path (expand-file-name "~/.emacs.d/snippets/code_snippets/python/argparse"))))
 
 ;; Inserts template code for python files
 (defun python-insert-template ()
   (interactive)
-  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/python/python-template")))
-    (if (file-readable-p template-path)
-        (insert-file-contents template-path)
-      (message "Snippet not found or not readable."))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash-basic" "bash-full" "cpp" "c" "gitignore" "readme" "makefile"))))
+	(cond
+	 ;; Python base template
+	 ((string-equal choice "base")
+	  (if (file-readable-p python-base-path)
+		  (insert-file-contents python-base-path)
+		(f-not-found)))
+	 ;; Python argparse template
+	 ((string-equal choice "argparse")
+	  (if (file-readable-p python-argparse-path)
+		  (insert-file-contents python-argparse-path)
+		(f-not-found)))
+	)))
 
 ;;;;;;;;;;;;;;;;;
 ; Bash Snippets ;
@@ -154,5 +161,11 @@
     (if (file-readable-p template-path)
         (insert-file-contents template-path)
       (message "Snippet not found or not readable."))))
+
+;;;;;;;;;;;
+; Helpers ;
+;;;;;;;;;;;
+(defun f-not-found ()
+  (message "Snippet not found or not readable."))
 
 (provide 'snippets)
