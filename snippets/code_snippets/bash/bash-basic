@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Syntax verification [package: 'shellcheck']
+# $ shellcheck <script>.sh
+
 # Ensure script safety
 set -Eeuo pipefail
 
