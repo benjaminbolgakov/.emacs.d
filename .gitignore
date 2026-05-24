@@ -27,6 +27,7 @@ var/
 workspace/
 url/
 server/
+tree-sitter/
 
 org-clock-save.el
 yaml-mode.el
