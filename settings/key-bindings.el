@@ -7,6 +7,8 @@
 
 (global-set-key (kbd "C-c e") 'eval-buffer)
 
+(global-set-key (kbd "C-z") nil)
+
 ;; Binding to special config-reloader function
 (global-set-key (kbd "C-c C-x e") #'reload-config)
 
