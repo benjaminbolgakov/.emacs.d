@@ -4,7 +4,7 @@
 (defun insert-template ()
   "Insert boilerplate code"
   (interactive)
-  (let ((choice (completing-read "Choose template: " '("python" "bash-basic" "bash-full" "cpp" "c" "gitignore" "readme" "makefile"))))
+  (let ((choice (completing-read "Choose template: " '("python" "bash-basic" "bash-full" "cpp" "c" "gitignore" "readme" "makefile" "wirewiz"))))
     (cond
      ((string-equal choice "python")
       (python-insert-template))
@@ -30,6 +30,8 @@
           (cpp-makefile-insert-template))
          (t
           (message "Invalid choice")))))
+	 ((string-equal choice "wirewiz")
+	  (wirewiz-insert-template))
      (t
       (message "Invalid choice")))))
 
@@ -161,6 +163,13 @@
     (if (file-readable-p template-path)
         (insert-file-contents template-path)
       (message "Snippet not found or not readable."))))
+
+(defun wirewiz-insert-template ()
+  (interactive)
+  (let ((template-path (expand-file-name "~/.emacs.d/snippets/code_snippets/wirewiz/bare-bones")))
+	(if (file-readable-p template-path)
+		(insert-file-contents template-path)
+	  (message "Snippet not found or not readable."))))
 
 ;;;;;;;;;;;
 ; Helpers ;
