@@ -67,6 +67,10 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 ;; (add-to-list 'package-archives '("org" . "https://elpa.gnu.org/packages/"))
+
+;; Load custom themes (~/.emacs.d/themes/)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
 ;; Only initialize if not already done
 (unless package--initialized
   (package-initialize))
