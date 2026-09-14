@@ -1,5 +1,6 @@
 ;; Configurations
 (setq config-base (expand-file-name "configs/config-base.el" user-emacs-directory))
+(setq config-base-cli (expand-file-name "configs/config-base-cli.el" user-emacs-directory))
 (setq config-linux (expand-file-name "configs/linux/linux-conf.el" user-emacs-directory))
 (setq config-windows (expand-file-name "configs/windows/windows-conf.el" user-emacs-directory))
 (setq config-work (expand-file-name "configs/work/work-conf.el" user-emacs-directory))
@@ -27,8 +28,11 @@
   (setq bookmark-default-file (expand-file-name "configs/unknown/bookmarks" user-emacs-directory))
   (load config-unknown))
 
-;; Load general configuration
-(load config-base)
+(if (display-graphic-p)
+	;; Load base GUI configuration
+    (load config-base)
+  ;; Load base CLI configuration
+  (load config-base-cli))
 
 ;; Load system specific configurations
 (cond
