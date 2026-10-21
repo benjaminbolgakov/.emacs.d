@@ -8,8 +8,8 @@
 
 (defun c++-mode-hook ()
   (add-pragma)
-  (setq c-default-style "stroustrup"
-      c-basic-offset 4))
+  (setq c-default-style "stroustrup")
+  (setq c-basic-offset 4))
 
 (add-hook 'c++-mode-hook 'c++-mode-hook)
 (add-hook 'c-mode-hook 'c++-mode-hook)
