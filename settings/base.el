@@ -76,6 +76,10 @@
 ;; for yes/no prompts.
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; WindMove - window nav using S-<l/r-arrow>
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
 ;; One Ring to rule them all, One Ring to find them,
 ;; One Ring to bring them all and in the darkness bind them.
 ;; Ash nazg durbatulûk, ash nazg gimbatul,
