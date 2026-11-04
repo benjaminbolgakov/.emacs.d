@@ -1,0 +1,84 @@
+   <h1 id="firstHeading" class="firstHeading">std::filesystem::space</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/filesystem" title="cpp/header/filesystem">&lt;filesystem&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">std::filesystem::space_info space( const std::filesystem::path&amp; p );
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">std::filesystem::space_info space( const std::filesystem::path&amp; p,
+                                   std::error_code&amp; ec ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Determines the information about the filesystem on which the pathname <code>p</code> is located, as if by POSIX <a rel="nofollow" class="external text" href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/fstatvfs.html"><code>statvfs</code></a>.</p>
+<p>Populates and returns an object of type <a href="space_info" title="cpp/filesystem/space info"><code>filesystem::space_info</code></a>, set from the members of the POSIX <span class="k">struct</span><span class="nc">statvfs</span> as follows:</p>
+<ul>
+<li>
+<a href="space_info" title="cpp/filesystem/space info"><code>space_info.capacity</code></a> is set as if by <code>f_blocks * f_frsize</code>.</li> <li>
+<a href="space_info" title="cpp/filesystem/space info"><code>space_info.free</code></a> is set to <code>f_bfree * f_frsize</code>.</li> <li>
+<a href="space_info" title="cpp/filesystem/space info"><code>space_info.available</code></a> is set to <code>f_bavail * f_frsize</code>.</li> <li>Any member that could not be determined is set to <code>static_cast&lt;std::uintmax_t&gt;(-1)</code>.</li>
+</ul> <p>The non-throwing overload sets all members to <code>static_cast&lt;std::uintmax_t&gt;(-1)</code> on error.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>p </td> <td>- </td> <td>path to examine </td>
+</tr> <tr class="t-par"> <td>ec </td> <td>- </td> <td>out-parameter for error reporting in the non-throwing overload </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>The filesystem information (a <a href="space_info" title="cpp/filesystem/space info"><code>filesystem::space_info</code></a> object).</p>
+<h3 id="Exceptions">Exceptions</h3> <p>Any overload not marked <code>noexcept</code> may throw <code><a href="../memory/new/bad_alloc" title="cpp/memory/new/bad alloc">std::bad_alloc</a></code> if memory allocation fails.<br></p>
+<div class="t-li1">
+<span class="t-li">1)</span> Throws <code><a href="filesystem_error" title="cpp/filesystem/filesystem error">std::filesystem::filesystem_error</a></code> on underlying OS API errors, constructed with <code>p</code> as the first path argument and the OS error code as the error code argument.</div> <div class="t-li1">
+<span class="t-li">2)</span> Sets a <code>std::error_code&amp;</code> parameter to the OS API error code if an OS API call fails, and executes <code><span class="n">ec</span><span class="p">.</span><a href="../error/error_code/clear" title="cpp/error/error code/clear">clear</a><span class="p">()</span></code> if no errors occur.</div> <h3 id="Notes">Notes</h3> <p><a href="space_info" title="cpp/filesystem/space info"><code>space_info.available</code></a> may be less than <a href="space_info" title="cpp/filesystem/space info"><code>space_info.free</code></a>.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cstdint&gt;
+#include &lt;filesystem&gt;
+#include &lt;iostream&gt;
+#include &lt;locale&gt;
+
+std::uintmax_t disk_usage_percent(const std::filesystem::space_info&amp; si,
+                                  bool is_privileged = false) noexcept
+{
+    if (constexpr std::uintmax_t X(-1);
+        si.capacity == 0 || si.free == 0 || si.available == 0 ||
+        si.capacity == X || si.free == X || si.available == X
+    )
+        return 100;
+
+    std::uintmax_t unused_space = si.free, capacity = si.capacity;
+    if (!is_privileged)
+    {
+        const std::uintmax_t privileged_only_space = si.free - si.available;
+        unused_space -= privileged_only_space;
+        capacity -= privileged_only_space;
+    }
+    const std::uintmax_t used_space{capacity - unused_space};
+    return 100 * used_space / capacity;
+}
+
+void print_disk_space_info(auto const&amp; dirs, int width = 14)
+{
+    (std::cout &lt;&lt; std::left).imbue(std::locale("en_US.UTF-8"));
+
+    for (const auto s : {"Capacity", "Free", "Available", "Use%", "Dir"})
+        std::cout &lt;&lt; "│ " &lt;&lt; std::setw(width) &lt;&lt; s &lt;&lt; ' ';
+
+    for (std::cout &lt;&lt; '\n'; auto const&amp; dir : dirs)
+    {
+        std::error_code ec;
+        const std::filesystem::space_info si = std::filesystem::space(dir, ec);
+        for (auto x : {si.capacity, si.free, si.available, disk_usage_percent(si)})
+            std::cout &lt;&lt; "│ " &lt;&lt; std::setw(width) &lt;&lt; static_cast&lt;std::intmax_t&gt;(x) &lt;&lt; ' ';
+        std::cout &lt;&lt; "│ " &lt;&lt; dir &lt;&lt; '\n';
+    }
+}
+
+int main()
+{
+    const auto dirs = {"/dev/null", "/tmp", "/home", "/proc", "/null"};
+    print_disk_space_info(dirs);
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">│ Capacity       │ Free           │ Available      │ Use%           │ Dir            
+│ 84,417,331,200 │ 42,732,986,368 │ 40,156,028,928 │ 50             │ /dev/null
+│ 84,417,331,200 │ 42,732,986,368 │ 40,156,028,928 │ 50             │ /tmp
+│ -1             │ -1             │ -1             │ 100            │ /home
+│ 0              │ 0              │ 0              │ 100            │ /proc
+│ -1             │ -1             │ -1             │ 100            │ /null
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="space_info" title="cpp/filesystem/space info"> <span class="t-lines"><span>space_info</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>information about free and available space on the filesystem <br> <span class="t-mark">(class)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/filesystem/space" class="_attribution-link">https://en.cppreference.com/cpp/filesystem/space</a>
+  </p>
+</div>

@@ -1,0 +1,72 @@
+   <h1 id="firstHeading" class="firstHeading">std::filesystem::filesystem_error</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/filesystem" title="cpp/header/filesystem">&lt;filesystem&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">class filesystem_error;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>The class <code>std::filesystem::filesystem_error</code> defines an exception object that is thrown on failure by the throwing overloads of the functions in the filesystem library.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/6/67/std-filesystem-filesystem_error-inheritance.svg" decoding="async" width="513" height="40" class="mw-file-element" usemap="#ImageMap_43b35d122732b7d4"></span><map name="ImageMap_43b35d122732b7d4"><area href="/cpp/error/exception" shape="rect" coords="4,4,107,36" alt="cpp/error/exception" title="cpp/error/exception">
+<area href="/cpp/error/runtime_error" shape="rect" coords="134,4,237,36" alt="cpp/error/runtime error" title="cpp/error/runtime error">
+<area href="/cpp/error/system_error" shape="rect" coords="264,4,367,36" alt="cpp/error/system error" title="cpp/error/system error"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="filesystem_error/filesystem_error" title="cpp/filesystem/filesystem error/filesystem error"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs the exception object <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="filesystem_error/operator=" title="cpp/filesystem/filesystem error/operator="> <span class="t-lines"><span>operator=</span></span></a></div> </td> <td>replaces the exception object <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="filesystem_error/path" title="cpp/filesystem/filesystem error/path"> <span class="t-lines"><span>path1</span><span>path2</span></span></a></div> </td> <td>returns the paths that were involved in the operation that caused the error <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="filesystem_error/what" title="cpp/filesystem/filesystem error/what"> <span class="t-lines"><span>what</span></span></a></div> </td> <td>returns the explanatory string <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <div class="t-inherited"> <h2 id="Inherited_from_std::system_error">Inherited from <a href="../error/system_error" title="cpp/error/system error">std::system_error</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../error/system_error/code" title="cpp/error/system error/code"> <span class="t-lines"><span>code</span></span></a></div> </td> <td>returns error code <br> <span class="t-mark">(public member function of <code>std::system_error</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../error/system_error/what" title="cpp/error/system error/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::system_error</code>)</span>  </td>
+</tr> </table> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::runtime_error">Inherited from <a href="../error/runtime_error" title="cpp/error/runtime error">std::runtime_error</a>
+</h2> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="../error/exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_3">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Notes">Notes</h3> <p>In order to ensure that copy functions of <code>filesystem_error</code> are noexcept, typical implementations store an object holding the return value of <code><a href="filesystem_error/what" title="cpp/filesystem/filesystem error/what">what()</a></code> and two <code><a href="path" title="cpp/filesystem/path">std::filesystem::path</a></code> objects referenced by <code><a href="filesystem_error/path" title="cpp/filesystem/filesystem error/path">path1()</a></code> and <code><a href="filesystem_error/path" title="cpp/filesystem/filesystem error/path">path2()</a></code> respectively in a separately-allocated reference-counted storage.</p>
+<p>Currently the <a rel="nofollow" class="external text" href="https://github.com/microsoft/STL/blob/master/stl/inc/filesystem#L1749">MS STL implementation</a> is non-conforming: objects mentioned above are stored directly in the <code>filesystem</code> object, which makes the copy functions not noexcept.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;filesystem&gt;
+#include &lt;iostream&gt;
+#include &lt;system_error&gt;
+
+int main()
+{
+    const std::filesystem::path from{"/none1/a"}, to{"/none2/b"};
+
+    try
+    {
+        std::filesystem::copy_file(from, to); // throws: files do not exist
+    }
+    catch (std::filesystem::filesystem_error const&amp; ex)
+    {
+        std::cout &lt;&lt; "what():  " &lt;&lt; ex.what() &lt;&lt; '\n'
+                  &lt;&lt; "path1(): " &lt;&lt; ex.path1() &lt;&lt; '\n'
+                  &lt;&lt; "path2(): " &lt;&lt; ex.path2() &lt;&lt; '\n'
+                  &lt;&lt; "code().value():    " &lt;&lt; ex.code().value() &lt;&lt; '\n'
+                  &lt;&lt; "code().message():  " &lt;&lt; ex.code().message() &lt;&lt; '\n'
+                  &lt;&lt; "code().category(): " &lt;&lt; ex.code().category().name() &lt;&lt; '\n';
+    }
+
+    // All functions have non-throwing equivalents
+    std::error_code ec;
+    std::filesystem::copy_file(from, to, ec); // does not throw
+    std::cout &lt;&lt; "\nNon-throwing form sets error_code: " &lt;&lt; ec.message() &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">what():  filesystem error: cannot copy file: No such file or directory [/none1/a] [/none2/b]
+path1(): "/none1/a"
+path2(): "/none2/b"
+code().value():    2
+code().message():  No such file or directory
+code().category(): generic
+
+Non-throwing form sets error_code: No such file or directory
+</pre> </div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/filesystem/filesystem_error" class="_attribution-link">https://en.cppreference.com/cpp/filesystem/filesystem_error</a>
+  </p>
+</div>

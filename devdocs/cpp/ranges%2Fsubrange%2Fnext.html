@@ -1,0 +1,48 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::subrange&lt;I,S,K&gt;::next</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr subrange next( std::iter_difference_t&lt;I&gt; n = 1 ) const&amp;
+    requires std::forward_iterator&lt;I&gt;;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">constexpr subrange next( std::iter_difference_t&lt;I&gt; n = 1 ) &amp;&amp;;
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr>  </table> <p>Returns a <a href="../subrange" title="cpp/ranges/subrange"><code>subrange</code></a> whose <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../subrange#begin" title="cpp/ranges/subrange">begin_</a></i></code> is incremented (or decremented if <code>n</code> is negative). The actual increment (or decrement) operation is performed by <a href="advance" title="cpp/ranges/subrange/advance"><code>advance()</code></a>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Returns a copy of <code>*this</code>.</div> <div class="t-li1">
+ Equivalent to: <code>auto tmp = *this;tmp.advance(n);return tmp;</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Returns a <code>subrange</code> moved from <code>*this</code>.</div> <div class="t-li1">
+ Equivalent to: <code>advance(n);return std::move(*this);</code>.</div>  <h3 id="Parameter">Parameter</h3> <table class="t-par-begin"> <tr class="t-par"> <td>n </td> <td>- </td> <td>number of maximal increments of the iterator </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>As described above.</p>
+<h3 id="Notes">Notes</h3> <p>The difference between this function and <a href="advance" title="cpp/ranges/subrange/advance"><code>advance()</code></a> is that the latter performs the increment (or decrement) in place.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;array&gt;
+#include &lt;iterator&gt;
+#include &lt;print&gt;
+#include &lt;ranges&gt;
+
+int main()
+{
+    std::array arr{1, 2, 3, 4, 5, 6, 7};
+    std::ranges::subrange sub{std::next(arr.begin(), 2), std::prev(arr.end(), 2)};
+    std::println("1) sub: {}", sub);
+    std::println("2) sub: {}", sub.next());
+    std::println("3) sub: {}", sub.next(2));
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1) sub: [3, 4, 5]
+2) sub: [4, 5]
+3) sub: [5]
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="prev" title="cpp/ranges/subrange/prev"> <span class="t-lines"><span>prev</span></span></a></div> </td> <td>obtains a copy of the <code>subrange</code> with its iterator decremented by a given distance <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="advance" title="cpp/ranges/subrange/advance"> <span class="t-lines"><span>advance</span></span></a></div> </td> <td>advances the iterator by given distance <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/next" title="cpp/iterator/next"> <span class="t-lines"><span>next</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>increment an iterator <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/ranges/next" title="cpp/iterator/ranges/next"> <span class="t-lines"><span>ranges::next</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>increment an iterator by a given distance or to a bound<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/subrange/next" class="_attribution-link">https://en.cppreference.com/cpp/ranges/subrange/next</a>
+  </p>
+</div>

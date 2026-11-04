@@ -1,0 +1,45 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_string&lt;CharT,Traits,Allocator&gt;::rend, std::basic_string&lt;CharT,Traits,Allocator&gt;::crend</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">reverse_iterator rend();
+</pre></td> <td> (1)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr> <tr class="t-dcl"> <td><pre data-language="c">const_reverse_iterator rend() const;
+</pre></td> <td> (2)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">const_reverse_iterator crend() const noexcept;
+</pre></td> <td> (3)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr>  </table> <p>Returns a reverse iterator to the character following the last character of the reversed string. It corresponds to the character preceding the first character of the non-reversed string. This character acts as a placeholder, attempting to access it results in undefined behavior.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-rbegin-rend.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/3/39/range-rbegin-rend.svg" decoding="async" width="589" height="250" class="mw-file-element"></a></span></p>
+<h3 id="Parameters">Parameters</h3> <p>(none)</p>
+<h3 id="Return_value">Return value</h3> <p>Reverse iterator to the character following the last character.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Notes">Notes</h3> <p>libc++ backports <code>crend()</code> to C++98 mode.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;string&gt;
+
+int main()
+{
+    std::string p("[A man, a plan, a canal: Panama]");
+    std::string q;
+
+    std::copy(p.crbegin(), p.crend(), std::back_inserter(q));
+    std::cout &lt;&lt; "q = " &lt;&lt; q &lt;&lt; '\n';
+
+    std::copy(q.crbegin(), q.crend(), p.rbegin());
+    std::cout &lt;&lt; "p = " &lt;&lt; p &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">q = ]amanaP :lanac a ,nalp a ,nam A[
+p = ]amanaP :lanac a ,nalp a ,nam A[
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="rbegin" title="cpp/string/basic string/rbegin"> <span class="t-lines"><span>rbegin</span><span>crbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>returns a reverse iterator to the beginning <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_string_view/rend" title="cpp/string/basic string view/rend"> <span class="t-lines"><span>rend</span><span>crend</span></span></a></div> </td> <td>returns a reverse iterator to the end <br> <span class="t-mark">(public member function of <code>std::basic_string_view&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/string/basic_string/rend" class="_attribution-link">https://en.cppreference.com/cpp/string/basic_string/rend</a>
+  </p>
+</div>

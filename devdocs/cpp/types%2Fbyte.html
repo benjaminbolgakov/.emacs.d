@@ -1,0 +1,115 @@
+   <h1 id="firstHeading" class="firstHeading">std::byte</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/cstddef" title="cpp/header/cstddef">&lt;cstddef&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">enum class byte : unsigned char {};
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p><code>std::byte</code> is a distinct type that implements the concept of byte as specified in the C++ language definition.</p>
+<p>Like <span class="kt">unsigned</span><span class="kt">char</span>, it can be used to access raw memory occupied by other objects (<a href="../language/object" title="cpp/language/object">object representation</a>), but unlike <span class="kt">unsigned</span><span class="kt">char</span>, it is not a character type and is not an arithmetic type. <code>std::byte</code> models a mere collection of bits, supporting only bitshift operations with an integer, and bitwise and comparison operations with another <code>std::byte</code>.</p>
+<h3 id="Non-member_functions">Non-member functions</h3> <div class="t-member"> <h2 id="std::to_integer">std::to_integer</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class IntegerType &gt;
+constexpr IntegerType to_integer( std::byte b ) noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Equivalent to: <code>return IntegerType(b);</code> This overload participates in overload resolution only if <code>std::is_integral_v&lt;IntegerType&gt;</code> is <code>true</code>.</p>
+</div> <div class="t-member"> <h2 id="std::operator&lt;&lt;=,operator&gt;&gt;=">std::operator&lt;&lt;=,operator&gt;&gt;=</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class IntegerType &gt;
+constexpr std::byte&amp; operator&lt;&lt;=( std::byte&amp; b, IntegerType shift ) noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class IntegerType &gt;
+constexpr std::byte&amp; operator&gt;&gt;=( std::byte&amp; b, IntegerType shift ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Equivalent to: <code>return b = b &lt;&lt; shift;</code> This overload participates in overload resolution only if <code>std::is_integral_v&lt;IntegerType&gt;</code> is <code>true</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to: <code>return b = b &gt;&gt; shift;</code> <p>This overload participates in overload resolution only if <code>std::is_integral_v&lt;IntegerType&gt;</code> is <code>true</code>.</p>
+</div>
+</div> <div class="t-member"> <h2 id="std::operator&lt;&lt;,operator&gt;&gt;">std::operator&lt;&lt;,operator&gt;&gt;</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class IntegerType &gt;
+constexpr std::byte operator&lt;&lt;( std::byte b, IntegerType shift ) noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class IntegerType &gt;
+constexpr std::byte operator&gt;&gt;( std::byte b, IntegerType shift ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Equivalent to: <code>return std::byte(static_cast&lt;unsigned int&gt;(b) &lt;&lt; shift);</code> This overload participates in overload resolution only if <code>std::is_integral_v&lt;IntegerType&gt;</code> is <code>true</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to: <code>return std::byte(static_cast&lt;unsigned int&gt;(b) &gt;&gt; shift);</code> <p>This overload participates in overload resolution only if <code>std::is_integral_v&lt;IntegerType&gt;</code> is <code>true</code>.</p>
+</div>
+</div> <div class="t-member"> <h2 id="std::operator|=,operator&amp;=,operator^=">std::operator|=,operator&amp;=,operator^=</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte&amp; operator|=( std::byte&amp; l, std::byte r ) noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte&amp; operator&amp;=( std::byte&amp; l, std::byte r ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte&amp; operator^=( std::byte&amp; l, std::byte r ) noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Equivalent to: <code>return l = l | r;</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to: <code>return l = l &amp; r;</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Equivalent to: <code>return l = l ^ r;</code>. </div>
+</div> <div class="t-member"> <h2 id="std::operator|,operator&amp;,operator^,operator~">std::operator|,operator&amp;,operator^,operator~</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte operator|( std::byte l, std::byte r ) noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte operator&amp;( std::byte l, std::byte r ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte operator^( std::byte l, std::byte r ) noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr std::byte operator~( std::byte b ) noexcept;
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Equivalent to: <code>return std::byte(static_cast&lt;unsigned int&gt;(l) | static_cast&lt;unsigned int&gt;(r));</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to: <code>return std::byte(static_cast&lt;unsigned int&gt;(l) &amp; static_cast&lt;unsigned int&gt;(r));</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Equivalent to: <code>return std::byte(static_cast&lt;unsigned int&gt;(l) ^ static_cast&lt;unsigned int&gt;(r));</code>.</div> <div class="t-li1">
+<span class="t-li">4)</span> Equivalent to: <code>return std::byte(~static_cast&lt;unsigned int&gt;(b));</code> </div>
+</div> <h3 id="Notes">Notes</h3> <p>A numeric value <code>n</code> can be converted to a byte value using <code>std::byte{n}</code>, due to C++17 <a href="../language/enum#enum_relaxed_init_cpp17" title="cpp/language/enum">relaxed enum class initialization</a> rules.</p>
+<p>A byte can be converted to a numeric value (such as to produce an integer hash of an object) the usual way with an <a href="../language/explicit_cast" title="cpp/language/explicit cast">explicit conversion</a> or alternatively with <a href="#Non-member_functions"><code>std::to_integer</code></a>.</p>
+<table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_byte" title="cpp/feature test"><code>__cpp_lib_byte</code></a></td> <td><a href="../compiler_support/17#cpp_lib_byte_201603L" title="cpp/compiler support/17"><code>201603L</code></a></td> <td><span class="t-mark">(C++17)</span></td> <td>
+<code>std::byte</code> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;bitset&gt;
+#include &lt;cassert&gt;
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, std::byte b)
+{
+    return os &lt;&lt; std::bitset&lt;8&gt;(std::to_integer&lt;int&gt;(b));
+}
+
+int main()
+{
+    // std::byte y = 1; // Error: cannot convert int to byte.
+    std::byte y{1}; // OK
+
+    // if (y == 13) {} // Error: cannot be compared.
+    if (y == std::byte{13}) {} // OK, bytes are comparable
+
+    int arr[]{1, 2, 3};
+    // int c = a[y]; // Error: array subscript is not an integer
+    [[maybe_unused]] int i = arr[std::to_integer&lt;int&gt;(y)]; // OK
+    [[maybe_unused]] int j = arr[std::to_underlying(y)];   // OK
+
+    auto to_int = [](std::byte b) { return std::to_integer&lt;int&gt;(b); };
+
+    std::byte b{42};
+    assert(to_int(b) == 0b00101010);
+    std::cout &lt;&lt; b &lt;&lt; '\n';
+
+    // b *= 2; // Error: b is not of arithmetic type
+    b &lt;&lt;= 1;
+    assert(to_int(b) == 0b01010100);
+
+    b &gt;&gt;= 1;
+    assert(to_int(b) == 0b00101010);
+
+    assert(to_int(b &lt;&lt; 1) == 0b01010100);
+    assert(to_int(b &gt;&gt; 1) == 0b00010101);
+
+    b |= std::byte{0b11110000};
+    assert(to_int(b) == 0b11111010);
+
+    b &amp;= std::byte{0b11110000};
+    assert(to_int(b) == 0b11110000);
+
+    b ^= std::byte{0b11111111};
+    assert(to_int(b) == 0b00001111);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">00101010
+</pre> </div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/types/byte" class="_attribution-link">https://en.cppreference.com/cpp/types/byte</a>
+  </p>
+</div>

@@ -1,0 +1,172 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::views::single, std::ranges::single_view</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20 t-until-cxx23"> <td>
+<pre data-language="c">template&lt; std::copy_constructible T &gt;
+    requires std::is_object_v&lt;T&gt;
+class single_view
+    : public ranges::view_interface&lt;single_view&lt;T&gt;&gt;
+</pre>
+</td> <td rowspan="2"> (1)</td> <td>
+<span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark-rev t-until-cxx23">(until C++23)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx23"> <td><pre data-language="c">template&lt; std::move_constructible T &gt;
+    requires std::is_object_v&lt;T&gt;
+class single_view
+    : public ranges::view_interface&lt;single_view&lt;T&gt;&gt;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">namespace views {
+    inline constexpr /* unspecified */ single = /* unspecified */;
+}
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr /* see below */ single( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Produces a <a href="view" title="cpp/ranges/view"><code>view</code></a> that contains exactly one element of a specified value.</div> <div class="t-li1">
+<span class="t-li">2)</span> The expression <code>views::single(e)</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to <code>single_view&lt;std::decay_t&lt;decltype((e))&gt;&gt;(e)</code> for any suitable subexpression <code>e</code>.</div> <p>The lifetime of the element is bound to the parent <code>single_view</code>. Copying <code>single_view</code> makes a copy of the element.</p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>views::single</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p><a href="copyable_wrapper" title="cpp/ranges/copyable wrapper"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>copyable-box</i></code></a> ﻿<code>&lt;T&gt;</code></p>
+</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p><a href="copyable_wrapper" title="cpp/ranges/copyable wrapper"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>movable-box</i></code></a> ﻿<code>&lt;T&gt;</code></p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> </td> <td>the single element of the view<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#ctor"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a <code>single_view</code> <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#begin"> <span class="t-lines"><span>begin</span></span></a></div> </td> <td>returns a pointer to the element <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#end"> <span class="t-lines"><span>end</span></span></a></div> </td> <td>returns a pointer past the element <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#empty"> <span class="t-lines"><span>empty</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>returns <code>false</code> <br> <span class="t-mark">(public static member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#size"> <span class="t-lines"><span>size</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>returns <code>1</code> <br> <span class="t-mark">(public static member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a class="mw-selflink-fragment" href="#data"> <span class="t-lines"><span>data</span></span></a></div> </td> <td>returns a pointer to the element <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr> <td colspan="2">
+<h5 id="Inherited_from_std::ranges::view_interface"> Inherited from <code><a href="view_interface" title="cpp/ranges/view interface">std::ranges::view_interface</a></code> </h5> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/cbegin" title="cpp/ranges/view interface/cbegin"> <span class="t-lines"><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>returns a constant iterator to the beginning of the range <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/cend" title="cpp/ranges/view interface/cend"> <span class="t-lines"><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>returns a sentinel for the constant iterator of the range <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/operator_bool" title="cpp/ranges/view interface/operator bool"> <span class="t-lines"><span>operator bool</span></span></a></div> </td> <td>returns whether the derived view is not empty, provided only if <code><a href="empty" title="cpp/ranges/empty">ranges::empty</a></code> is applicable to it <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/front" title="cpp/ranges/view interface/front"> <span class="t-lines"><span>front</span></span></a></div> </td> <td>returns the first element in the derived view, provided if it satisfies <a href="forward_range" title="cpp/ranges/forward range"><code>forward_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/back" title="cpp/ranges/view interface/back"> <span class="t-lines"><span>back</span></span></a></div> </td> <td>returns the last element in the derived view, provided only if it satisfies <a href="bidirectional_range" title="cpp/ranges/bidirectional range"><code>bidirectional_range</code></a> and <a href="common_range" title="cpp/ranges/common range"><code>common_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/operator_at" title="cpp/ranges/view interface/operator at"> <span class="t-lines"><span>operator[]</span></span></a></div> </td> <td>returns the <code>n</code><sup>th</sup> element in the derived view, provided only if it satisfies <a href="random_access_range" title="cpp/ranges/random access range"><code>random_access_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> </table> <div class="t-member"> <h2 id="std::ranges::single_view::single_view">std::ranges::single_view::single_view</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">single_view() requires std::default_initializable&lt;T&gt; = default;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20 t-until-cxx23"> <td>
+<pre data-language="c">constexpr explicit single_view( const T&amp; t );
+</pre>
+</td> <td rowspan="2"> (2)</td> <td>
+<span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark-rev t-until-cxx23">(until C++23)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx23"> <td><pre data-language="c">constexpr explicit single_view( const T&amp; t )
+    requires std::copy_constructible&lt;T&gt;;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr explicit single_view( T&amp;&amp; t );
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class... Args &gt;
+    requires std::constructible_from&lt;T, Args...&gt;
+constexpr explicit single_view( std::in_place_t, Args&amp;&amp;... args );
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Constructs a <code>single_view</code>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Default initializes <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code>, which value-initializes its contained value.</div> <div class="t-li1">
+<span class="t-li">2)</span> Initializes <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> with <code>t</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Initializes <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> with <code>std::move(t)</code>.</div> <div class="t-li1">
+<span class="t-li">4)</span> Initializes <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> as if by <code>value_{std::in_place, std::forward&lt;Args&gt;(args)...}</code>.</div> </div> <div class="t-member"> <h2 id="std::ranges::single_view::begin">std::ranges::single_view::begin</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr T* begin() noexcept;
+constexpr const T* begin() const noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Equivalent to <code>return data();</code>.</p>
+</div> <div class="t-member"> <h2 id="std::ranges::single_view::end">std::ranges::single_view::end</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr T* end() noexcept;
+constexpr const T* end() const noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Equivalent to <code>return data() + 1;</code>.</p>
+</div> <div class="t-member"> <h2 id="std::ranges::single_view::empty">std::ranges::single_view::empty</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">static constexpr bool empty() noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Equivalent to <code>return false;</code>.</p>
+</div> <div class="t-member"> <h2 id="std::ranges::single_view::size">std::ranges::single_view::size</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">static constexpr std::size_t size() noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Equivalent to <code>return 1;</code>.</p>
+<p>Makes <code>single_view</code> model <span class="cm">/*tiny-range*/</span> as required by <a href="split_view" title="cpp/ranges/split view"><code>split_view</code></a>.</p>
+</div> <div class="t-member"> <h2 id="std::ranges::single_view::data">std::ranges::single_view::data</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr T* data() noexcept;
+constexpr const T* data() const noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Returns a pointer to the contained value of <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code>. The behavior is undefined if <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> does not contains a value.</p>
+</div> <h3 id="Deduction_guides">Deduction guides</h3> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+single_view( T ) -&gt; single_view&lt;T&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <h3 id="Notes">Notes</h3> <p>For a <a href="#top"><code>single_view</code></a>, the inherited <code>empty</code> member function always returns <code>false</code>, and the inherited <code>operator bool</code> conversion function always returns <code>true</code>.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;string&gt;
+#include &lt;tuple&gt;
+
+int main()
+{
+    constexpr std::ranges::single_view sv1{3.1415}; // uses (const T&amp;) constructor
+    static_assert(sv1);
+    static_assert(not sv1.empty());
+    
+    std::cout &lt;&lt; "1) *sv1.data(): " &lt;&lt; *sv1.data() &lt;&lt; '\n'
+              &lt;&lt; "2) *sv1.begin(): " &lt;&lt; *sv1.begin() &lt;&lt; '\n'
+              &lt;&lt; "3)  sv1.size(): " &lt;&lt; sv1.size() &lt;&lt; '\n'
+              &lt;&lt; "4)  distance: " &lt;&lt; std::distance(sv1.begin(), sv1.end()) &lt;&lt; '\n';
+    
+    std::string str{"C++20"};
+    std::cout &lt;&lt; "5)  str = " &lt;&lt; std::quoted(str) &lt;&lt; '\n';
+    std::ranges::single_view sv2{std::move(str)}; // uses (T&amp;&amp;) constructor
+    std::cout &lt;&lt; "6) *sv2.data(): " &lt;&lt; std::quoted(*sv2.data()) &lt;&lt; '\n'
+              &lt;&lt; "7)  str = " &lt;&lt; std::quoted(str) &lt;&lt; '\n';
+    
+    std::ranges::single_view&lt;std::tuple&lt;int, double, std::string&gt;&gt;
+        sv3{std::in_place, 42, 3.14, "😄"}; // uses (std::in_place_t, Args&amp;&amp;... args)
+    
+    std::cout &lt;&lt; "8)  sv3 holds a tuple: { "
+              &lt;&lt; std::get&lt;0&gt;(sv3[0]) &lt;&lt; ", "
+              &lt;&lt; std::get&lt;1&gt;(sv3[0]) &lt;&lt; ", "
+              &lt;&lt; std::get&lt;2&gt;(sv3[0]) &lt;&lt; " }\n";
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1) *sv1.data(): 3.1415
+2) *sv1.begin(): 3.1415
+3)  sv1.size(): 1
+4)  distance: 1
+5)  str = "C++20"
+6) *sv2.data(): "C++20"
+7)  str = ""
+8)  sv3 holds a tuple: { 42, 3.14, 😄 }
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3428">LWG 3428</a> </td> <td>C++20 </td> <td>
+<code>single_view</code> was convertible from <code><a href="../utility/in_place" title="cpp/utility/in place">std::in_place_t</a></code> </td> <td>the constructor is made explicit </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue4035">LWG 4035</a> </td> <td>C++20 </td> <td>
+<code>single_view</code> did not provide the member function <code>empty()</code> </td> <td>provides <code>empty()</code> </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2367R0">P2367R0</a> </td> <td>C++20 </td> <td>deduction guides for <code>single_view</code> failed to decay the argument;<br><code>views::single</code> copied but not wrapped a <code>single_view</code> </td> <td>a decaying guide provided;<br>made always wrapping </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../utility/optional" title="cpp/utility/optional"> <span class="t-lines"><span>optional</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>a wrapper that may or may not hold an object <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="empty_view" title="cpp/ranges/empty view"> <span class="t-lines"><span>ranges::empty_view</span><span>views::empty</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>an empty <a href="view" title="cpp/ranges/view"><code>view</code></a> with no elements<br><span class="t-mark">(class template)</span> <span class="t-mark">(variable template)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="split_view" title="cpp/ranges/split view"> <span class="t-lines"><span>ranges::split_view</span><span>views::split</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>a <a href="view" title="cpp/ranges/view"><code>view</code></a> over the subranges obtained from splitting another <a href="view" title="cpp/ranges/view"><code>view</code></a> using a delimiter<br><span class="t-mark">(class template)</span> <span class="t-mark">(range adaptor object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/single_view" class="_attribution-link">https://en.cppreference.com/cpp/ranges/single_view</a>
+  </p>
+</div>

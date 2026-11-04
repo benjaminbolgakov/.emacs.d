@@ -1,0 +1,65 @@
+   <h1 id="firstHeading" class="firstHeading">std::valarray&lt;T&gt;::apply</h1>            <table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">valarray&lt;T&gt; apply( T func(T) ) const;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">valarray&lt;T&gt; apply( T func(const T&amp;) ) const;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Returns a new valarray of the same size with values which are acquired by applying function <code>func</code> to the previous values of the elements.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>func </td> <td>- </td> <td>function to apply to the values </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>The resulting valarray with values acquired by applying function <code>func</code>.</p>
+<h3 id="Notes">Notes</h3> <p>The function can be implemented with the return type different from <code><a href="../valarray" title="cpp/numeric/valarray">std::valarray</a></code>. In this case, the replacement type has the following properties:</p>
+<ul>
+<li>All <span class="k">const</span> member functions of <code><a href="../valarray" title="cpp/numeric/valarray">std::valarray</a></code> are provided.</li> <li>
+<code><a href="../valarray" title="cpp/numeric/valarray">std::valarray</a></code>, <code><a href="slice_array" title="cpp/numeric/valarray/slice array">std::slice_array</a></code>, <code><a href="gslice_array" title="cpp/numeric/valarray/gslice array">std::gslice_array</a></code>, <code><a href="mask_array" title="cpp/numeric/valarray/mask array">std::mask_array</a></code> and <code><a href="indirect_array" title="cpp/numeric/valarray/indirect array">std::indirect_array</a></code> can be constructed from the replacement type.</li> <li>For every function taking a <span class="k">const</span><span class="n">std</span><span class="o">::</span><span class="n">valarray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="t-rev-inl t-since-cxx11"><span>except <a href="begin" title="cpp/numeric/valarray/begin"><code>begin()</code></a> and <a href="end" title="cpp/numeric/valarray/end"><code>end()</code></a></span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>, identical functions taking the replacement types shall be added;</li> <li>For every function taking two <span class="k">const</span><span class="n">std</span><span class="o">::</span><span class="n">valarray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> arguments, identical functions taking every combination of <span class="k">const</span><span class="n">std</span><span class="o">::</span><span class="n">valarray</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> and replacement types shall be added.</li> <li>The return type does not add more than two levels of template nesting over the most deeply-nested argument type.</li>
+</ul> <h3 id="Possible_implementation">Possible implementation</h3> <p>Following straightforward implementations can be replaced by expression templates for a higher efficiency.</p>
+<table class="eq-fun-cpp-table"> <tr> <td> <pre data-language="c">template&lt;class T&gt;
+valarray&lt;T&gt; valarray&lt;T&gt;::apply(T func(T)) const
+{
+    valarray&lt;T&gt; other = *this;
+    for (T&amp; i : other)
+        i = func(i);
+    return other;
+}
+
+template&lt;class T&gt;
+valarray&lt;T&gt; valarray&lt;T&gt;::apply(T func(const T&amp;)) const
+{
+    valarray&lt;T&gt; other = *this;
+    for (T&amp; i : other)
+        i = func(i);
+    return other;
+}
+</pre> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example">
+<p>Calculates and prints the first 10 factorials.</p>
+<pre data-language="c">#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+#include &lt;valarray&gt;
+
+int main()
+{
+    std::valarray&lt;int&gt; v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    v = v.apply([](int n) -&gt; int
+                {
+                    return std::round(std::tgamma(n + 1));
+                });
+    for (auto n : v)
+        std::cout &lt;&lt; n &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1 2 6 24 120 720 5040 40320 362880 3628800
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../algorithm/for_each" title="cpp/algorithm/for each"> <span class="t-lines"><span>for_each</span></span></a></div> </td> <td rowspan="2">applies a unary <a href="../../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> to elements from a <a href="../../iterator#Ranges" title="cpp/iterator">range</a><br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../algorithm/ranges/for_each" title="cpp/algorithm/ranges/for each"> <span class="t-lines"><span>ranges::for_each</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../algorithm/ranges/for_each" title="cpp/algorithm/ranges/for each"> <span class="t-lines"><span>ranges::for_each</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>applies a unary <a href="../../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> to elements from a <a href="../../iterator#Ranges" title="cpp/iterator">range</a><br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/numeric/valarray/apply" class="_attribution-link">https://en.cppreference.com/cpp/numeric/valarray/apply</a>
+  </p>
+</div>

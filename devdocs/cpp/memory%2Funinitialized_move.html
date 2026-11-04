@@ -1,0 +1,140 @@
+   <h1 id="firstHeading" class="firstHeading">std::uninitialized_move</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/memory" title="cpp/header/memory">&lt;memory&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">template&lt; class InputIt, class NoThrowForwardIt &gt;
+NoThrowForwardIt uninitialized_move( InputIt first, InputIt last,
+                                     NoThrowForwardIt d_first );
+</pre>
+</td> <td> (1)</td> <td>
+<span class="t-mark-rev t-since-cxx17">(since C++17)</span> <br><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class ExecutionPolicy,
+          class ForwardIt, class NoThrowForwardIt &gt;
+NoThrowForwardIt uninitialized_move( ExecutionPolicy&amp;&amp; policy,
+                                     ForwardIt first, ForwardIt last,
+                                     NoThrowForwardIt d_first );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Constructs elements in the destination range beginning at <code>d_first</code> from elements in the source range <code>[</code><code>first</code><code>, </code><code>last</code><code>)</code> as if by <p><code> <span class="k">for</span><span class="p">(;</span><span class="n">first</span><span class="o">!=</span><span class="n">last</span><span class="p">;</span><span class="o">++</span><span class="n">d_first</span><span class="p">,</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="o">++</span><span class="n">first</span><span class="p">)</span><br>     <span class="o">::</span><span class="k">new</span><span class="p">(</span><a href="voidify" title="cpp/memory/voidify">voidify</a><span class="p">(</span><span class="o">*</span><span class="n">d_first</span><span class="p">))</span><br>         <span class="k">typename</span><span class="nc">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">NoThrowForwardIt</span><span class="o">&gt;::</span><span class="n">value_type</span><span class="p">(</span><a href="deref-move" title="cpp/memory/deref-move">deref-move</a><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">));</span><br> <span class="k">return</span><span class="n">d_first</span><span class="p">;</span> </code></p>
+</div> <div class="t-li1">
+ If an exception is thrown during the initialization, some objects in <code>[</code><code>first</code><code>, </code><code>last</code><code>)</code> are left in a valid but unspecified state, and the objects already constructed are destroyed in an unspecified order.</div> <div class="t-li1">
+<span class="t-li">2)</span> Same as <span class="t-v">(1)</span>, but executed according to <code>policy</code>.</div> <div class="t-li1">
+ This overload participates in overload resolution only if the value of the following expression is <code>true</code>: <table class="t-rev-begin"> <tr class="t-rev t-until-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-until-cxx20">(until C++20)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table>
+</div> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx20">
+<td> <p>If <code>d_first</code><code> + </code><code>[</code><code>0</code><code>, </code><code>std::distance(first, last)</code><code>)</code> overlaps with <code>[</code><code>first</code><code>, </code><code>last</code><code>)</code>, the behavior is undefined.</p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>first, last </td> <td>- </td> <td>the pair of iterators defining the <a href="../iterator#Ranges" title="cpp/iterator">range</a> of elements to move </td>
+</tr> <tr class="t-par"> <td>d_first </td> <td>- </td> <td>the beginning of the destination range </td>
+</tr> <tr class="t-par"> <td>policy </td> <td>- </td> <td>the <a href="../algorithm/execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">execution policy</a> to use </td>
+</tr> <tr class="t-par-hitem"> <td colspan="3">Type requirements </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>InputIt</code> must meet the requirements of <a href="../named_req/inputiterator" title="cpp/named req/InputIterator">LegacyInputIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>ForwardIt</code> must meet the requirements of <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>NoThrowForwardIt</code> must meet the requirements of <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-No increment, assignment, comparison, or indirection through valid instances of <code>NoThrowForwardIt</code> may throw exceptions. </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>As described above.</p>
+<h3 id="Exceptions">Exceptions</h3> <span class="t-li">2)</span> During the execution process: <ul>
+<li>If the temporary memory resources required for parallelization are not available, <a href="new/bad_alloc" title="cpp/memory/new/bad alloc"><code>std::bad_alloc</code></a> is thrown.</li> <li>If an uncaught exception is thrown while accessing objects via an algorithm argument, the behavior is determined by the execution policy (for <a href="../algorithm/execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">standard policies</a>, <a href="../error/terminate" title="cpp/error/terminate"><code>std::terminate</code></a> is invoked).</li>
+</ul> <h3 id="Notes">Notes</h3> <p>When the input iterator deferences to an rvalue, the behavior of <code>std::uninitialized_move</code> is same as <code><a href="uninitialized_copy" title="cpp/memory/uninitialized copy">std::uninitialized_copy</a></code>.</p>
+<table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_raw_memory_algorithms" title="cpp/feature test"><code>__cpp_lib_raw_memory_algorithms</code></a></td> <td><a href="../compiler_support/26#cpp_lib_raw_memory_algorithms_202411L" title="cpp/compiler support/26"><code>202411L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>
+<span class="k">constexpr</span> for <a href="../algorithm/memory" title="cpp/algorithm/memory">specialized <code>&lt;memory&gt;</code> algorithms</a>, <span class="t-v">(<a href="#Version_1">1</a>)</span> </td>
+</tr>
+</table> <h3 id="Possible_implementation">Possible implementation</h3> <table class="eq-fun-cpp-table"> <tr> <td> <pre data-language="c">template&lt;class InputIt, class NoThrowForwardIt&gt;
+constexpr NoThrowForwardIt uninitialized_move(InputIt first, InputIt last,
+                                              NoThrowForwardIt d_first)
+{
+    using ValueType = typename std::iterator_traits&lt;NoThrowForwardIt&gt;::value_type;
+    auto current = d_first;
+    try
+    {
+        for (; first != last; ++first, (void) ++current)
+        {
+            auto addr = static_cast&lt;void*&gt;(std::addressof(*current));
+            if constexpr (std::is_lvalue_reference_v&lt;decltype(*first)&gt;)
+                ::new (addr) ValueType(std::move(*first));
+            else
+                ::new (addr) ValueType(*first);
+        }
+        return current;
+    }
+    catch (...)
+    {
+        std::destroy(d_first, current);
+        throw;
+    }
+}
+</pre> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cstdlib&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+
+void print(auto rem, auto first, auto last)
+{
+    for (std::cout &lt;&lt; rem; first != last; ++first)
+        std::cout &lt;&lt; std::quoted(*first) &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+
+int main()
+{
+    std::string in[]{"Home", "Work!"};
+    print("initially, in: ", std::begin(in), std::end(in));
+    
+    if (constexpr auto sz = std::size(in);
+        void* out = std::aligned_alloc(alignof(std::string), sizeof(std::string) * sz))
+    {
+        try
+        {
+            auto first{static_cast&lt;std::string*&gt;(out)};
+            auto last{first + sz};
+            std::uninitialized_move(std::begin(in), std::end(in), first);
+            
+            print("after move, in: ", std::begin(in), std::end(in));
+            print("after move, out: ", first, last);
+            
+            std::destroy(first, last);
+        }
+        catch (...)
+        {
+            std::cout &lt;&lt; "Exception!\n";
+        }
+        std::free(out);
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">initially, in: "Home" "Work!"
+after move, in: "" ""
+after move, out: "Home" "Work!"
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3918">LWG 3918</a> </td> <td>C++17 </td> <td>move constuction is always performed even<br>if the input iterator deferences to a prvalue </td> <td>no move construction<br>in this case </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="uninitialized_copy" title="cpp/memory/uninitialized copy"> <span class="t-lines"><span>uninitialized_copy</span></span></a></div> </td> <td rowspan="2">copies a range of objects to an uninitialized area of memory<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/uninitialized_copy" title="cpp/memory/ranges/uninitialized copy"> <span class="t-lines"><span>ranges::uninitialized_copy</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="uninitialized_move_n" title="cpp/memory/uninitialized move n"> <span class="t-lines"><span>uninitialized_move_n</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td rowspan="2">moves a number of objects to an uninitialized area of memory<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/uninitialized_move_n" title="cpp/memory/ranges/uninitialized move n"> <span class="t-lines"><span>ranges::uninitialized_move_n</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/uninitialized_move" title="cpp/memory/ranges/uninitialized move"> <span class="t-lines"><span>ranges::uninitialized_move</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>moves a range of objects to an uninitialized area of memory<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/uninitialized_move" class="_attribution-link">https://en.cppreference.com/cpp/memory/uninitialized_move</a>
+  </p>
+</div>

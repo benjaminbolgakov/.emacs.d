@@ -1,0 +1,38 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_stacktrace&lt;Allocator&gt;::rend, std::basic_stacktrace&lt;Allocator&gt;::crend</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">const_reverse_iterator rend()  const noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">const_reverse_iterator crend() const noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>Returns a reverse iterator pointing past the last entry of the reversed <code>basic_stacktrace</code>. It corresponds to the iterator preceding the first entry of the original <code>basic_stacktrace</code>. This iterator acts as a placeholder, attempting to dereference it results in undefined behavior.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-rbegin-rend.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/3/39/range-rbegin-rend.svg" decoding="async" width="589" height="250" class="mw-file-element"></a></span></p>
+<h3 id="Parameters">Parameters</h3> <p>(none)</p>
+<h3 id="Return_value">Return value</h3> <p>The end iterator of the reversed <code>basic_stacktrace</code>.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;stacktrace&gt;
+
+int main()
+{
+    auto trace       = std::stacktrace::current();
+    auto empty_trace = std::stacktrace{};
+
+    // Print stacktrace.
+    std::for_each(trace.rbegin(), trace.rend(),
+                  [](const auto&amp; f) { std::cout &lt;&lt; f &lt;&lt; '\n'; });
+
+    if (empty_trace.rbegin() == empty_trace.rend())
+        std::cout &lt;&lt; "stacktrace 'empty_trace' is indeed empty.\n";
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">0x0000000000402A29 in ./prog.exe
+__libc_start_main in /lib/x86_64-linux-gnu/libc.so.6
+0x0000000000402BA5 in ./prog.exe
+stacktrace 'empty_trace' is indeed empty.
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="rbegin" title="cpp/utility/basic stacktrace/rbegin"> <span class="t-lines"><span>rbegin</span><span>crbegin</span></span></a></div> </td> <td>returns a reverse iterator to the beginning <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/basic_stacktrace/rend" class="_attribution-link">https://en.cppreference.com/cpp/utility/basic_stacktrace/rend</a>
+  </p>
+</div>

@@ -1,0 +1,142 @@
+   <h1 id="firstHeading" class="firstHeading">std::variant&lt;Types...&gt;::operator=</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr variant&amp; operator=( const variant&amp; rhs );
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr variant&amp; operator=( variant&amp;&amp; rhs ) noexcept(/* see below */);
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">template&lt; class T &gt;
+variant&amp; operator=( T&amp;&amp; t ) noexcept(/* see below */);
+</pre>
+</td> <td> (3)</td> <td>
+<span class="t-mark-rev t-since-cxx17">(since C++17)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr>  </table> <p>Assigns a new value to an existing <code>variant</code> object.</p>
+<span class="t-li">1)</span> Copy-assignment: <ul>
+<li>If both <code>*this</code> and <code>rhs</code> are valueless by exception, does nothing.</li> <li>Otherwise, if <code>rhs</code> is valueless, but <code>*this</code> is not, destroys the value contained in <code>*this</code> and makes it valueless.</li> <li>Otherwise, if <code>rhs</code> holds the same alternative as <code>*this</code>, assigns the value contained in <code>rhs</code> to the value contained in <code>*this</code>. If an exception is thrown, <code>*this</code> does not become valueless: the value depends on the exception safety guarantee of the alternative's copy assignment.</li> <li>Otherwise, if the alternative held by <code>rhs</code> is either nothrow copy constructible or <i>not</i> nothrow move constructible (as determined by <code><a href="../../types/is_copy_constructible" title="cpp/types/is copy constructible">std::is_nothrow_copy_constructible</a></code> and <code><a href="../../types/is_move_constructible" title="cpp/types/is move constructible">std::is_nothrow_move_constructible</a></code>, respectively), equivalent to <code>this-&gt;emplace&lt;rhs.index()&gt;(*std::get_if&lt;rhs.index()&gt;(std::addressof(rhs)))</code>. <code>*this</code> may become <a href="valueless_by_exception" title="cpp/utility/variant/valueless by exception"><code>valueless_by_exception</code></a> if an exception is thrown on the copy-construction inside <a href="emplace" title="cpp/utility/variant/emplace"><code>emplace</code></a>.</li> <li>Otherwise, equivalent to <code>this-&gt;operator=(variant(rhs))</code>.</li>
+</ul> <div class="t-li1">
+ This overload is defined as deleted unless <code>std::is_copy_constructible_v&lt;T_i&gt;</code> and <code>std::is_copy_assignable_v&lt;T_i&gt;</code> are both <code>true</code> for all <code>T_i</code> in <code>Types...</code>. This overload is trivial if <code>std::is_trivially_copy_constructible_v&lt;T_i&gt;</code>,<code>std::is_trivially_copy_assignable_v&lt;T_i&gt;</code> and <code>std::is_trivially_destructible_v&lt;T_i&gt;</code> are all <code>true</code> for all <code>T_i</code> in <code>Types...</code>.</div> <span class="t-li">2)</span> Move-assignment: <ul>
+<li>If both <code>*this</code> and <code>rhs</code> are valueless by exception, does nothing.</li> <li>Otherwise, if <code>rhs</code> is valueless, but <code>*this</code> is not, destroys the value contained in <code>*this</code> and makes it valueless.</li> <li>Otherwise, if <code>rhs</code> holds the same alternative as <code>*this</code>, assigns <code>std::move(*std::get_if&lt;j&gt;(std::addressof(rhs)))</code> to the value contained in <code>*this</code>, with <code>j</code> being <code>index()</code>. If an exception is thrown, <code>*this</code> does not become valueless: the value depends on the exception safety guarantee of the alternative's move assignment.</li> <li>Otherwise (if <code>rhs</code> and <code>*this</code> hold different alternatives), equivalent to <code>this-&gt;emplace&lt;rhs.index()&gt;(std::move(*std::get_if&lt;rhs.index()&gt;(std::addressof(rhs))))</code>. If an exception is thrown by <code>T_i</code>'s move constructor, <code>*this</code> becomes <a href="valueless_by_exception" title="cpp/utility/variant/valueless by exception"><code>valueless_by_exception</code></a>.</li>
+</ul> <div class="t-li1">
+ This overload participates in overload resolution only if <code>std::is_move_constructible_v&lt;T_i&gt;</code> and <code>std::is_move_assignable_v&lt;T_i&gt;</code> are both <code>true</code> for all <code>T_i</code> in <code>Types...</code>. This overload is trivial if <code>std::is_trivially_move_constructible_v&lt;T_i&gt;</code>, <code>std::is_trivially_move_assignable_v&lt;T_i&gt;</code>, and <code>std::is_trivially_destructible_v&lt;T_i&gt;</code> are all <code>true</code> for all <code>T_i</code> in <code>Types...</code>.</div> <span class="t-li">3)</span> Converting assignment. <ul>
+<li>Determines the alternative type <code>T_j</code> that would be selected by overload resolution for the expression <code>F(std::forward&lt;T&gt;(t))</code> if there was an overload of imaginary function <code>F(T_i)</code> for every <code>T_i</code> from <code>Types...</code> in scope at the same time, except that:</li>
+<ul><li>An overload <code>F(T_i)</code> is only considered if the declaration <code>T_i x[] = { std::forward&lt;T&gt;(t) };</code> is valid for some invented variable <code>x</code>;</li></ul>
+<li>If <code>*this</code> already holds a <code>T_j</code>, assigns <code>std::forward&lt;T&gt;(t)</code> to the value contained in <code>*this</code>. If an exception is thrown, <code>*this</code> does not become valueless: the value depends on the exception safety guarantee of the assignment called.</li> <li>Otherwise, if <code>std::is_nothrow_constructible_v&lt;T_j, T&gt; || !std::is_nothrow_move_constructible_v&lt;T_j&gt;</code> is <code>true</code>, equivalent to <code>this-&gt;emplace&lt;j&gt;(std::forward&lt;T&gt;(t))</code>. <code>*this</code> may become <a href="valueless_by_exception" title="cpp/utility/variant/valueless by exception"><code>valueless_by_exception</code></a> if an exception is thrown on the initialization inside <a href="emplace" title="cpp/utility/variant/emplace"><code>emplace</code></a>.</li> <li>Otherwise, equivalent to <code>this-&gt;emplace&lt;j&gt;(T_j(std::forward&lt;T&gt;(t)))</code>.</li>
+</ul>   <p>This overload participates in overload resolution only if <span class="t-rev-inl t-until-cxx20"><span><code>std::decay_t&lt;T&gt;</code></span><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span><span class="t-rev-inl t-since-cxx20"><span><code>std::remove_cvref_t&lt;T&gt;</code></span><span><span class="t-mark-rev t-since-cxx20">(since C++20)</span></span></span> is not the same type as <a href="../variant" title="cpp/utility/variant"><code>variant</code></a> and <code>std::is_assignable_v&lt;T_j&amp;, T&gt;</code> is <code>true</code> and <code>std::is_constructible_v&lt;T_j, T&gt;</code> is <code>true</code> and the expression <code>F(std::forward&lt;T&gt;(t))</code> (with F being the above-mentioned set of imaginary functions) is well formed.</p>
+<pre data-language="c">std::variant&lt;std::string&gt; v1;
+v1 = "abc"; // OK
+std::variant&lt;std::string, std::string&gt; v2;
+v2 = "abc"; // Error
+std::variant &lt;std::string, bool&gt; v3;
+v3 = "abc"; // OK, chooses string; bool is not a candidate
+std::variant&lt;float, long, double&gt; v4; // holds float
+v4 = 0; // OK, holds long; float and double are not candidates
+</pre>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>rhs </td> <td>- </td> <td>another <code>variant</code> </td>
+</tr> <tr class="t-par"> <td>t </td> <td>- </td> <td>a value convertible to one of the variant's alternatives </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+<h3 id="Exceptions">Exceptions</h3> <div class="t-li1">
+<span class="t-li">1)</span> May throw any exception thrown by assignment and copy/move initialization of any alternative.</div> <div class="t-li1">
+<span class="t-li">2)</span> <div class="t-noexcept-full">
+<a href="../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(((std::is_nothrow_move_constructible_v&lt;Types&gt; &amp;&amp;
+           std::is_nothrow_move_assignable_v&lt;Types&gt;) &amp;&amp; ...))
+</pre>
+</div>
+</div>
+</div> <div class="t-li1">
+<span class="t-li">3)</span> <div class="t-noexcept-full">
+<a href="../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(std::is_nothrow_assignable_v&lt;T_j&amp;, T&gt; &amp;&amp;
+         std::is_nothrow_constructible_v&lt;T_j, T&gt;)
+</pre>
+</div>
+</div>
+</div> <h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../../feature_test#cpp_lib_variant" title="cpp/feature test"><code>__cpp_lib_variant</code></a></td> <td><a href="../../compiler_support/20#cpp_lib_variant_202106L" title="cpp/compiler support/20"><code>202106L</code></a></td> <td>
+<span class="t-mark">(C++20)</span><br><span class="t-mark">(DR)</span>
+</td> <td>Fully <span class="k">constexpr</span> <code>std::variant</code> <span class="t-v">(<a href="#Version_3">3</a>)</span> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;type_traits&gt;
+#include &lt;variant&gt;
+ 
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, std::variant&lt;int, std::string&gt; const&amp; va)
+{
+    os &lt;&lt; ": { ";
+ 
+    std::visit([&amp;](auto&amp;&amp; arg)
+    {
+        using T = std::decay_t&lt;decltype(arg)&gt;;
+        if constexpr (std::is_same_v&lt;T, int&gt;)
+            os &lt;&lt; arg;
+        else if constexpr (std::is_same_v&lt;T, std::string&gt;)
+            os &lt;&lt; std::quoted(arg);
+    }, va);
+ 
+    return os &lt;&lt; " };\n";
+}
+ 
+int main()
+{
+    std::variant&lt;int, std::string&gt; a{2017}, b{"CppCon"};
+    std::cout &lt;&lt; "a" &lt;&lt; a &lt;&lt; "b" &lt;&lt; b &lt;&lt; '\n';
+ 
+    std::cout &lt;&lt; "(1) operator=( const variant&amp; rhs )\n";
+    a = b;
+    std::cout &lt;&lt; "a" &lt;&lt; a &lt;&lt; "b" &lt;&lt; b &lt;&lt; '\n';
+ 
+    std::cout &lt;&lt; "(2) operator=( variant&amp;&amp; rhs )\n";
+    a = std::move(b);
+    std::cout &lt;&lt; "a" &lt;&lt; a &lt;&lt; "b" &lt;&lt; b &lt;&lt; '\n';
+ 
+    std::cout &lt;&lt; "(3) operator=( T&amp;&amp; t ), where T is int\n";
+    a = 2019;
+    std::cout &lt;&lt; "a" &lt;&lt; a &lt;&lt; '\n';
+ 
+    std::cout &lt;&lt; "(3) operator=( T&amp;&amp; t ), where T is std::string\n";
+    std::string s{"CppNow"};
+    std::cout &lt;&lt; "s: " &lt;&lt; std::quoted(s) &lt;&lt; '\n';
+    a = std::move(s);
+    std::cout &lt;&lt; "a" &lt;&lt; a &lt;&lt; "s: " &lt;&lt; std::quoted(s) &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">a: { 2017 };
+b: { "CppCon" };
+
+(1) operator=( const variant&amp; rhs )
+a: { "CppCon" };
+b: { "CppCon" };
+
+(2) operator=( variant&amp;&amp; rhs )
+a: { "CppCon" };
+b: { "" };
+
+(3) operator=( T&amp;&amp; t ), where T is int
+a: { 2019 };
+
+(3) operator=( T&amp;&amp; t ), where T is std::string
+s: "CppNow"
+a: { "CppNow" };
+s: ""
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3024">LWG 3024</a> </td> <td>C++17 </td> <td>copy assignment operator doesn't participate in overload resolution<br>if any member type is not copyable </td> <td>defined as deleted instead </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3585">LWG 3585</a> </td> <td>C++17 </td> <td>converting assignment was sometimes unexpectedly ill-formed<br>because there was no available move assignment </td> <td>made well-formed </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P0602R4">P0602R4</a> </td> <td>C++17 </td> <td>copy/move assignment may not be trivial<br>even if underlying operations are trivial </td> <td>required to propagate triviality </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P0608R3">P0608R3</a> </td> <td>C++17 </td> <td>converting assignment blindly assembles an overload set,<br>leading to unintended conversions </td> <td>narrowing and boolean conversions<br>not considered </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2231R1">P2231R1</a> </td> <td>C++20 </td> <td>converting assignment <span class="t-v">(<a href="#Version_3">3</a>)</span> was not <span class="k">constexpr</span><br>while the required operations can be <span class="k">constexpr</span> in C++20 </td> <td>made <span class="k">constexpr</span> </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="emplace" title="cpp/utility/variant/emplace"> <span class="t-lines"><span>emplace</span></span></a></div> </td> <td>constructs a value in the <code>variant</code>, in place <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/variant/operator%3D" class="_attribution-link">https://en.cppreference.com/cpp/utility/variant/operator%3D</a>
+  </p>
+</div>

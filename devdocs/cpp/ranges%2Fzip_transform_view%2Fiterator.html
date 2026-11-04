@@ -1,0 +1,71 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::zip_transform_view&lt;F,Views...&gt;::<i>iterator</i>
+</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td><pre data-language="c">template&lt; bool Const &gt;
+class /*iterator*/;
+</pre></td> <td class="t-dcl-nopad"> </td> <td>
+<span class="t-mark-rev t-since-cxx23">(since C++23)</span> <br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span>
+</td> </tr>  </table> <p>The iterator type of a possibly const-qualified <code>zip_transform_view</code>, returned by <a href="begin" title="cpp/ranges/zip transform view/begin"><code>zip_transform_view::begin</code></a> and in certain cases by <a href="end" title="cpp/ranges/zip transform view/end"><code>zip_transform_view::end</code></a>.</p>
+<p>The type <code>/*iterator*/&lt;true&gt;</code> or <code>/*iterator*/&lt;false&gt;</code> treats the underlying views as const-qualified or non-const-qualified respectively.</p>
+<h3 id="Member_types">Member types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>Parent</i></code> <span class="t-mark">(private)</span> </td> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../../ranges#maybe-const" title="cpp/ranges">maybe-const</a></i></code> ﻿<span class="o">&lt;</span><span class="n">Const</span><span class="p">,</span><span class="n">zip_transform_view</span><span class="o">&gt;</span><br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member type*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>Base</i></code> <span class="t-mark">(private)</span> </td> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../../ranges#maybe-const" title="cpp/ranges">maybe-const</a></i></code> ﻿<span class="o">&lt;</span><span class="n">Const</span><span class="p">,</span><span class="n">InnerView</span><span class="o">&gt;</span><br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member type*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_category</code><br><span class="t-mark">(conditionally present)</span> </td> <td> <p>Let <code>/*POT*/</code> denote the pack of types</p>
+<pre data-language="c">std::iterator_traits&lt;std::iterator_t&lt;
+    /*maybe-const*/&lt;Const, Views&gt;&gt;&gt;::iterator_category...
+</pre> <p>If <code>/*Base*/</code> models <a href="../forward_range" title="cpp/ranges/forward range"><code>forward_range</code></a>, then <code>iterator_category</code> denotes:</p>
+<ul>
+<li>
+<code><a href="../../iterator/iterator_tags" title="cpp/iterator/iterator tags">std::input_iterator_tag</a></code>, if <pre data-language="c">std::invoke_result_t&lt;/*maybe-const*/&lt;Const, F&gt;&amp;,
+    ranges::range_reference_t&lt;/*maybe-const*/&lt;Const, Views&gt;&gt;...&gt;
+</pre>
+</li>
+<li>Otherwise,</li>
+<li>
+<code><a href="../../iterator/iterator_tags" title="cpp/iterator/iterator tags">std::random_access_iterator_tag</a></code>, if<br>
+</li>
+</ul> is not a reference.   <code>(std::derived_from&lt;/*POT*/, std::random_access_iterator_tag&gt; &amp;&amp; ...)</code> is <code>true</code>.<br> <ul><li>Otherwise, <code><a href="../../iterator/iterator_tags" title="cpp/iterator/iterator tags">std::bidirectional_iterator_tag</a></code>, if<br>
+</li></ul> <code>(std::derived_from&lt;/*POT*/, std::bidirectional_iterator_tag&gt; &amp;&amp; ...)</code> is <code>true</code>.<br> <ul><li>Otherwise, <code><a href="../../iterator/iterator_tags" title="cpp/iterator/iterator tags">std::forward_iterator_tag</a></code>, if<br>
+</li></ul> <code>(std::derived_from&lt;/*POT*/, std::forward_iterator_tag&gt; &amp;&amp; ...)</code> is <code>true</code>.<br> <ul><li>Otherwise, <code><a href="../../iterator/iterator_tags" title="cpp/iterator/iterator tags">std::input_iterator_tag</a></code>.</li></ul> <p>Not present if <code>/*Base*/</code> does not model <a href="../forward_range" title="cpp/ranges/forward range"><code>forward_range</code></a>.</p>
+</td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_concept</code> </td> <td>
+<code>/*ziperator*/&lt;Const&gt;::iterator_concept</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value_type</code> </td> <td> <p>Let <code>/*RREF*/</code> be <code>ranges::range_reference_t&lt;Views&gt;...</code>,<br> and <code>/*CRREF*/</code> be <code>ranges::range_reference_t&lt;const Views&gt;...</code>. Then:</p>
+<ul>
+<li>
+<code>std::remove_cvref_t&lt;std::invoke_result_t&lt;F&amp;, /*RREF*/&gt;&gt;</code> if <code>Const</code> is <code>false</code>,</li> <li>
+<code>std::remove_cvref_t&lt;std::invoke_result_t&lt;const F&amp;, /*CRREF*/&gt;&gt;</code> otherwise.</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>difference_type</code> </td> <td>
+<code>range::range_difference_t&lt;/*Base*/&gt;</code> </td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><a href="#Member_types"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>Parent*</i></code></a></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>parent_</i></code> <span class="t-mark">(private)</span> </td> <td>a pointer to the parent object<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><a href="../zip_transform_view#Member_types" title="cpp/ranges/zip transform view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ziperator&lt;Const&gt;</i></code></a></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>inner_</i></code> <span class="t-mark">(private)</span> </td> <td>an iterator<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="iterator/iterator" title="cpp/ranges/zip transform view/iterator/iterator"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs an iterator <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iterator/operator*" title="cpp/ranges/zip transform view/iterator/operator*"> <span class="t-lines"><span>operator*</span></span></a></div> </td> <td>obtains the result of applying the invocable object to the underlying pointed-to elements <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iterator/operator_at" title="cpp/ranges/zip transform view/iterator/operator at"> <span class="t-lines"><span>operator[]</span></span></a></div> </td> <td>obtains the result of applying the invocable object to the underlying elements at given offset <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iterator/operator_arith" title="cpp/ranges/zip transform view/iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++(int)</span><span>operator--</span><span>operator--(int)</span><span>operator+=</span><span>operator-=</span></span></a></div> </td> <td>advances or decrements the underlying iterator <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <h3 id="Non-member_functions">Non-member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="iterator/operator_cmp" title="cpp/ranges/zip transform view/iterator/operator cmp"> <span class="t-lines"><span>operator==</span><span>operator&lt;=&gt;</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>compares the underlying iterators <br> <span class="t-mark">(function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iterator/operator_arith2" title="cpp/ranges/zip transform view/iterator/operator arith2"> <span class="t-lines"><span>operator+</span><span>operator-</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>performs iterator arithmetic on underlying iterators <br> <span class="t-mark">(function)</span> </td>
+</tr> </table> <h3 id="Example">Example</h3>     </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/zip_transform_view/iterator" class="_attribution-link">https://en.cppreference.com/cpp/ranges/zip_transform_view/iterator</a>
+  </p>
+</div>

@@ -1,0 +1,21 @@
+   <h1 id="firstHeading" class="firstHeading">deduction guides for <code>std::extents</code>
+</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../../header/mdspan" title="cpp/header/mdspan">&lt;mdspan&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">template&lt; class... Integrals &gt;
+explicit extents( Integrals... ) -&gt; /* see below */;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>A <a href="../../../language/class_template_argument_deduction" title="cpp/language/class template argument deduction">deduction guide</a> is provided for <code>std::extents</code> to allow deduction from integral arguments.</p>
+<p>The deduced type is equivalent to</p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx26">
+<td> <p><code>std::dextents&lt;std::size_t, sizeof...(Integrals)&gt;</code></p>
+</td> <td><span class="t-mark-rev t-until-cxx26">(until C++26)</span></td>
+</tr> <tr class="t-rev t-since-cxx26">
+<td> <p><code><span class="n">std</span><span class="o">::</span><span class="n">extents</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">,</span> <a href="../../../header/span#Synopsis" title="cpp/header/span">maybe-static-ext</a> ﻿<span class="o">&lt;</span><span class="n">Integrals</span><span class="o">&gt;</span><span class="p">...</span><span class="o">&gt;</span></code></p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <p>This overload participates in overload resolution only if <code>(std::is_convertible_v&lt;Integrals, std::size_t&gt; &amp;&amp; ...)</code> is <code>true</code>.</p>
+<h3 id="Example">Example</h3>  <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="extents" title="cpp/container/mdspan/extents/extents"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs an <code>extents</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/mdspan/extents/deduction_guides" class="_attribution-link">https://en.cppreference.com/cpp/container/mdspan/extents/deduction_guides</a>
+  </p>
+</div>

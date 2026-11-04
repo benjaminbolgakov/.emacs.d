@@ -1,0 +1,83 @@
+   <h1 id="firstHeading" class="firstHeading">std::bad_weak_ptr</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/memory" title="cpp/header/memory">&lt;memory&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">class bad_weak_ptr;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p><code>std::bad_weak_ptr</code> is the type of the object thrown as exceptions by the constructors of <code><a href="shared_ptr" title="cpp/memory/shared ptr">std::shared_ptr</a></code> that take <code><a href="weak_ptr" title="cpp/memory/weak ptr">std::weak_ptr</a></code> as the argument, when the <code><a href="weak_ptr" title="cpp/memory/weak ptr">std::weak_ptr</a></code> refers to an already deleted object.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/6/62/std-bad_weak_ptr-inheritance.svg" decoding="async" width="243" height="40" class="mw-file-element" usemap="#ImageMap_03d43e23e22f8885"></span><map name="ImageMap_03d43e23e22f8885"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>(constructor)</span></span></div> </td> <td>constructs a new <code>bad_weak_ptr</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>operator=</span></span></div> </td> <td>replaces the <code>bad_weak_ptr</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>what</span></span></div> </td> <td>returns the explanatory string <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <div class="t-member"> <h2 id="std::bad_weak_ptr::bad_weak_ptr">std::bad_weak_ptr::bad_weak_ptr</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">bad_weak_ptr() noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">bad_weak_ptr( const bad_weak_ptr&amp; other ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Constructs a new <code>bad_weak_ptr</code> object with an implementation-defined null-terminated byte string which is accessible through <a href="../error/exception/what" title="cpp/error/exception/what"><code>what()</code></a>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Default constructor.</div> <div class="t-li1">
+<span class="t-li">2)</span> Copy constructor. If <code>*this</code> and <code>other</code> both have dynamic type <code>std::bad_weak_ptr</code> then <code>std::strcmp(what(), other.what()) == 0</code>.</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to copy </td>
+</tr>
+</table> </div> <div class="t-member"> <h2 id="std::bad_weak_ptr::operator=">std::bad_weak_ptr::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">bad_weak_ptr&amp; operator=( const bad_weak_ptr&amp; other ) noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Assigns the contents with those of <code>other</code>.If <code>*this</code> and <code>other</code> both have dynamic type <code>std::bad_weak_ptr</code> then <code>std::strcmp(what(), other.what()) == 0</code> after assignment.</p>
+<h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to assign with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+</div> <div class="t-member"> <h2 id="std::bad_weak_ptr::what">std::bad_weak_ptr::what</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">virtual const char* what() const noexcept;
+</pre></td> <td class="t-dcl-nopad"> </td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span>
+</td> </tr>  </table> <p>Returns the explanatory string.</p>
+<h3 id="Return_value_2">Return value</h3> <p>Pointer to an implementation-defined null-terminated string with explanatory information. The string is suitable for conversion and display as a <code><a href="../string/basic_string" title="cpp/string/basic string">std::wstring</a></code>. The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function (e.g. copy assignment operator) on the exception object is called.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>The returned string is encoded with the ordinary literal encoding during constant evaluation.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <h3 id="Notes">Notes</h3> <p>Implementations are allowed but not required to override <code>what()</code>.</p>
+</div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="../error/exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Notes_2">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_constexpr_memory" title="cpp/feature test"><code>__cpp_lib_constexpr_memory</code></a></td> <td><a href="../compiler_support/26#cpp_lib_constexpr_memory_202506L" title="cpp/compiler support/26"><code>202506L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>Constexpr <code>std::bad_weak_ptr</code> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+int main()
+{
+    std::shared_ptr&lt;int&gt; p1(new int(42));
+    std::weak_ptr&lt;int&gt; wp(p1);
+    p1.reset();
+    try
+    {
+        std::shared_ptr&lt;int&gt; p2(wp);
+    }
+    catch (const std::bad_weak_ptr&amp; e)
+    {
+        std::cout &lt;&lt; e.what() &lt;&lt; '\n';
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">std::bad_weak_ptr
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2376">LWG 2376</a> </td> <td>C++11 </td> <td>calling <code>what</code> on a default-constructed <code>bad_weak_ptr</code><br>was required to return <code>"bad_weak_ptr"</code> </td> <td>the return value is implementation-defined </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="shared_ptr" title="cpp/memory/shared ptr"> <span class="t-lines"><span>shared_ptr</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>smart pointer with shared object ownership semantics <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="weak_ptr" title="cpp/memory/weak ptr"> <span class="t-lines"><span>weak_ptr</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>weak reference to an object managed by <code><a href="shared_ptr" title="cpp/memory/shared ptr">std::shared_ptr</a></code> <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/bad_weak_ptr" class="_attribution-link">https://en.cppreference.com/cpp/memory/bad_weak_ptr</a>
+  </p>
+</div>

@@ -1,0 +1,115 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::for_each_n, std::ranges::for_each_n_result</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/algorithm" title="cpp/header/algorithm">&lt;algorithm&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; std::input_iterator I, class Proj = std::identity,
+          std::indirectly_unary_invocable&lt;std::projected&lt;I, Proj&gt;&gt; Fun &gt;
+constexpr for_each_n_result&lt;I, Fun&gt;
+    for_each_n( I first, std::iter_difference_t&lt;I&gt; count,
+                Fun f, Proj proj = {} );
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx26"> <td> <pre data-language="c">template&lt; /*execution-policy*/ Ep,
+          std::random_access_iterator I, class Proj = identity,
+          std::indirectly_unary_invocable&lt;std::projected&lt;I, Proj&gt;&gt; Fun &gt;
+I for_each_n( Ep&amp;&amp; policy, I first, iter_difference_t&lt;I&gt; count,
+              Fun f, Proj proj = {} );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx26">(since C++26)</span> </td> </tr> <tr class="t-dcl-h"> <td> Helper types</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class I, class F &gt;
+using for_each_n_result = ranges::in_fun_result&lt;I, F&gt;;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>For the definition of <span class="cm">/*execution-policy*/</span>, see <a href="../execution-policy" title="cpp/algorithm/execution-policy">this page</a>.</p>
+<p>Applies the given invocable object <code>f</code> to each element (projected by <code>proj</code>) in the target range <code>[</code><code>first</code><code>, </code><code>ranges::next(first, count)</code><code>)</code>. If <code>f</code> returns a result, the result is ignored.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> <code>f</code> is applied in order from <code>first</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> <code>f</code> might not be applied in order. The algorithm is executed according to <code>policy</code>.</div> <div class="t-li1">
+ Unlike other <a href="../../algorithm#Parallel_algorithms" title="cpp/algorithm">parallel algorithms</a>, <code>for_each_n</code> is not allowed to make arbitrary copies of elements from the target range.</div> <p>If <code>count &gt;= 0</code> is not <code>true</code>, the behavior is undefined.</p>
+<p>The function-like entities described on this page are <a href="../ranges#Algorithm_function_objects" title="cpp/algorithm/ranges"><i>algorithm function objects</i></a> (informally known as <i>niebloids</i>), that is:</p>
+<ul>
+<li>Explicit template argument lists cannot be specified when calling any of them.</li> <li>None of them are visible to <a href="../../language/adl" title="cpp/language/adl">argument-dependent lookup</a>.</li> <li>When any of them are found by <a href="../../language/unqualified_lookup" title="cpp/language/unqualified lookup">normal unqualified lookup</a> as the name to the left of the function-call operator, <a href="../../language/adl" title="cpp/language/adl">argument-dependent lookup</a> is inhibited.</li>
+</ul>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>first </td> <td>- </td> <td>the beginning of the target range </td>
+</tr> <tr class="t-par"> <td>count </td> <td>- </td> <td>the number of elements in the target range </td>
+</tr> <tr class="t-par"> <td>f </td> <td>- </td> <td>the invocable object to be applied to the (projected) elements </td>
+</tr> <tr class="t-par"> <td>proj </td> <td>- </td> <td>the projection to be applied to the elements </td>
+</tr> <tr class="t-par"> <td>policy </td> <td>- </td> <td>the <a href="../execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">execution policy</a> to use </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <div class="t-li1">
+<span class="t-li">1)</span> <code>{ranges::next(first, count), std::move(f)}</code>
+</div> <div class="t-li1">
+<span class="t-li">2)</span> <code>ranges::next(first, count)</code>
+</div> <h3 id="Complexity">Complexity</h3> <p>Exactly <code>count</code> applications of <code>f</code> and <code>proj</code>.</p>
+<h3 id="Exceptions">Exceptions</h3> <span class="t-li">2)</span> During the execution process: <ul>
+<li>If the temporary memory resources required for parallelization are not available, <a href="../../memory/new/bad_alloc" title="cpp/memory/new/bad alloc"><code>std::bad_alloc</code></a> is thrown.</li> <li>If an uncaught exception is thrown while accessing objects via an algorithm argument, the behavior is determined by the execution policy (for <a href="../execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">standard policies</a>, <a href="../../error/terminate" title="cpp/error/terminate"><code>std::terminate</code></a> is invoked).</li>
+</ul> <h3 id="Notes">Notes</h3> <p>If the projection returns a mutable reference, <code>f</code> may modify the elements in the target range.</p>
+<h3 id="Possible_implementation">Possible implementation</h3> <pre data-language="c">struct for_each_n_fn
+{
+    template&lt;std::input_iterator I, class Proj = std::identity,
+             std::indirectly_unary_invocable&lt;std::projected&lt;I, Proj&gt;&gt; Fun&gt;
+    constexpr for_each_n_result&lt;I, Fun&gt;
+        operator()(I first, std::iter_difference_t&lt;I&gt; count,
+                   Fun fun, Proj proj = Proj{}) const
+    {
+        for (; count-- &gt; 0; ++first)
+            std::invoke(fun, std::invoke(proj, *first));
+        return {std::move(first), std::move(fun)};
+    }
+};
+
+inline constexpr for_each_n_fn for_each_n{};
+</pre> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;string_view&gt;
+
+struct P
+{
+    int first;
+    char second;
+    friend std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const P&amp; p)
+    {
+        return os &lt;&lt; '{' &lt;&lt; p.first &lt;&lt; ",'" &lt;&lt; p.second &lt;&lt; "'}";
+    }
+};
+
+auto print = [](std::string_view name, const auto&amp; v)
+{
+    std::cout &lt;&lt; name &lt;&lt; ": ";
+    for (auto n = v.size(); const auto&amp; e : v)
+        std::cout &lt;&lt; e &lt;&lt; (--n ? ", " : "\n");
+};
+
+int main()
+{
+    std::array a {1, 2, 3, 4, 5};
+    print("a", a);
+    // Negate first three numbers:
+    std::ranges::for_each_n(a.begin(), 3, [](auto&amp; n) { n *= -1; });
+    print("a", a);
+    
+    std::array s { P{1,'a'}, P{2, 'b'}, P{3, 'c'}, P{4, 'd'} };
+    print("s", s);
+    // Negate data members “P::first” using projection:
+    std::ranges::for_each_n(s.begin(), 2, [](auto&amp; x) { x *= -1; }, &amp;P::first);
+    print("s", s);
+    // Capitalize data members “P::second” using projection:
+    std::ranges::for_each_n(s.begin(), 3, [](auto&amp; c) { c -= 'a' - 'A'; }, &amp;P::second);
+    print("s", s);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">a: 1, 2, 3, 4, 5
+a: -1, -2, -3, 4, 5
+s: {1,'a'}, {2,'b'}, {3,'c'}, {4,'d'}
+s: {-1,'a'}, {-2,'b'}, {3,'c'}, {4,'d'}
+s: {-1,'A'}, {-2,'B'}, {3,'C'}, {4,'d'}
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../for_each_n" title="cpp/algorithm/for each n"> <span class="t-lines"><span>for_each_n</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>applies a function object to the first N elements of a sequence <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../for_each" title="cpp/algorithm/for each"> <span class="t-lines"><span>for_each</span></span></a></div> </td> <td rowspan="2">applies a unary <a href="../../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> to elements from a <a href="../../iterator#Ranges" title="cpp/iterator">range</a><br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="for_each" title="cpp/algorithm/ranges/for each"> <span class="t-lines"><span>ranges::for_each</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<a href="../../language/range-for" title="cpp/language/range-for"> range-<code>for</code> loop</a><span class="t-mark-rev t-since-cxx11">(C++11)</span> </td> <td>executes loop over range </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/algorithm/ranges/for_each_n" class="_attribution-link">https://en.cppreference.com/cpp/algorithm/ranges/for_each_n</a>
+  </p>
+</div>

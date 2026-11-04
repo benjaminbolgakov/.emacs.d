@@ -1,0 +1,83 @@
+   <h1 id="firstHeading" class="firstHeading">std::array&lt;T,N&gt;::end, std::array&lt;T,N&gt;::cend</h1>           <div id="mw-content-text">
+  <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td>
+<pre data-language="c">iterator end() noexcept;
+</pre>
+</td> <td> (1)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx17">(constexpr since C++17)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx11"> <td>
+<pre data-language="c">const_iterator end() const noexcept;
+</pre>
+</td> <td> (2)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx17">(constexpr since C++17)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx11"> <td>
+<pre data-language="c">const_iterator cend() const noexcept;
+</pre>
+</td> <td> (3)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx17">(constexpr since C++17)</span>
+</td> </tr>  </table> <p>Returns an iterator to the element following the last element of the <code>array</code>.</p>
+<p>This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<h3 id="Return_value">Return value</h3> <p>Iterator to the element following the last element.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::cout &lt;&lt; std::boolalpha;
+
+    std::array&lt;int, 0&gt; empty;
+    std::cout &lt;&lt; "1) "
+              &lt;&lt; (empty.begin() == empty.end()) &lt;&lt; ' '     // true
+              &lt;&lt; (empty.cbegin() == empty.cend()) &lt;&lt; '\n'; // true
+    // *(empty.begin()) = 42; // =&gt; undefined behavior at run-time
+
+
+    std::array&lt;int, 4&gt; numbers{5, 2, 3, 4};
+    std::cout &lt;&lt; "2) "
+              &lt;&lt; (numbers.begin() == numbers.end()) &lt;&lt; ' '    // false
+              &lt;&lt; (numbers.cbegin() == numbers.cend()) &lt;&lt; '\n' // false
+              &lt;&lt; "3) "
+              &lt;&lt; *(numbers.begin()) &lt;&lt; ' '    // 5
+              &lt;&lt; *(numbers.cbegin()) &lt;&lt; '\n'; // 5
+
+    *numbers.begin() = 1;
+    std::cout &lt;&lt; "4) " &lt;&lt; *(numbers.begin()) &lt;&lt; '\n'; // 1
+    // *(numbers.cbegin()) = 42; // compile-time error: 
+                                 // read-only variable is not assignable
+
+    // print out all elements
+    std::cout &lt;&lt; "5) ";
+    std::for_each(numbers.cbegin(), numbers.cend(), [](int x)
+    {
+        std::cout &lt;&lt; x &lt;&lt; ' ';
+    });
+    std::cout &lt;&lt; '\n';
+
+    constexpr std::array constants{'A', 'B', 'C'};
+    static_assert(constants.begin() != constants.end());   // OK
+    static_assert(constants.cbegin() != constants.cend()); // OK
+    static_assert(*constants.begin() == 'A');              // OK
+    static_assert(*constants.cbegin() == 'A');             // OK
+    // *constants.begin() = 'Z'; // compile-time error: 
+                                 // read-only variable is not assignable
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1) true true
+2) false false
+3) 5 5
+4) 1
+5) 1 2 3 4
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="begin" title="cpp/container/array/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div> </td> <td>returns an iterator to the beginning <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/end" title="cpp/iterator/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the end of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/array/end" class="_attribution-link">https://en.cppreference.com/cpp/container/array/end</a>
+  </p>
+</div>

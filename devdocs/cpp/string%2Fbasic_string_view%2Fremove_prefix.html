@@ -1,0 +1,61 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_string_view&lt;CharT,Traits&gt;::remove_prefix</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr void remove_prefix( size_type n );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Moves the start of the view forward by <code>n</code> characters.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx26">
+<td> <p>If <code>n &gt; size()</code> is <code>true</code>, the behavior is undefined.</p>
+</td> <td><span class="t-mark-rev t-until-cxx26">(until C++26)</span></td>
+</tr> <tr class="t-rev t-since-cxx26">
+<td> <p>If <code>n &gt; size()</code> is <code>true</code>:</p>
+<ul>
+<li>If the implementation is <a href="../../standard_library#Standard_library_hardening" title="cpp/standard library">hardened</a>, a <a href="../../language/contracts" title="cpp/language/contracts">contract violation</a> occurs.</li> <li>If the implementation is not hardened, the behavior is undefined.</li>
+</ul> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>n </td> <td>- </td> <td>number of characters to remove from the start of the view </td>
+</tr>
+</table> <h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;string_view&gt;
+
+using namespace std::literals;
+
+[[nodiscard("a pure function")]]
+constexpr std::size_t count_substrings(std::string_view hive, const std::string_view bee)
+{
+    if (hive.empty() || bee.empty())
+        return 0U;
+    
+    std::size_t buzz{};
+    while (bee.size() &lt;= hive.size())
+    {
+        const auto pos = hive.find(bee);
+        if (pos == hive.npos)
+            break;
+        ++buzz;
+        hive.remove_prefix(pos + bee.size());
+    }
+    return buzz;
+}
+
+int main()
+{
+    std::string str = "   trim me";
+    std::string_view v = str;
+    v.remove_prefix(std::min(v.find_first_not_of(" "), v.size()));
+    std::cout &lt;&lt; "String: '" &lt;&lt; str &lt;&lt; "'\n"
+              &lt;&lt; "View  : '" &lt;&lt; v &lt;&lt; "'\n";
+    
+    constexpr auto hive{"bee buzz bee buzz bee"};
+    std::cout &lt;&lt; "There are " &lt;&lt; count_substrings(hive, "bee") &lt;&lt; " bees in this hive.\n";
+}
+</pre> <p>Output:</p>
+<pre data-language="c">String: '   trim me'
+View  : 'trim me'
+There are 3 bees in this hive.
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="remove_suffix" title="cpp/string/basic string view/remove suffix"> <span class="t-lines"><span>remove_suffix</span></span></a></div> </td> <td>shrinks the view by moving its end backward <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/string/basic_string_view/remove_prefix" class="_attribution-link">https://en.cppreference.com/cpp/string/basic_string_view/remove_prefix</a>
+  </p>
+</div>

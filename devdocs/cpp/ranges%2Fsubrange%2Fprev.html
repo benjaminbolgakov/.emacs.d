@@ -1,0 +1,38 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::subrange&lt;I,S,K&gt;::prev</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr subrange prev( std::iter_difference_t&lt;I&gt; n = 1 ) const
+    requires std::bidirectional_iterator&lt;I&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Returns a copy of <code>*this</code> whose <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../subrange#begin" title="cpp/ranges/subrange">begin_</a></i></code> is decremented (or incremented if <code>n</code> is negative). The actual decrement (or increment) operation is performed by <a href="advance" title="cpp/ranges/subrange/advance"><code>advance()</code></a>.</p>
+<p>Equivalent to:<code>auto tmp = *this;tmp.advance(-n);return tmp;</code>.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>n </td> <td>- </td> <td>number of decrements of the iterator </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>As described above.</p>
+<h3 id="Notes">Notes</h3> <p>The difference between this function and <a href="advance" title="cpp/ranges/subrange/advance"><code>advance()</code></a> is that the latter performs the decrement (or increment) in place.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iterator&gt;
+#include &lt;list&gt;
+#include &lt;print&gt;
+#include &lt;ranges&gt;
+
+int main()
+{
+    std::list list{1, 2, 3, 4, 5};
+    std::ranges::subrange sub{std::next(list.begin(), 2), std::prev(list.end(), 2)};
+    std::println("{} {} {}", sub, sub.prev(), sub.prev(2));
+}
+</pre> <p>Output:</p>
+<pre data-language="c">[3] [2, 3] [1, 2, 3]
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="next" title="cpp/ranges/subrange/next"> <span class="t-lines"><span>next</span></span></a></div> </td> <td>obtains a copy of the <code>subrange</code> with its iterator advanced by a given distance <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="advance" title="cpp/ranges/subrange/advance"> <span class="t-lines"><span>advance</span></span></a></div> </td> <td>advances the iterator by given distance <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/prev" title="cpp/iterator/prev"> <span class="t-lines"><span>prev</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>decrement an iterator <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/ranges/prev" title="cpp/iterator/ranges/prev"> <span class="t-lines"><span>ranges::prev</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>decrement an iterator by a given distance or to a bound<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/subrange/prev" class="_attribution-link">https://en.cppreference.com/cpp/ranges/subrange/prev</a>
+  </p>
+</div>

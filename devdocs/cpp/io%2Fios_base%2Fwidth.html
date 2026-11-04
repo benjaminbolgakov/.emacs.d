@@ -1,0 +1,102 @@
+   <h1 id="firstHeading" class="firstHeading">std::ios_base::width</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">streamsize width() const;
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">streamsize width( streamsize new_width );
+</pre>
+</td> <td> (2) </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Manages the minimum number of characters to generate on certain output operations and the maximum number of characters to generate on certain input operations.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Returns the current field width.</div> <div class="t-li1">
+<span class="t-li">2)</span> Sets the field width to the given one. Returns the previous field width.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>new_width </td> <td>- </td> <td>new field width setting </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>The field width before the call to the function.</p>
+<h3 id="Notes">Notes</h3> <p>Some I/O functions call <code>width(0)</code> before returning, see <code><a href="../manip/setw" title="cpp/io/manip/setw">std::setw</a></code> (this results in this field having effect on the next I/O function only, and not on any subsequent I/O).</p>
+<p>The exact effects this modifier has on the input and output vary between the individual I/O functions and are described at each <code>operator&lt;&lt;</code> and <code>operator&gt;&gt;</code> overload page individually.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;span&gt;
+#include &lt;string_view&gt;
+using namespace std::string_view_literals;
+
+constexpr std::array table_header =
+{
+    "Language"sv, "Author"sv, "Birthdate"sv, "RIP date"sv
+};
+
+using row_t = std::array&lt;std::string_view, table_header.size()&gt;;
+using widths_t = std::array&lt;std::size_t, table_header.size()&gt;;
+
+constexpr std::array table_body = std::to_array&lt;row_t&gt;
+({
+    {"C", "Dennis Ritchie", "1941-09-09", "2011-10-12"},
+    {"C++", "Bjarne Stroustrup", "1950-12-30"},
+    {"C#", "Anders Hejlsberg", "1960-12-02"},
+    {"Python", "Guido van Rossum", "1956-01-31"},
+    {"Javascript", "Brendan Eich", "1961-07-04"}
+});
+
+constexpr widths_t calculate_column_widths(std::span&lt;const row_t&gt; table)
+{
+    widths_t widths{};
+    for (const row_t&amp; row : table)
+        for (size_t i = 0; i != row.size(); ++i)
+            widths[i] = std::max(widths[i], row[i].size());
+    return widths;
+}
+
+void print_row(const row_t&amp; row, const widths_t&amp; widths)
+{
+    std::cout &lt;&lt; '|';
+    for (size_t i = 0; i != row.size(); ++i)
+    {
+        std::cout &lt;&lt; ' ';
+        std::cout.width(widths[i]);
+        std::cout &lt;&lt; row[i] &lt;&lt; " |";
+    }
+    std::cout &lt;&lt; '\n';
+};
+
+void print_break(const widths_t&amp; widths)
+{
+    const std::size_t margin = 1;
+    std::cout.put('+').fill('-');
+    for (std::size_t w : widths)
+    {
+        std::cout.width(w + margin * 2);
+        std::cout &lt;&lt; '-' &lt;&lt; '+';
+    }
+    std::cout.put('\n').fill(' ');
+};
+
+int main()
+{
+    constexpr widths_t widths = calculate_column_widths(table_body);
+ 
+    std::cout.setf(std::ios::left, std::ios::adjustfield);
+    print_break(widths);
+    print_row(table_header, widths);
+    print_break(widths);
+    for (const row_t&amp; row : table_body)
+        print_row(row, widths);
+    print_break(widths);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">+------------+-------------------+------------+------------+
+| Language   | Author            | Birthdate  | RIP date   |
++------------+-------------------+------------+------------+
+| C          | Dennis Ritchie    | 1941-09-09 | 2011-10-12 |
+| C++        | Bjarne Stroustrup | 1950-12-30 |            |
+| C#         | Anders Hejlsberg  | 1960-12-02 |            |
+| Python     | Guido van Rossum  | 1956-01-31 |            |
+| Javascript | Brendan Eich      | 1961-07-04 |            |
++------------+-------------------+------------+------------+
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="precision" title="cpp/io/ios base/precision"> <span class="t-lines"><span>precision</span></span></a></div> </td> <td>manages decimal precision of floating point operations <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../manip/setw" title="cpp/io/manip/setw"> <span class="t-lines"><span>setw</span></span></a></div> </td> <td>changes the width of the next input/output field <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/io/ios_base/width" class="_attribution-link">https://en.cppreference.com/cpp/io/ios_base/width</a>
+  </p>
+</div>

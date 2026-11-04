@@ -1,0 +1,100 @@
+   <h1 id="firstHeading" class="firstHeading">std::moneypunct</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt; class CharT, bool International = false &gt;
+class moneypunct;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>The facet <code>std::moneypunct</code> encapsulates monetary value format preferences. Stream I/O manipulators <code><a href="../io/manip/get_money" title="cpp/io/manip/get money">std::get_money</a></code> and <code><a href="../io/manip/put_money" title="cpp/io/manip/put money">std::put_money</a></code> use <code>std::moneypunct</code> through <code><a href="money_get" title="cpp/locale/money get">std::money_get</a></code> and <code><a href="money_put" title="cpp/locale/money put">std::money_put</a></code> for parsing monetary value input and formatting monetary value output.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/e/e7/std-moneypunct-inheritance.svg" decoding="async" width="302" height="88" class="mw-file-element" usemap="#ImageMap_a11ed03a6788854d"></span><map name="ImageMap_a11ed03a6788854d"><area href="/cpp/locale/money_base" shape="rect" coords="5,4,107,36" alt="cpp/locale/money base" title="cpp/locale/money base">
+<area href="/cpp/locale/locale/facet" shape="rect" coords="5,52,107,85" alt="cpp/locale/locale/facet" title="cpp/locale/locale/facet"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Specializations">Specializations</h3> <p>The standard library is guaranteed to provide the following specializations (they are <a href="locale" title="cpp/locale/locale">required to be implemented by any locale object</a>):</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code>  </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">moneypunct</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td> <td>provides equivalents of the "C" locale preferences </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">moneypunct</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td> <td>provides wide character equivalents of the "C" locale preferences </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">moneypunct</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">,</span><span class="nb">true</span><span class="o">&gt;</span> </td> <td>provides equivalents of the "C" locale preferences, with international currency symbols </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">moneypunct</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="p">,</span><span class="nb">true</span><span class="o">&gt;</span> </td> <td>provides wide character equivalents of the "C" locale preferences, with international currency symbols </td>
+</tr> </table> <h3 id="Nested_types">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>char_type</code> </td> <td>
+<code>CharT</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>string_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="n">CharT</span><span class="o">&gt;</span> </td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code><a href="locale/id" title="cpp/locale/locale/id">std::locale::id</a></code></span> <code>id</code> <span class="t-cmark">[static]</span> </td> <td>the identifier of the <a href="locale/facet#Facet_class" title="cpp/locale/locale/facet">facet</a> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><span class="k">const</span><span class="kt">bool</span></span> <code>intl</code> <span class="t-cmark">[static]</span> </td> <td>
+<code>International</code> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/moneypunct" title="cpp/locale/moneypunct/moneypunct"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a new <code>moneypunct</code> facet <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/decimal_point" title="cpp/locale/moneypunct/decimal point"> <span class="t-lines"><span>decimal_point</span></span></a></div> </td> <td>invokes <code>do_decimal_point</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/thousands_sep" title="cpp/locale/moneypunct/thousands sep"> <span class="t-lines"><span>thousands_sep</span></span></a></div> </td> <td>invokes <code>do_thousands_sep</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/grouping" title="cpp/locale/moneypunct/grouping"> <span class="t-lines"><span>grouping</span></span></a></div> </td> <td>invokes <code>do_grouping</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/curr_symbol" title="cpp/locale/moneypunct/curr symbol"> <span class="t-lines"><span>curr_symbol</span></span></a></div> </td> <td>invokes <code>do_curr_symbol</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/positive_sign" title="cpp/locale/moneypunct/positive sign"> <span class="t-lines"><span>positive_sign</span><span>negative_sign</span></span></a></div> </td> <td>invokes <code>do_positive_sign</code> or <code>do_negative_sign</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/frac_digits" title="cpp/locale/moneypunct/frac digits"> <span class="t-lines"><span>frac_digits</span></span></a></div> </td> <td>invokes <code>do_frac_digits</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/pos_format" title="cpp/locale/moneypunct/pos format"> <span class="t-lines"><span>pos_format</span><span>neg_format</span></span></a></div> </td> <td>invokes <code>do_pos_format</code>/<code>do_neg_format</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <h3 id="Protected_member_functions">Protected member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/~moneypunct" title="cpp/locale/moneypunct/~moneypunct"> <span class="t-lines"><span>(destructor)</span></span></a></div> </td> <td>destructs a <code>moneypunct</code> facet <br> <span class="t-mark">(protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/decimal_point" title="cpp/locale/moneypunct/decimal point"> <span class="t-lines"><span>do_decimal_point</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the character to use as decimal point <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/thousands_sep" title="cpp/locale/moneypunct/thousands sep"> <span class="t-lines"><span>do_thousands_sep</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the character to use as thousands separator <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/grouping" title="cpp/locale/moneypunct/grouping"> <span class="t-lines"><span>do_grouping</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the numbers of digits between each pair of thousands separators <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/curr_symbol" title="cpp/locale/moneypunct/curr symbol"> <span class="t-lines"><span>do_curr_symbol</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the string to use as the currency identifier <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/positive_sign" title="cpp/locale/moneypunct/positive sign"> <span class="t-lines"><span>do_positive_sign</span><span>do_negative_sign</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the string to indicate a positive or negative value <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/frac_digits" title="cpp/locale/moneypunct/frac digits"> <span class="t-lines"><span>do_frac_digits</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the number of digits to display after the decimal point <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct/pos_format" title="cpp/locale/moneypunct/pos format"> <span class="t-lines"><span>do_pos_format</span><span>do_neg_format</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>provides the formatting pattern for currency values <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> </table> 
+<div class="t-inherited"> <h2 id="Inherited_from_std::money_base">Inherited from <a href="money_base" title="cpp/locale/money base">std::money_base</a>
+</h2> <h3 id="Nested_types_2">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="k">enum</span><span class="nc">part</span><span class="p">{</span><span class="n">none</span><span class="p">,</span><span class="n">space</span><span class="p">,</span><span class="n">symbol</span><span class="p">,</span><span class="n">sign</span><span class="p">,</span><span class="n">value</span><span class="p">};</span> </td> <td>unscoped enumeration type </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="k">struct</span><span class="nc">pattern</span><span class="p">{</span><span class="kt">char</span><span class="n">field</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span><span class="p">};</span> </td> <td>the monetary format type </td>
+</tr> </table> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Enumeration constant </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<code>none</code> </td> <td>whitespace is permitted but not required except in the last position, where whitespace is not permitted </td>
+</tr> <tr class="t-dsc"> <td>
+<code>space</code> </td> <td>one or more whitespace characters are required </td>
+</tr> <tr class="t-dsc"> <td>
+<code>symbol</code> </td> <td>the sequence of characters returned by <code><a href="moneypunct/curr_symbol" title="cpp/locale/moneypunct/curr symbol">std::moneypunct::curr_symbol</a></code> is required </td>
+</tr> <tr class="t-dsc"> <td>
+<code>sign</code> </td> <td>the first of the characters returned by <code><a href="moneypunct/positive_sign" title="cpp/locale/moneypunct/positive sign">std::moneypunct::positive_sign</a></code> or <code><a href="moneypunct/positive_sign" title="cpp/locale/moneypunct/positive sign">std::moneypunct::negative_sign</a></code> is required </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value</code> </td> <td>the absolute numeric monetary value is required </td>
+</tr> </table> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="money_base" title="cpp/locale/money base"> <span class="t-lines"><span>money_base</span></span></a></div> </td> <td>defines monetary formatting patterns <br> <span class="t-mark">(class)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="moneypunct_byname" title="cpp/locale/moneypunct byname"> <span class="t-lines"><span>moneypunct_byname</span></span></a></div> </td> <td>represents the system-supplied <code><a class="mw-selflink selflink">std::moneypunct</a></code> for the named locale <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="money_get" title="cpp/locale/money get"> <span class="t-lines"><span>money_get</span></span></a></div> </td> <td>parses and constructs a monetary value from an input character sequence <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="money_put" title="cpp/locale/money put"> <span class="t-lines"><span>money_put</span></span></a></div> </td> <td>formats a monetary value for output as a character sequence <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/locale/moneypunct" class="_attribution-link">https://en.cppreference.com/cpp/locale/moneypunct</a>
+  </p>
+</div>

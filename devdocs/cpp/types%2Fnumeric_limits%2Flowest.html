@@ -1,0 +1,129 @@
+   <h1 id="firstHeading" class="firstHeading">std::numeric_limits&lt;T&gt;::lowest</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">static constexpr T lowest() noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Returns the lowest finite value representable by the numeric type <code>T</code>, that is, a finite value <code>x</code> such that there is no other finite value <code>y</code> where <code>y &lt; x</code>. This is different from <code>std::numeric_limits&lt;T&gt;::min()</code> for floating-point types. Only meaningful for bounded types.</p>
+<h3 id="Return_value">Return value</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>
+<code>T</code> </th> <th>
+<code>std::numeric_limits&lt;T&gt;::lowest()</code> </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="cm">/* non-specialized */</span> </td> <td>
+<code>T()</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">bool</span> </td> <td>
+<code>false</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">CHAR_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">signed</span><span class="kt">char</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">SCHAR_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">char</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">wchar_t</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">WCHAR_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char8_t</span> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char16_t</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char32_t</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">short</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">SHRT_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">short</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">int</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">INT_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">int</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">LONG_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">long</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span><span class="kt">long</span> </td> <td>
+<code><a href="../climits" title="cpp/types/climits">LLONG_MIN</a></code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">long</span><span class="kt">long</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">float</span> </td> <td>
+<code>-FLT_MAX</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">double</span> </td> <td>
+<code>-DBL_MAX</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span><span class="kt">double</span> </td> <td>
+<code>-LDBL_MAX</code> </td>
+</tr> </table> <h3 id="Notes">Notes</h3> <p>For every standard C++ floating-point type <code>T</code> <code>std::numeric_limits&lt;T&gt;::lowest() == -std::numeric_limits&lt;T&gt;::max()</code>, but this does not necessarily have to be the case for any third-party specialization.</p>
+<h3 id="Example">Example</h3> <div class="t-example">
+<p>Demonstrates <code><a href="min" title="cpp/types/numeric limits/min">min()</a></code>, <code><a href="max" title="cpp/types/numeric limits/max">max()</a></code>, and <code>lowest()</code> for floating-point types:</p>
+<pre data-language="c">#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string_view&gt;
+
+template&lt;typename T&gt;
+void print_twice(std::string_view type, T value)
+{
+    std::cout &lt;&lt; '\t' &lt;&lt; type &lt;&lt; ": "
+              &lt;&lt; std::defaultfloat &lt;&lt; value &lt;&lt; " or "
+              &lt;&lt; std::hexfloat &lt;&lt; value &lt;&lt; '\n';
+}
+
+int main()
+{
+    // min()
+    std::cout &lt;&lt; "std::numeric_limits&lt;T&gt;::min():\n";
+    print_twice("float", std::numeric_limits&lt;float&gt;::min());
+    print_twice("double", std::numeric_limits&lt;double&gt;::min());
+    print_twice("long double", std::numeric_limits&lt;long double&gt;::min());
+    
+    // lowest()
+    std::cout &lt;&lt; "std::numeric_limits&lt;T&gt;::lowest():\n";
+    print_twice("float", std::numeric_limits&lt;float&gt;::lowest());
+    print_twice("double", std::numeric_limits&lt;double&gt;::lowest());
+    print_twice("long double", std::numeric_limits&lt;long double&gt;::lowest());
+    
+    // max()
+    std::cout &lt;&lt; "std::numeric_limits&lt;T&gt;::max():\n";
+    print_twice("float", std::numeric_limits&lt;float&gt;::max());
+    print_twice("double", std::numeric_limits&lt;double&gt;::max());
+    print_twice("long double", std::numeric_limits&lt;long double&gt;::max());
+}
+</pre> <p>Output:</p>
+<pre data-language="c">std::numeric_limits&lt;T&gt;::min():
+        float: 1.17549e-38 or 0x1p-126
+        double: 2.22507e-308 or 0x1p-1022
+        long double: 3.3621e-4932 or 0x8p-16385
+std::numeric_limits&lt;T&gt;::lowest():
+        float: -3.40282e+38 or -0x1.fffffep+127
+        double: -1.79769e+308 or -0x1.fffffffffffffp+1023
+        long double: -1.18973e+4932 or -0xf.fffffffffffffffp+16380
+std::numeric_limits&lt;T&gt;::max():
+        float: 3.40282e+38 or 0x1.fffffep+127
+        double: 1.79769e+308 or 0x1.fffffffffffffp+1023
+        long double: 1.18973e+4932 or 0xf.fffffffffffffffp+16380
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="min" title="cpp/types/numeric limits/min"> <span class="t-lines"><span>min</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>returns the smallest finite value of the given non-floating-point type, or the smallest positive normal value of the given floating-point type <br> <span class="t-mark">(public static member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="denorm_min" title="cpp/types/numeric limits/denorm min"> <span class="t-lines"><span>denorm_min</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>returns the smallest positive subnormal value of the given floating-point type <br> <span class="t-mark">(public static member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="max" title="cpp/types/numeric limits/max"> <span class="t-lines"><span>max</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>returns the largest finite value of the given type <br> <span class="t-mark">(public static member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/types/numeric_limits/lowest" class="_attribution-link">https://en.cppreference.com/cpp/types/numeric_limits/lowest</a>
+  </p>
+</div>

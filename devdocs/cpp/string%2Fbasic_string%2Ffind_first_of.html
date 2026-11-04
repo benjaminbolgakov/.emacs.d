@@ -1,0 +1,119 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_string&lt;CharT,Traits,Allocator&gt;::find_first_of</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">size_type find_first_of( const basic_string&amp; str, size_type pos = 0 ) const;
+</pre></td> <td> (1)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr> <tr class="t-dcl"> <td><pre data-language="c">size_type find_first_of( const CharT* s,
+                         size_type pos, size_type count ) const;
+</pre></td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span></td> </tr> <tr class="t-dcl"> <td><pre data-language="c">size_type find_first_of( const CharT* s, size_type pos = 0 ) const;
+</pre></td> <td> (3)</td> <td><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span></td> </tr> <tr class="t-dcl"> <td><pre data-language="c">size_type find_first_of( CharT ch, size_type pos = 0 ) const;
+</pre></td> <td> (4)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx17"> <td><pre data-language="c">template&lt; class StringViewLike &gt;
+size_type
+    find_first_of( const StringViewLike&amp; t,
+                   size_type pos = 0 ) const noexcept(/* see below */);
+</pre></td> <td> (5)</td> <td>
+<span class="t-mark-rev t-since-cxx17">(since C++17)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr>  </table> <p>Finds the first character equal to one of the characters in the given character sequence. The search considers only the range <code>[</code><code>pos</code><code>, </code><code><a href="size" title="cpp/string/basic string/size">size()</a></code><code>)</code>. If none of the characters in the given character sequence is present in the range, <code><a href="npos" title="cpp/string/basic string/npos">npos</a></code> will be returned.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Finds the first character equal to one of the characters in <code>str</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Finds the first character equal to one of the characters in the range <code>[</code><code>s</code><code>, </code><code>s + count</code><code>)</code>. This range can include null characters.</div> <div class="t-li1">
+ If <code>[</code><code>s</code><code>, </code><code>s + count</code><code>)</code> is not a <a href="../../iterator#Ranges" title="cpp/iterator">valid range</a>, the behavior is undefined.</div> <div class="t-li1">
+<span class="t-li">3)</span> Finds the first character equal to one of the characters in character string pointed to by <code>s</code>. The length of the string is determined by the first null character using <code>Traits::length(s)</code>.</div> <div class="t-li1">
+ If <code>[</code><code>s</code><code>, </code><code>s + Traits::length(s)</code><code>)</code> is not a <a href="../../iterator#Ranges" title="cpp/iterator">valid range</a>, the behavior is undefined.</div> <div class="t-li1">
+<span class="t-li">4)</span> Finds the first character equal to <code>ch</code>.</div> <div class="t-li1">
+<span class="t-li">5)</span> Implicitly converts <code>t</code> to a string view <code>sv</code> as if by <code>std::basic_string_view&lt;CharT, Traits&gt; sv = t;</code>, then finds the first character equal to one of the characters in <code>sv</code>.</div> <div class="t-li1">
+ This overload participates in overload resolution only if <code>std::is_convertible_v&lt;const StringViewLike&amp;,std::basic_string_view&lt;CharT, Traits&gt;&gt;</code> is <code>true</code> and <code>std::is_convertible_v&lt;const StringViewLike&amp;, const CharT*&gt;</code> is <code>false</code>.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>str </td> <td>- </td> <td>string identifying characters to search for </td>
+</tr> <tr class="t-par"> <td>pos </td> <td>- </td> <td>position at which to begin searching </td>
+</tr> <tr class="t-par"> <td>count </td> <td>- </td> <td>length of character string identifying characters to search for </td>
+</tr> <tr class="t-par"> <td>s </td> <td>- </td> <td>pointer to a character string identifying characters to search for </td>
+</tr> <tr class="t-par"> <td>ch </td> <td>- </td> <td>character to search for </td>
+</tr> <tr class="t-par"> <td>t </td> <td>- </td> <td>object (convertible to <code><a href="../basic_string_view" title="cpp/string/basic string view">std::basic_string_view</a></code>) identifying characters to search for </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>Position of the found character or <code><a href="npos" title="cpp/string/basic string/npos">npos</a></code> if no such character is found.</p>
+<h3 id="Exceptions">Exceptions</h3> <div class="t-li1">
+<span class="t-li">1,4)</span> Throws nothing.</div> <div class="t-li1">
+<span class="t-li">5)</span> <div class="t-noexcept-full">
+<a href="../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(std::is_nothrow_convertible_v&lt;const T&amp;, std::basic_string_view&lt;CharT, Traits&gt;&gt;)
+</pre>
+</div>
+</div>
+</div> <p>If an exception is thrown for any reason, this function has no effect (<a href="../../language/exceptions#Exception_safety" title="cpp/language/exceptions">strong exception safety guarantee</a>).</p>
+<h3 id="Notes">Notes</h3> <p><code>Traits::eq()</code> is used to perform the comparison.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cassert&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;string_view&gt;
+
+int main()
+{
+    using namespace std::literals;
+    std::string::size_type sz;
+
+    // (1)
+    sz = "alignas"s.find_first_of("klmn"s);
+    //     └────────────────────────┘
+    assert(sz == 1);
+
+    sz = "alignof"s.find_first_of("wxyz"s);
+    // no match
+    assert(sz == std::string::npos);
+
+    // (2)
+    sz = "consteval"s.find_first_of("xyzabc", 0, 3);
+    // no match (× are not targets)     ×××
+    assert(sz == std::string::npos);
+
+    sz = "consteval"s.find_first_of("xyzabc", 0, 6);
+    //    └───────────────────────────────┘
+    assert(sz == 0);
+
+    // (3)
+    sz = "decltype"s.find_first_of("xyzabc");
+    //      └────────────────────────────┘
+    assert(sz == 2);
+
+    // (4)
+    sz = "co_await"s.find_first_of('a');
+    //       └──────────────────────┘
+    assert(sz == 3);
+
+    // (5)
+    sz = "constinit"s.find_first_of("int"sv);
+    //      └─────────────────────────┘
+    assert(sz == 2);
+
+    std::cout &lt;&lt; "All tests passed.\n";
+}
+</pre> <p>Output:</p>
+<pre data-language="c">All tests passed.
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue847">LWG 847</a> </td> <td>C++98 </td> <td>there was no exception safety guarantee </td> <td>added strong exception safety guarantee </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2064">LWG 2064</a> </td> <td>C++11 </td> <td>overloads <span class="t-v">(3,4)</span> were noexcept </td> <td>removed </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2946">LWG 2946</a> </td> <td>C++17 </td> <td>overload <span class="t-v">(5)</span> caused ambiguity in some cases </td> <td>avoided by making it a template </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P1148R0">P1148R0</a> </td> <td>C++11<br>C++17 </td> <td>noexcept for overloads <span class="t-v">(4,5)</span> were<br>accidentally dropped by LWG2064/LWG2946 </td> <td>restored </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="find" title="cpp/string/basic string/find"> <span class="t-lines"><span>find</span></span></a></div> </td> <td>finds the first occurrence of the given substring <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="rfind" title="cpp/string/basic string/rfind"> <span class="t-lines"><span>rfind</span></span></a></div> </td> <td>find the last occurrence of a substring <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="find_first_not_of" title="cpp/string/basic string/find first not of"> <span class="t-lines"><span>find_first_not_of</span></span></a></div> </td> <td>find first absence of characters <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="find_last_of" title="cpp/string/basic string/find last of"> <span class="t-lines"><span>find_last_of</span></span></a></div> </td> <td>find last occurrence of characters <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="find_last_not_of" title="cpp/string/basic string/find last not of"> <span class="t-lines"><span>find_last_not_of</span></span></a></div> </td> <td>find last absence of characters <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_string_view/find_first_of" title="cpp/string/basic string view/find first of"> <span class="t-lines"><span>find_first_of</span></span></a></div> </td> <td>find first occurrence of characters <br> <span class="t-mark">(public member function of <code>std::basic_string_view&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../byte/strspn" title="cpp/string/byte/strspn"> <span class="t-lines"><span>strspn</span></span></a></div> </td> <td>returns the length of the maximum initial segment that consists<br>of only the characters found in another byte string <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/string/basic_string/find_first_of" class="_attribution-link">https://en.cppreference.com/cpp/string/basic_string/find_first_of</a>
+  </p>
+</div>

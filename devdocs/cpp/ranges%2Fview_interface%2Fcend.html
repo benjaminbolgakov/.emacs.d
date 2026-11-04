@@ -1,0 +1,22 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::view_interface&lt;D&gt;::cend</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr auto cend();
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr auto cend() const requires ranges::range&lt;const D&gt;;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>The default implementation of <code>cend()</code> member function returns the sentinel for the constant iterator of the range.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<div class="t-li1">
+<span class="t-li">1)</span> Let <code>derived</code> be a reference bound to <code>static_cast&lt;D&amp;&gt;(*this)</code>. Equivalent to <code>return ranges::cend(derived);</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Same as <span class="t-v">(1)</span>, except that <code>derived</code> is <code>static_cast&lt;const D&amp;&gt;(*this)</code>.</div>  <h3 id="Return_value">Return value</h3> <p>The sentinel for the constant iterator of the range.</p>
+<h3 id="Notes">Notes</h3> <p>All range adaptors and range factories in the standard library and <code><a href="../subrange" title="cpp/ranges/subrange">std::ranges::subrange</a></code> use the default implementation of <code>cend</code>.</p>
+<h3 id="Example">Example</h3>  <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/end" title="cpp/iterator/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the end of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../cend" title="cpp/ranges/cend"> <span class="t-lines"><span>ranges::cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns a sentinel indicating the end of a read-only range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/view_interface/cend" class="_attribution-link">https://en.cppreference.com/cpp/ranges/view_interface/cend</a>
+  </p>
+</div>

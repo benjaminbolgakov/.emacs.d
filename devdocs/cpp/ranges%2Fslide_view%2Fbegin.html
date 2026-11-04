@@ -1,0 +1,48 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::slide_view&lt;V&gt;::begin</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td>
+<pre data-language="c">constexpr auto begin()
+    requires (!(/*simple-view*/&lt;V&gt; &amp;&amp; /*slide-caches-nothing*/&lt;const V&gt;));
+</pre>
+</td> <td> (1)</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td> </tr> <tr class="t-dcl t-since-cxx23"> <td>
+<pre data-language="c">constexpr auto begin() const
+    requires /*slide-caches-nothing*/&lt;const V&gt;;
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td> </tr>  </table> <p>Returns an iterator to the first element of the <a href="slide_view" title="cpp/ranges/slide view/slide view"><code>slide_view</code></a>.</p>
+<p>Let <code>base_</code> be the underlying view, <code>n_</code> be the window size, <code>iterator</code> be the <a href="iterator" title="cpp/ranges/slide view/iterator">iterator</a> type.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> If <code>V</code> models <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../slide_view#slide-caches-first" title="cpp/ranges/slide view">slide-caches-first</a></i></code>, equivalent to</div> <div class="t-li1">
+ <pre data-language="c">return iterator&lt;false&gt;(ranges::begin(base_),
+                       ranges::next(ranges::begin(base_), n_ - 1, ranges::end(base_)),
+                       n_);
+</pre>
+</div> <div class="t-li1">
+ Otherwise, equivalent to <code>return iterator&lt;false&gt;(ranges::begin(base_), n_);</code>
+</div> <div class="t-li1">
+ If <span class="n">V</span> models <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../slide_view#slide-caches-first" title="cpp/ranges/slide view">slide-caches-first</a></i></code> this function caches the result within the <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../slide_view#cached_begin" title="cpp/ranges/slide view">cached_begin_</a></i></code> for use on subsequent calls. This is necessary to provide the amortized constant-time complexity required by the <a href="../range" title="cpp/ranges/range"><code>range</code></a>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to <code>return iterator&lt;true&gt;(ranges::begin(base_), n_);</code>.</div> <h3 id="Return_value">Return value</h3> <p>An <a href="iterator" title="cpp/ranges/slide view/iterator">iterator</a> to the first element of <a href="../slide_view" title="cpp/ranges/slide view"><code>slide_view</code></a>, which points to the <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../slide_view#n" title="cpp/ranges/slide view">n_</a></i></code>-sized subrange of the underlying view type: <span class="n">V</span> for overload <span class="t-v">(<a href="#Version_1">1</a>)</span> or <span class="k">const</span><span class="n">V</span> for overload <span class="t-v">(<a href="#Version_2">2</a>)</span>.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;string_view&gt;
+using namespace std::literals;
+
+int main()
+{
+    static constexpr auto source = {"∀x"sv, "∃y"sv, "ε"sv, "δ"sv};
+    auto view{std::ranges::slide_view(source, 2)};
+    const auto subrange{*(view.begin())};
+    for (std::string_view const s : subrange)
+        std::cout &lt;&lt; s &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">∀x ∃y
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="end" title="cpp/ranges/slide view/end"> <span class="t-lines"><span>end</span></span></a></div> </td> <td>returns an iterator or a sentinel to the end <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="sentinel/operator_cmp" title="cpp/ranges/slide view/sentinel/operator cmp"> <span class="t-lines"><span>operator==</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>compares a sentinel with an iterator returned from <a class="mw-selflink selflink"><code>slide_view::begin</code></a> <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/slide_view/begin" class="_attribution-link">https://en.cppreference.com/cpp/ranges/slide_view/begin</a>
+  </p>
+</div>

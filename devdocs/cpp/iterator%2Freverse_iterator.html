@@ -1,0 +1,178 @@
+   <h1 id="firstHeading" class="firstHeading">std::reverse_iterator</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt; class Iter &gt;
+class reverse_iterator;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p><code>std::reverse_iterator</code> is an iterator adaptor that reverses the direction of a given iterator, which must be at least a <a href="../named_req/bidirectionaliterator" title="cpp/named req/BidirectionalIterator">LegacyBidirectionalIterator</a><span class="t-rev-inl t-since-cxx20"><span> or model <a href="bidirectional_iterator" title="cpp/iterator/bidirectional iterator"><code>bidirectional_iterator</code></a></span><span><span class="t-mark-rev t-since-cxx20">(since C++20)</span></span></span>. In other words, when provided with a bidirectional iterator, <code>std::reverse_iterator</code> produces a new iterator that moves from the end to the beginning of the sequence defined by the underlying bidirectional iterator.</p>
+<p>For a reverse iterator <code>r</code> constructed from an iterator <code>i</code>, the relationship <code>&amp;*r == &amp;*(i - 1)</code> is always <code>true</code> (as long as <code>r</code> is <a href="../iterator#Dereferenceability_and_validity" title="cpp/iterator">dereferenceable</a>); thus a reverse iterator constructed from a one-past-the-end iterator dereferences to the last element in a sequence.</p>
+<p>This is the iterator returned by member functions <code>rbegin()</code> and <code>rend()</code> of the <a href="../container" title="cpp/container">standard library containers</a>.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-rbegin-rend.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/3/39/range-rbegin-rend.svg" decoding="async" width="589" height="250" class="mw-file-element"></a></span></p>
+<h3 id="Nested_types">Nested types</h3> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx20">
+<td> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_type</code> </td> <td>
+<code>Iter</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_category</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">iterator_category</span><sup id="cite_ref-iterator_1-0" class="reference"><a href="#cite_note-iterator-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">value_type</span><sup id="cite_ref-iterator_1-1" class="reference"><a href="#cite_note-iterator-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>difference_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">difference_type</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>pointer</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">pointer</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>reference</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">reference</span> </td>
+</tr> </table> </td> <td><span class="t-mark-rev t-until-cxx20">(until C++20)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_type</code> </td> <td>
+<code>Iter</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_concept</code> </td> <td> <ul>
+<li>
+<code><a href="iterator_tags" title="cpp/iterator/iterator tags">std::random_access_iterator_tag</a></code> if <code>Iter</code> models <code><a href="random_access_iterator" title="cpp/iterator/random access iterator">std::random_access_iterator</a></code>
+</li> <li>
+<code><a href="iterator_tags" title="cpp/iterator/iterator tags">std::bidirectional_iterator_tag</a></code> otherwise</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_category</code> </td> <td> <ul>
+<li>
+<code><a href="iterator_tags" title="cpp/iterator/iterator tags">std::random_access_iterator_tag</a></code> if <span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">iterator_category</span> models <span class="n">std</span><span class="o">::</span><span class="n">derived_from</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">random_access_iterator_tag</span><span class="o">&gt;</span>
+</li> <li>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">iterator_category</span> otherwise</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_value_t</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>difference_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_difference_t</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>pointer</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;::</span><span class="n">pointer</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>reference</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_reference_t</span><span class="o">&lt;</span><span class="n">Iter</span><span class="o">&gt;</span> </td>
+</tr> </table> </td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table> <div class="mw-references-wrap"><ol class="references"> <li id="cite_note-iterator-1"> <span class="reference-text">The definition is provided by the base <code><a href="iterator" title="cpp/iterator/iterator">std::iterator</a></code> specialization until C++17.</span> </li> </ol></div> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code>Iter</code></span> <code>current</code> </td> <td>the underlying iterator<br><span class="t-mark">(protected member object)</span> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/reverse_iterator" title="cpp/iterator/reverse iterator/reverse iterator"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a new <code>reverse_iterator</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator=" title="cpp/iterator/reverse iterator/operator="> <span class="t-lines"><span>operator=</span></span></a></div> </td> <td>assigns another <code>reverse_iterator</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/base" title="cpp/iterator/reverse iterator/base"> <span class="t-lines"><span>base</span></span></a></div> </td> <td>accesses the underlying iterator <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator*" title="cpp/iterator/reverse iterator/operator*"> <span class="t-lines"><span>operator*</span><span>operator-&gt;</span></span></a></div> </td> <td>accesses the pointed-to element <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator_at" title="cpp/iterator/reverse iterator/operator at"> <span class="t-lines"><span>operator[]</span></span></a></div> </td> <td>accesses an element by index <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator_arith" title="cpp/iterator/reverse iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span><span>operator+=</span><span>operator+</span><span>operator--</span><span>operator--<span class="t-dsc-small">(int)</span></span><span>operator-=</span><span>operator-</span></span></a></div> </td> <td>advances or decrements the <code>reverse_iterator</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <h3 id="Non-member_functions">Non-member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator_cmp" title="cpp/iterator/reverse iterator/operator cmp"> <span class="t-lines"><span>operator==</span><span>operator!=</span><span>operator&lt;</span><span>operator&lt;=</span><span>operator&gt;</span><span>operator&gt;=</span><span>operator&lt;=&gt;</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>compares the underlying iterators <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator_plus_" title="cpp/iterator/reverse iterator/operator+"> <span class="t-lines"><span>operator+</span></span></a></div> </td> <td>advances the iterator <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/operator-" title="cpp/iterator/reverse iterator/operator-"> <span class="t-lines"><span>operator-</span></span></a></div> </td> <td>computes the distance between two iterator adaptors <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/iter_move" title="cpp/iterator/reverse iterator/iter move"> <span class="t-lines"><span>iter_move</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>casts the result of dereferencing the adjusted underlying iterator to its associated rvalue reference type <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="reverse_iterator/iter_swap" title="cpp/iterator/reverse iterator/iter swap"> <span class="t-lines"><span>iter_swap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>swaps the objects pointed to by two adjusted underlying iterators <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="make_reverse_iterator" title="cpp/iterator/make reverse iterator"> <span class="t-lines"><span>make_reverse_iterator</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>creates a <code><a class="mw-selflink selflink">std::reverse_iterator</a></code> of type inferred from the argument <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table> <h3 id="Helper_templates">Helper templates</h3> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class Iterator1, class Iterator2 &gt;
+    requires (!std::sized_sentinel_for&lt;Iterator1, Iterator2&gt;)
+inline constexpr bool disable_sized_sentinel_for
+    &lt;std::reverse_iterator&lt;Iterator1&gt;, std::reverse_iterator&lt;Iterator2&gt;&gt; = true;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>This partial specialization of <code>std::disable_sized_sentinel_for</code> prevents specializations of <code>reverse_iterator</code> from satisfying <a href="sized_sentinel_for" title="cpp/iterator/sized sentinel for"><code>sized_sentinel_for</code></a> if their underlying iterators do not satisfy the concept.</p>
+<h3 id="Possible_implementation">Possible implementation</h3> <p>Below is a partial implementation focusing on the way the inner iterator is stored, calling <code><a href="prev" title="cpp/iterator/prev">std::prev</a></code> only when the content is fetched via <span class="k">operator</span><span class="o">*</span>.</p>
+<table class="eq-fun-cpp-table"> <tr> <td> <pre data-language="c">template&lt;class It&gt;
+class reverse_iterator
+{
+protected:
+    It current = It();
+public:
+    reverse_iterator() = default;
+    constexpr explicit reverse_iterator(It itr) : current(itr) {}
+    template&lt;class U&gt;
+        requires (!std::is_same_v&lt;U, It&gt; &amp;&amp; std::convertible_to&lt;const U&amp;, It&gt;)
+    constexpr explicit reverse_iterator(const U&amp; other) : current(other.base()) {}
+    
+    constexpr decltype(auto) operator*() const
+    {
+        return *std::prev(current); // &lt;== returns the content of prev
+    }
+    
+    constexpr reverse_iterator&amp; operator++() { --current; return *this; }
+    constexpr reverse_iterator operator++(int) { auto tmp = *this; ++(*this); return tmp; }
+    
+    constexpr reverse_iterator&amp; operator--() { ++current; return *this; }
+    constexpr reverse_iterator operator--(int) { auto tmp = *this; --(*this); return tmp; }
+    
+    constexpr It base() const { return current; }
+    
+    // Other member functions, friend functions, and member typedefs are not shown here.
+};
+</pre> </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <p><code>std::reverse_iterator</code> does not work with iterators whose dereference returns a reference to a member of <code>*this</code> (so-called “stashing iterators”). An example of a stashing iterator is <a rel="nofollow" class="external text" href="https://github.com/microsoft/STL/blob/ac129e595f762f11551663f1c7fa5f51444a8c6c/stl/inc/filesystem#L1387-L1585">MSVC STL's</a> <a href="../filesystem/path#Member_types" title="cpp/filesystem/path"><code>std::filesystem::path::iterator</code></a>.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+
+template&lt;typename T, std::size_t SIZE&gt;
+class Stack
+{
+    T arr[SIZE];
+    std::size_t pos = 0;
+public:
+    T pop()
+    {
+        return arr[--pos];
+    }
+    
+    Stack&amp; push(const T&amp; t)
+    {
+        arr[pos++] = t;
+        return *this;
+    }
+    
+    // we wish that looping on Stack would be in LIFO order
+    // thus we use std::reverse_iterator as an adaptor to existing iterators
+    // (which are in this case the simple pointers: [arr, arr + pos)
+    auto begin() { return std::reverse_iterator(arr + pos); }
+    auto end() { return std::reverse_iterator(arr); }
+};
+
+int main()
+{
+    Stack&lt;int, 8&gt; s;
+    s.push(5).push(15).push(25).push(35);
+    for (int val : s)
+        std::cout &lt;&lt; val &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">35 25 15 5
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="make_reverse_iterator" title="cpp/iterator/make reverse iterator"> <span class="t-lines"><span>make_reverse_iterator</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>creates a <code><a class="mw-selflink selflink">std::reverse_iterator</a></code> of type inferred from the argument <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iterator" title="cpp/iterator/iterator"> <span class="t-lines"><span>iterator</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark">(deprecated in C++17)</span></span></span></div> </td> <td>base class to ease the definition of required types for simple iterators <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/iterator/reverse_iterator" class="_attribution-link">https://en.cppreference.com/cpp/iterator/reverse_iterator</a>
+  </p>
+</div>

@@ -1,0 +1,65 @@
+   <h1 id="firstHeading" class="firstHeading">std::format_error</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/format" title="cpp/header/format">&lt;format&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">class format_error;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Defines the type of exception object thrown to report errors in the formatting library.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/3/3e/std-format_error-inheritance.svg" decoding="async" width="374" height="40" class="mw-file-element" usemap="#ImageMap_f73c4961ce7ddc4f"></span><map name="ImageMap_f73c4961ce7ddc4f"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception">
+<area href="/cpp/error/runtime_error" shape="rect" coords="135,4,238,36" alt="cpp/error/runtime error" title="cpp/error/runtime error"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>(constructor)</span></span></div> </td> <td>constructs a new <code>format_error</code> object with the given message <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>operator=</span></span></div> </td> <td>replaces the <code>format_error</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <div class="t-member"> <h2 id="std::format_error::format_error">std::format_error::format_error</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">format_error( const std::string&amp; what_arg );
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">format_error( const char* what_arg );
+</pre>
+</td> <td> (2) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">format_error( const format_error&amp; other ) noexcept;
+</pre>
+</td> <td> (3) </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Constructs the exception object with <code>what_arg</code> as explanatory string. After construction, <code>std::strcmp(what(), what_arg.c_str()) == 0</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Constructs the exception object with <code>what_arg</code> as explanatory string. After construction, <code>std::strcmp(what(), what_arg) == 0</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Copy constructor. If <code>*this</code> and <code>other</code> both have dynamic type <code>std::format_error</code> then <code>std::strcmp(what(), other.what()) == 0</code>. No exception can be thrown from the copy constructor.</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>what_arg </td> <td>- </td> <td>explanatory string </td>
+</tr> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to copy </td>
+</tr>
+</table> <h3 id="Exceptions">Exceptions</h3> <div class="t-li1">
+<span class="t-li">1,2)</span> May throw <code><a href="../../memory/new/bad_alloc" title="cpp/memory/new/bad alloc">std::bad_alloc</a></code>.</div> <h3 id="Notes">Notes</h3> <p>Because copying <code>std::format_error</code> is not permitted to throw exceptions, this message is typically stored internally as a separately-allocated reference-counted string. This is also why there is no constructor taking <code>std::string&amp;&amp;</code>: it would have to copy the content anyway.</p>
+<p>A derived standard exception class must have a publicly accessible copy constructor. It can be implicitly defined as long as the explanatory strings obtained by <code>what()</code> are the same for the original object and the copied object.</p>
+</div> <div class="t-member"> <h2 id="std::format_error::operator=">std::format_error::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">format_error&amp; operator=( const format_error&amp; other ) noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Assigns the contents with those of <code>other</code>. If <code>*this</code> and <code>other</code> both have dynamic type <code>std::format_error</code> then <code>std::strcmp(what(), other.what()) == 0</code> after assignment. No exception can be thrown from the copy assignment operator.</p>
+<h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to assign with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+<h3 id="Notes_2">Notes</h3> <p>A derived standard exception class must have a publicly accessible copy assignment operator. It can be implicitly defined as long as the explanatory strings obtained by <code>what()</code> are the same for the original object and the copied object.</p>
+</div> <div class="t-inherited"> <h2 id="Inherited_from_std::runtime_error">Inherited from <a href="../../error/runtime_error" title="cpp/error/runtime error">std::runtime_error</a>
+</h2> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="../../error/exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../error/exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../error/exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;format&gt;
+#include &lt;print&gt;
+#include &lt;string_view&gt;
+#include &lt;utility&gt;
+
+int main()
+{
+    try
+    {
+        auto x13{37};
+        auto args{std::make_format_args(x13)};
+        std::ignore = std::vformat("{:()}", args); // throws
+    }
+    catch(const std::format_error&amp; ex)
+    {
+        std::println("{}", ex.what());
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">format error: failed to parse format-spec
+</pre> </div> <h3 id="See_also">See also</h3>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/format/format_error" class="_attribution-link">https://en.cppreference.com/cpp/utility/format/format_error</a>
+  </p>
+</div>

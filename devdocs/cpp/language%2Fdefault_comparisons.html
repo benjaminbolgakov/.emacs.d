@@ -1,0 +1,181 @@
+   <h1 id="firstHeading" class="firstHeading">Default comparisons <span class="t-mark-rev t-since-cxx20">(since C++20)</span>
+</h1>            <p>Comparison operator functions can be explicitly defaulted to request the compiler to generate the corresponding default comparison for a class.</p>
+<h3 id="Definition">Definition</h3> <p>A <i>defaulted comparison operator function</i> is a non-template comparison operator function (i.e. <code>&lt;=&gt;</code>, <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>) satisfying all following conditions:</p>
+<ul>
+<li>It is a <a href="member_functions" title="cpp/language/member functions">non-static member</a> or <a href="friend" title="cpp/language/friend">friend</a> of some class <code>C</code>.</li> <li>It is <a href="function#Function_definition" title="cpp/language/function">defined as defaulted</a> in <code>C</code> or in a context where <code>C</code> is <a href="type#Incomplete_type" title="cpp/language/type">complete</a>.</li> <li>It has two parameters of type <span class="k">const</span><span class="n">C</span><span class="o">&amp;</span> or two parameters of type <code>C</code>, where the <a href="overload_resolution#Additional_rules_for_member_function_candidates" title="cpp/language/overload resolution">implicit object parameter</a> (if any) is considered to be the first parameter.</li>
+</ul> <p>Such a comparison operator function is termed a <i>defaulted comparison operator function for class <code>C</code></i>.</p>
+<pre data-language="c">struct X
+{
+    bool operator==(const X&amp;) const = default; // OK
+    bool operator==(const X&amp;) = default;       // Error: the implicit object
+                                               //        parameter type is X&amp;
+    bool operator==(this X, X) = default;      // OK
+};
+
+struct Y
+{
+    friend bool operator==(Y, Y) = default;        // OK
+    friend bool operator==(Y, const Y&amp;) = default; // Error: different parameter types
+};
+
+bool operator==(const Y&amp;, const Y&amp;) = default;     // Error: not a friend of Y
+</pre> <p>Name lookups and access checks in the implicit definition of a comparison operator function are performed from a context equivalent to its function body. A definition of a comparison operator function as defaulted that appears in a class must be the first declaration of that function.</p>
+<h3 id="Default_comparison_order">Default comparison order</h3> <p>Given a class <code>C</code>, a subobject list is formed by the following subjects in order:</p>
+<ul>
+<li>The direct base class subobjects of <code>C</code>, in declaration order.</li> <li>The non-static <a href="data_members" title="cpp/language/data members">data members</a> of <code>C</code>, in declaration order.</li>
+<ul><li>If any member subobject is of array type, it is expanded to the sequence of its elements, in the order of increasing subscript. The expansion is recursive: array elements of array types will be expanded again until there is no subobject of array type.</li></ul>
+</ul>  <p>For any object <code>x</code> of type <code>C</code>, in the following descriptions:</p>
+<ul>
+<li>Let <code>n</code> be the number of subobjects in the (expanded) subobject list for <code>x</code>.</li> <li>Let <code>x_i</code> be the <code>i</code>th subobject in the (expanded) subobject list for <code>x</code>, where <code>x_i</code> is formed by a sequence of <a href="overload_resolution#Ranking_of_implicit_conversion_sequences" title="cpp/language/overload resolution">derived-to-base conversions</a>, <a href="operator_member_access#Built-in_member_access_operators" title="cpp/language/operator member access">class member access expressions</a>, and <a href="operator_member_access#Built-in_subscript_operator" title="cpp/language/operator member access">array subscript expressions</a> applied to <code>x</code>.</li>
+</ul> <pre data-language="c">struct S {};
+
+struct T : S
+{
+    int arr[2][2];
+} t;
+
+// The subobject list for “t” consists of the following 5 subobjects in order:
+// (S)t → t[0][0] → t[0][1] → t[1][0] → t[1][1]
+</pre> <h3 id="Three-way_comparison">Three-way comparison</h3> <p>An <span class="k">operator</span><span class="o">&lt;=&gt;</span> for a class type can be defined as defaulted with any return type.</p>
+<h4 id="Comparison_category_types">Comparison category types</h4> <p>There are three comparison category types:</p>
+<ul>
+<li><a href="../utility/compare/strong_ordering" title="cpp/utility/compare/strong ordering"><code>std::strong_ordering</code></a></li> <li><a href="../utility/compare/weak_ordering" title="cpp/utility/compare/weak ordering"><code>std::weak_ordering</code></a></li> <li><a href="../utility/compare/partial_ordering" title="cpp/utility/compare/partial ordering"><code>std::partial_ordering</code></a></li>
+</ul> <table class="wikitable"> <tr> <th>Type </th> <th> Equivalent values are.. </th> <th> Incomparable values are.. </th>
+</tr> <tr> <td>
+<a href="../utility/compare/strong_ordering" title="cpp/utility/compare/strong ordering"><code>std::strong_ordering</code></a> </td> <td>indistinguishable </td> <td>not allowed </td>
+</tr> <tr> <td>
+<a href="../utility/compare/weak_ordering" title="cpp/utility/compare/weak ordering"><code>std::weak_ordering</code></a> </td> <td>distinguishable </td> <td>not allowed </td>
+</tr> <tr> <td> <a href="../utility/compare/partial_ordering" title="cpp/utility/compare/partial ordering"><code>std::partial_ordering</code></a> </td> <td>distinguishable </td> <td>allowed </td>
+</tr>
+</table> <h4 id="Synthesized_three-way_comparison">Synthesized three-way comparison</h4> <p>The <i>synthesized three-way comparison</i> of type <code>T</code> between glvalues <code>a</code> and <code>b</code> of the same type is defined as follows:</p>
+<ul>
+<li>If the overload resolution for <code>a &lt;=&gt; b</code> results in a usable candidate, and can be explicitly converted to <code>T</code> using <a href="static_cast" title="cpp/language/static cast"><code>static_cast</code></a>, the synthesized comparison is <code>static_cast&lt;T&gt;(a &lt;=&gt; b)</code>.</li> <li>Otherwise, if any of the following condition is satisfied, the synthesized comparison is not defined:</li>
+<ul>
+<li>The overload resolution for <code>a &lt;=&gt; b</code> finds at least one viable candidate.</li> <li>
+<code>T</code> is not a comparison category type.</li> <li>The overload resolution for <code>a == b</code> does not result in a usable candidate.</li> <li>The overload resolution for <code>a &lt; b</code> does not result in a usable candidate.</li>
+</ul>
+<li>Otherwise, if <code>T</code> is <a href="../utility/compare/strong_ordering" title="cpp/utility/compare/strong ordering"><code>std::strong_ordering</code></a>, the synthesized comparison is</li>
+</ul>   <pre data-language="c">a == b ? std::strong_ordering::equal :
+a &lt; b  ? std::strong_ordering::less :
+         std::strong_ordering::greater
+</pre> <ul><li>Otherwise, if <code>T</code> is <a href="../utility/compare/weak_ordering" title="cpp/utility/compare/weak ordering"><code>std::weak_ordering</code></a>, the synthesized comparison is</li></ul> <pre data-language="c">a == b ? std::weak_ordering::equivalent :
+a &lt; b  ? std::weak_ordering::less :
+         std::weak_ordering::greater
+</pre> <ul><li>Otherwise (<code>T</code> is <a href="../utility/compare/partial_ordering" title="cpp/utility/compare/partial ordering"><code>std::partial_ordering</code></a>), the synthesized comparison is</li></ul> <pre data-language="c">a == b ? std::partial_ordering::equivalent :
+a &lt; b  ? std::partial_ordering::less :
+b &lt; a  ? std::partial_ordering::greater : 
+         std::partial_ordering::unordered
+</pre> <h4 id="Placeholder_return_type">Placeholder return type</h4> <p>If the declared return type of a defaulted three-way comparison operator function (<span class="k">operator</span><span class="o">&lt;=&gt;</span>) for a class type <code>C</code> is <span class="k">auto</span>, the return type is deduced from the return types of the three-way comparisons between the corresponding subobjects of an object <code>x</code> of type <code>C</code>.</p>
+<p>For each subobject <code>x_i</code> in the <a href="#Default_comparison_order">(expanded) subobject list</a> for <code>x</code>:</p>
+<ol>
+<li>Perform overload resolution for <code>x_i &lt;=&gt; x_i</code>, if the overload resolution does not result in a usable candidate, the defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span> is defined as deleted.</li> <li>Denote the cv-unqualified version of the type of <code>x_i &lt;=&gt; x_i</code> as <code>R_i</code>, if <code>R_i</code> is not a comparison category type, the defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span> is defined as deleted.</li>
+</ol> <p>If the defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span> is not defined as deleted, its return type is deduced as <span class="n">std</span><span class="o">::</span><span class="n">common_comparison_category_t</span><span class="o">&lt;</span><span class="n">R_1</span><span class="p">,</span><span class="n">R_2</span><span class="p">,</span><span class="p">...,</span><span class="n">R_n</span><span class="o">&gt;</span>.</p>
+<h4 id="Non-placeholder_return_type">Non-placeholder return type</h4> <p>If the declared return type of the defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span> is not <span class="k">auto</span>, it cannot contain any <a href="auto" title="cpp/language/auto">placeholder type</a> (e.g. <span class="k">decltype</span><span class="p">(</span><span class="k">auto</span><span class="p">)</span>).</p>
+<p>If there is a subobject <code>x_i</code> in the (expanded) subobject list for <code>x</code> such that the <a href="#Synthesized_three-way_comparison">synthesized three-way comparison</a> of the declared return type between <code>x_i</code> and <code>x_i</code> is not defined, the defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span> is defined as deleted.</p>
+<h4 id="Comparison_result">Comparison result</h4> <p>Let <code>x</code> and <code>y</code> be the parameters of a defaulted <span class="k">operator</span><span class="o">&lt;=&gt;</span>, denote each subobject in the (expanded) subobject list for <code>x</code> and <code>y</code> as <code>x_i</code> and <code>y_i</code> respectively. The default three-way comparison between <code>x</code> and <code>y</code> is performed by comparing corresponding subobjects <code>x_i</code> and <code>y_i</code> with increasing <code>i</code> order.</p>
+<p>Let <code>R</code> be the (possibly-deduced) return type, the comparison result between <code>x_i</code> and <code>y_i</code> is the result of the synthesized three-way comparison of type <code>R</code> between <code>x_i</code> and <code>y_i</code>.</p>
+<ul>
+<li>During the default three-way comparison between <code>x</code> and <code>y</code>, if a subobject-wise comparison between <code>x_i</code> and <code>y_i</code> generates a result <code>v_i</code> such that contextually converting <code>v_i != 0</code> to <span class="kt">bool</span> yields <code>true</code>, the return value is a copy of <code>v_i</code> (the remaining subobjects will not be compared).</li> <li>Otherwise, the return value is <code>static_cast&lt;R&gt;(std::strong_ordering::equal)</code>.</li>
+</ul> <div class="t-example"> <pre data-language="c">#include &lt;compare&gt;
+#include &lt;iostream&gt;
+#include &lt;set&gt;
+
+struct Point
+{
+    int x;
+    int y;
+    auto operator&lt;=&gt;(const Point&amp;) const = default;
+    /* non-comparison functions */
+};
+
+int main()
+{
+    Point pt1{1, 1}, pt2{1, 2};
+    std::set&lt;Point&gt; s; // OK
+    s.insert(pt1);     // OK
+    
+    // two-way comparison operator functions are not required to be explicitly defined:
+    // operator== is implicitly declared (see below)
+    // the overload resolutions of other candidates will select rewritten candidates 
+    std::cout &lt;&lt; std::boolalpha
+        &lt;&lt; (pt1 == pt2) &lt;&lt; ' '  // false
+        &lt;&lt; (pt1 != pt2) &lt;&lt; ' '  // true
+        &lt;&lt; (pt1 &lt;  pt2) &lt;&lt; ' '  // true
+        &lt;&lt; (pt1 &lt;= pt2) &lt;&lt; ' '  // true
+        &lt;&lt; (pt1 &gt;  pt2) &lt;&lt; ' '  // false
+        &lt;&lt; (pt1 &gt;= pt2) &lt;&lt; ' '; // false
+}
+</pre> </div> <h3 id="Equality_comparison">Equality comparison</h3> <h4 id="Explicit_declaration">Explicit declaration</h4> <p>An <span class="k">operator</span><span class="o">==</span> for a class type can be defined as defaulted with return type <span class="kt">bool</span>.</p>
+<p>Given a class <code>C</code> and an object <code>x</code> of type <code>C</code>, if there is a subobject <code>x_i</code> in the (expanded) subobject list for <code>x</code> such that the overload resolution for <code>x_i == x_i</code> does not result in a usable candidate, the defaulted <span class="k">operator</span><span class="o">==</span> is defined as deleted.</p>
+<p>Let <code>x</code> and <code>y</code> be the parameters of a defaulted <span class="k">operator</span><span class="o">==</span>, denote each subobject in the (expanded) subobject list for <code>x</code> and <code>y</code> as <code>x_i</code> and <code>y_i</code> respectively. The default equality comparison between <code>x</code> and <code>y</code> is performed by comparing corresponding subobjects <code>x_i</code> and <code>y_i</code> with increasing <code>i</code> order.</p>
+<p>The comparison result between <code>x_i</code> and <code>y_i</code> is the result of <code>x_i == y_i</code>.</p>
+<ul>
+<li>During the default equality comparison between <code>x</code> and <code>y</code>, if a subobject-wise comparison between <code>x_i</code> and <code>y_i</code> generates a result <code>v_i</code> such that contextually converting <code>v_i</code> to <span class="kt">bool</span> yields <code>false</code>, the return value is <code>false</code> (the remaining subobjects will not be compared).</li> <li>Otherwise, the return value is <code>true</code>.</li>
+</ul> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+
+struct Point
+{
+    int x;
+    int y;
+    bool operator==(const Point&amp;) const = default;
+    /* non-comparison functions */
+};
+
+int main()
+{
+    Point pt1{3, 5}, pt2{2, 5};
+    std::cout &lt;&lt; std::boolalpha
+        &lt;&lt; (pt1 != pt2) &lt;&lt; '\n'  // true
+        &lt;&lt; (pt1 == pt1) &lt;&lt; '\n'; // true
+    
+    struct [[maybe_unused]] { int x{}, y{}; } p, q;
+    // if (p == q) {} // Error: operator== is not defined
+}</pre> </div> <h4 id="Implicit_declaration">Implicit declaration</h4> <p>If a class <code>C</code> does not explicitly declare any member or friend named operator==, an  operator function is declared implicitly for each operator&lt;=&gt; defined as defaulted. Each implicity-declared operator== have the same access and <a href="function#Function_definition" title="cpp/language/function">function definition</a> and in the same <a href="scope#Class_scope" title="cpp/language/scope">class scope</a> as the respective defaulted operator&lt;=&gt;, with the following changes:</p>
+<ul>
+<li>The <a href="declarations#Declarators" title="cpp/language/declarations">declarator identifier</a> is replaced with operator==.</li> <li>The return type is replaced with bool.</li>
+</ul> <pre data-language="c">template&lt;typename T&gt;
+struct X
+{
+    friend constexpr std::partial_ordering operator&lt;=&gt;(X, X)
+        requires (sizeof(T) != 1) = default;
+    // implicitly declares: friend constexpr bool operator==(X, X)
+    //                          requires (sizeof(T) != 1) = default;
+    
+    [[nodiscard]] virtual std::strong_ordering operator&lt;=&gt;(const X&amp;) const = default;
+    // implicitly declares: [[nodiscard]] virtual bool
+    //                          operator==(const X&amp;) const = default;
+};</pre> <h3 id="Secondary_comparison">Secondary comparison</h3> <p>A secondary comparison operator function (<code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, or <code>&gt;=</code>) for a class type can be defined as defaulted with return type bool.</p>
+<p>Let <code>@</code> be one of the five secondary comparison operators, for each defaulted operator@ with parameters <code>x</code> and <code>y</code>, up to two overloads resolutions are performed (not considering the defaulted operator@ as a candidate) to determine whether it is defined as deleted.</p>
+<ul>
+<li>The first overload resolution is performed for <code>x @ y</code>. If the overload resolution does not result in a usable candidate, or the selected candidate is not a <a href="overload_resolution#Call_to_an_overloaded_operator" title="cpp/language/overload resolution">rewritten candidate</a>, the defaulted operator@ is defined as deleted. There is no second overload resolution in these cases.</li> <li>The second overload resolution is performed for the selected rewritten candidate of <code>x @ y</code>. If the overload resolution does not result in a usable candidate, the defaulted operator@ is defined as deleted.</li>
+</ul> <p>If is <code>x @ y</code> cannot be implicitly converted to bool, the defaulted operator@ is defined as deleted.</p>
+<p>If the defaulted operator@ is not defined as deleted, it yields <code>x @ y</code>.</p>
+<pre data-language="c">struct HasNoRelational {};
+
+struct C
+{
+    friend HasNoRelational operator&lt;=&gt;(const C&amp;, const C&amp;);
+    bool operator&lt;(const C&amp;) const = default; // OK, function is defaulted
+};</pre> <h3 id="Keywords">Keywords</h3> <p><a href="../keyword/default" title="cpp/keyword/default"><code>default</code></a></p>
+<h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2539.html">CWG 2539</a> </td> <td>C++20 </td> <td>the synthesized three-way comparison would choose<br>static_cast even if the explicit conversion is not available </td> <td>does not choose<br>static_cast in this case </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2546.html">CWG 2546</a> </td> <td>C++20 </td> <td>the defaulted secondary operator@ was not<br>defined as deleted if the overload resolution of<br><code>x @ y</code> selects a non-usable rewritten candidate </td> <td>defined as deleted<br>in this case </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2547.html">CWG 2547</a> </td> <td>C++20 </td> <td>it was unclear whether comparison operator<br>functions for non-classes can be defaulted </td> <td>they cannot be defaulted </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2568.html">CWG 2568</a> </td> <td>C++20 </td> <td>the implicit definition of comparison operator<br>functions might violate member access rules </td> <td>access checks are performed<br>from a context equivalent<br>to their function bodies </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <ul>
+<li>
+<a href="overload_resolution#Call_to_an_overloaded_operator" title="cpp/language/overload resolution">overload resolution</a> in a call to an overloaded operator</li> <li>Built-in <a href="operator_comparison#Three-way_comparison" title="cpp/language/operator comparison">three-way comparison operator</a>
+</li> <li>
+<a href="operators#Comparison_operators" title="cpp/language/operators">Operator overloading</a> for comparison operators</li>
+</ul>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/language/default_comparisons" class="_attribution-link">https://en.cppreference.com/cpp/language/default_comparisons</a>
+  </p>
+</div>

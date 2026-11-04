@@ -1,0 +1,52 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::data</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">inline namespace /* unspecified */ {
+    inline constexpr /* unspecified */ data = /* unspecified */;
+}
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark">(customization point object)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr std::remove_reference_t&lt;
+    ranges::range_reference_t&lt;T&gt;&gt;* data( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Returns a pointer to the first element of a contiguous range.</p>
+<p>If <code>T</code> is an array type and <span class="n">std</span><span class="o">::</span><span class="n">remove_all_extents_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> is incomplete, then the call to <code>ranges::data</code> is ill-formed, no diagnostic required.</p>
+<p>If the argument is an lvalue or <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>true</code>, a call to <code>ranges::data</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to:</p>
+<ol>
+<li>
+<span class="t-rev-inl t-until-cxx23"><span><code><a href="../standard_library/decay-copy" title="cpp/standard library/decay-copy">decay-copy</a><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">data</span><span class="p">())</span></code></span><span><span class="t-mark-rev t-until-cxx23">(until C++23)</span></span></span><span class="t-rev-inl t-since-cxx23"><span><code>auto(t.data())</code></span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span>, if that expression is valid and its type is a pointer to an object type.</li> <li>Otherwise, <code>std::to_address(ranges::begin(t))</code>, if the expression <code>ranges::begin(t)</code> is valid and its type models <code><a href="../iterator/contiguous_iterator" title="cpp/iterator/contiguous iterator">std::contiguous_iterator</a></code>.</li>
+</ol> <p>In all other cases, a call to <code>ranges::data</code> is ill-formed, which can result in <a href="../language/sfinae" title="cpp/language/sfinae">substitution failure</a> when <code>ranges::data(e)</code> appears in the immediate context of a template instantiation.</p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>ranges::data</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Notes">Notes</h3> <p>If the argument is an rvalue (i.e. <code>T</code> is an object type) and <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>false</code>, the call to <code>ranges::data</code> is ill-formed, which also results in substitution failure.</p>
+<p>If <code>ranges::data(e)</code> is valid for an expression <code>e</code>, then it returns a pointer to an object.</p>
+<p>The C++20 standard requires that if the underlying <code>data</code> function call returns a prvalue, the return value is move-constructed from the materialized temporary object. All implementations directly return the prvalue instead. The requirement is corrected by the post-C++20 proposal <a rel="nofollow" class="external text" href="https://wg21.link/P0849R8">P0849R8</a> to match the implementations.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;string&gt;
+
+int main()
+{
+    std::string s{"Hello world!\n"};
+    
+    char a[20]; // storage for a C-style string
+    std::strcpy(a, std::ranges::data(s));
+    // [data(s), data(s) + size(s)] is guaranteed to be an NTBS
+    
+    std::cout &lt;&lt; a;
+}
+</pre> <p>Output:</p>
+<pre data-language="c">Hello world!
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="cdata" title="cpp/ranges/cdata"> <span class="t-lines"><span>ranges::cdata</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>obtains a pointer to the beginning of a read-only contiguous range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="begin" title="cpp/ranges/begin"> <span class="t-lines"><span>ranges::begin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns an iterator to the beginning of a range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/data" title="cpp/iterator/data"> <span class="t-lines"><span>data</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>obtains the pointer to the underlying array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/data" class="_attribution-link">https://en.cppreference.com/cpp/ranges/data</a>
+  </p>
+</div>

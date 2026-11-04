@@ -1,0 +1,110 @@
+   <h1 id="firstHeading" class="firstHeading">std::ios_base::failure</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/ios" title="cpp/header/ios">&lt;ios&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">class failure;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>The class <code>std::ios_base::failure</code> defines an exception object that is thrown on failure by the functions in the Input/Output library.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx17">
+<td> <p><code>std::ios_base::failure</code> may be defined either as a member class of <code><a href="../ios_base" title="cpp/io/ios base">std::ios_base</a></code> or as a synonym (typedef) for another class with equivalent functionality.</p>
+</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td>
+</tr> </table> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx11">
+<td>  <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/6/60/std-ios_base-failure-2003-inheritance.svg" decoding="async" width="252" height="40" class="mw-file-element" usemap="#ImageMap_03d43e23e22f8885"></span><map name="ImageMap_03d43e23e22f8885"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div>  </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td>
+</tr> <tr class="t-rev t-since-cxx11">
+<td>  <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/f/f2/std-ios_base-failure-inheritance.svg" decoding="async" width="514" height="40" class="mw-file-element" usemap="#ImageMap_d58581fd2ca9d021"></span><map name="ImageMap_d58581fd2ca9d021"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception">
+<area href="/cpp/error/runtime_error" shape="rect" coords="135,4,238,36" alt="cpp/error/runtime error" title="cpp/error/runtime error">
+<area href="/cpp/error/system_error" shape="rect" coords="266,4,369,36" alt="cpp/error/system error" title="cpp/error/system error"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div>  </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>(constructor)</span></span></div> </td> <td>constructs a new <code>failure</code> object with the given message <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>operator=</span></span></div> </td> <td>replaces the <code>failure</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>what</span></span></div> </td> <td>returns the explanatory string <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <div class="t-member"> <h2 id="std::ios_base::failure::failure">std::ios_base::failure::failure</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">explicit failure( const std::string&amp; message );
+</pre>
+</td> <td rowspan="2"> (1)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">explicit failure( const std::string&amp; message, 
+                  const std::error_code&amp; ec = std::io_errc::stream );
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">explicit failure( const char* message,
+                  const std::error_code&amp; ec = std::io_errc::stream );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">failure( const failure&amp; other );
+</pre>
+</td> <td rowspan="2"> (3)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">failure( const failure&amp; other ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1,2)</span> Constructs the exception object using <code>message</code> as explanation string which can later be retrieved using <a href="../../error/exception/what" title="cpp/error/exception/what"><code>what()</code></a>. <span class="t-rev-inl t-since-cxx11"><span><code>ec</code> is used to identify the specific reason for the failure.</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>
+</div> <div class="t-li1">
+<span class="t-li">3)</span> Copy constructor. Initialize the contents with those of <code>other</code>. <span class="t-rev-inl t-since-cxx11"><span>If <code>*this</code> and <code>other</code> both have dynamic type <code>std::ios_base::failure</code> then <code>std::strcmp(what(), other.what()) == 0</code>.</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>
+</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>message </td> <td>- </td> <td>explanatory string </td>
+</tr> <tr class="t-par"> <td>ec </td> <td>- </td> <td>error code to identify the specific reason for the failure </td>
+</tr> <tr class="t-par"> <td>other </td> <td>- </td> <td>another <code>failure</code> to copy </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <p>Because copying <code>std::ios_base::failure</code> is not permitted to throw exceptions, this message is typically stored internally as a separately-allocated reference-counted string. This is also why there is no constructor taking <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;&amp;</span>: it would have to copy the content anyway.</p>
+</div> <div class="t-member"> <h2 id="std::ios_base::failure::operator=">std::ios_base::failure::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td><pre data-language="c">failure&amp; operator=( const failure&amp; other );
+</pre></td> <td rowspan="2" class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">failure&amp; operator=( const failure&amp; other ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <p>Assigns the contents with those of <code>other</code>.<span class="t-rev-inl t-since-cxx11"><span> If <code>*this</code> and <code>other</code> both have dynamic type <code>std::ios_base::failure</code> then <code>std::strcmp(what(), other.what()) == 0</code> after assignment.</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span></p>
+<h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to assign with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+</div> <div class="t-member"> <h2 id="std::ios_base::failure::what">std::ios_base::failure::what</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td><pre data-language="c">virtual const char* what() const throw();
+</pre></td> <td rowspan="2" class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">virtual const char* what() const noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <p>Returns the explanatory string.</p>
+<h3 id="Return_value_2">Return value</h3> <p>Pointer to an implementation-defined null-terminated string with explanatory information. The string is suitable for conversion and display as a <code><a href="../../string/basic_string" title="cpp/string/basic string">std::wstring</a></code>. The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function (e.g. copy assignment operator) on the exception object is called.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>The returned string is encoded with the ordinary literal encoding during constant evaluation.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <h3 id="Notes_2">Notes</h3> <p>Implementations are allowed but not required to override <code>what()</code>.</p>
+</div> <div class="t-inherited"> <h2 id="Inherited_from_std::system_error">Inherited from <a href="../../error/system_error" title="cpp/error/system error">std::system_error</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../error/system_error/code" title="cpp/error/system error/code"> <span class="t-lines"><span>code</span></span></a></div> </td> <td>returns error code <br> <span class="t-mark">(public member function of <code>std::system_error</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../error/system_error/what" title="cpp/error/system error/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::system_error</code>)</span>  </td>
+</tr> </table> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::runtime_error">Inherited from <a href="../../error/runtime_error" title="cpp/error/runtime error">std::runtime_error</a>
+</h2> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="../../error/exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_3">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../error/exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../error/exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Notes_3">Notes</h3> <p>Before the resolution of <a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue331">LWG issue 331</a>, <code>std::ios_base::failure</code> declared a destructor without <span class="k">throw</span><span class="p">()</span>, where <a href="../../error/exception/~exception" title="cpp/error/exception/~exception"><code>std::exception::~exception()</code></a> was declared with <span class="k">throw</span><span class="p">()</span><sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup>. This means the <code>std::ios_base::failure::~failure()</code> had a weaker exception specification. The resolution is to remove that declaration so that the non-throwing exception specification is kept.</p>
+<p><a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue363">LWG issue 363</a> targets the same defect and its resolution is to add <span class="k">throw</span><span class="p">()</span> to the declaration of <code>std::ios_base::failure::~failure()</code>. That resolution was not applied due to the conflict between the two resolutions.</p>
+<div class="mw-references-wrap"><ol class="references"> <li id="cite_note-1"> <span class="reference-text">The non-throwing exception specification is now applied <a href="../../standard_library#Guarantees" title="cpp/standard library">globally across the standard library</a>, so the destructors of standard library classes are not declared with <span class="k">throw</span><span class="p">()</span> or <span class="k">noexcept</span>.</span> </li> </ol></div> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::ifstream f("doesn't exist");
+    
+    try
+    {
+        f.exceptions(f.failbit);
+    }
+    catch (const std::ios_base::failure&amp; e)
+    {
+        std::cout &lt;&lt; "Caught an ios_base::failure.\n"
+                  &lt;&lt; "Explanatory string: " &lt;&lt; e.what() &lt;&lt; '\n'
+                  &lt;&lt; "Error code: " &lt;&lt; e.code() &lt;&lt; '\n';
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">Caught an ios_base::failure.
+Explanatory string: ios_base::clear: unspecified iostream_category error
+Error code: iostream:1
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue48">LWG 48</a> </td> <td>C++98 </td> <td>the constructor overload (1) initialized the base class <code><a href="../../error/exception" title="cpp/error/exception">std::exception</a></code><br>with <code>msg</code>, but the base class does not have a matching constructor </td> <td>corresponding<br>description removed </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue331">LWG 331</a> </td> <td>C++98 </td> <td>
+<code>std::ios_base::failure</code> declared a destructor without <span class="k">throw</span><span class="p">()</span> </td> <td>removed the destructor declaration </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../io_errc" title="cpp/io/io errc"> <span class="t-lines"><span>io_errc</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>the IO stream error codes <br> <span class="t-mark">(enum)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/io/ios_base/failure" class="_attribution-link">https://en.cppreference.com/cpp/io/ios_base/failure</a>
+  </p>
+</div>

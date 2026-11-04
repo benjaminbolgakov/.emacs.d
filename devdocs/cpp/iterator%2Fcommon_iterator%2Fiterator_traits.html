@@ -1,0 +1,80 @@
+   <h1 id="firstHeading" class="firstHeading">std::iterator_traits<small>&lt;std::common_iterator&gt;</small>
+</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; std::input_iterator I, class S &gt;
+struct iterator_traits&lt;std::common_iterator&lt;I, S&gt;&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Provides the uniform interface to the properties of the <code><a href="../common_iterator" title="cpp/iterator/common iterator">std::common_iterator</a></code> type.</p>
+<h3 id="Member_types">Member types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type name </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_concept</code> </td> <td> <ul>
+<li>
+<code><a href="../iterator_tags" title="cpp/iterator/iterator tags">std::forward_iterator_tag</a></code>, if <code>I</code> models <code><a href="../forward_iterator" title="cpp/iterator/forward iterator">std::forward_iterator</a></code>.</li> <li>
+<code><a href="../iterator_tags" title="cpp/iterator/iterator tags">std::input_iterator_tag</a></code> otherwise.</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iterator_category</code><br><span class="t-mark">(conditionally present)</span> </td> <td> <ul>
+<li>Not defined, if <span class="n">std</span><span class="o">::</span><span class="n">iter_difference_t</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> is not an integral type.</li> <li>
+<code><a href="../iterator_tags" title="cpp/iterator/iterator tags">std::forward_iterator_tag</a></code> otherwise, if <span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;::</span><span class="n">iterator_category</span> is valid and denotes a type that models <code>std::derived_from&lt;std::forward_iterator_tag&gt;</code>.</li> <li>
+<code><a href="../iterator_tags" title="cpp/iterator/iterator tags">std::input_iterator_tag</a></code> otherwise.</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_value_t</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>difference_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_difference_t</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>pointer</code> </td> <td> <ul>
+<li>
+<span class="k">decltype</span><span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="k">operator</span><span class="o">-&gt;</span><span class="p">())</span>, if it is well-formed (where <code>c</code> is an lvalue of type <span class="k">const</span><span class="n">std</span><span class="o">::</span><span class="n">common_iterator</span><span class="o">&lt;</span><span class="n">I</span><span class="p">,</span><span class="n">S</span><span class="o">&gt;</span>).</li> <li>
+<span class="kt">void</span> otherwise.</li>
+</ul> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>reference</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iter_reference_t</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> </td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iterator&gt;
+#include &lt;type_traits&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector v{1, 2, 3, 4};
+    using CV = std::common_iterator&lt;
+                    std::counted_iterator&lt;std::vector&lt;int&gt;::iterator&gt;,
+                    std::default_sentinel_t&gt;;
+    CV i{std::counted_iterator{v.begin(), 3}};
+    using TRCV = std::iterator_traits&lt;decltype(i)&gt;;
+    static_assert(std::is_same&lt;TRCV::iterator_concept, std::forward_iterator_tag&gt;());
+    static_assert(std::is_same&lt;TRCV::iterator_category, std::forward_iterator_tag&gt;());
+    static_assert(std::is_same&lt;TRCV::value_type, int&gt;());
+    static_assert(std::is_same&lt;TRCV::difference_type,
+                  std::vector&lt;int&gt;::difference_type&gt;());
+    static_assert(std::is_same&lt;TRCV::pointer, decltype(i.operator-&gt;())&gt;());
+    static_assert(std::is_same&lt;TRCV::reference, int&amp;&gt;());
+
+    CV s{std::default_sentinel};
+    using TRCS = std::iterator_traits&lt;decltype(s)&gt;;
+    static_assert(std::is_same&lt;TRCS::iterator_concept, std::forward_iterator_tag&gt;());
+    static_assert(std::is_same&lt;TRCS::iterator_category, std::forward_iterator_tag&gt;());
+    static_assert(std::is_same&lt;TRCS::value_type, int&gt;());
+    static_assert(std::is_same&lt;TRCS::difference_type,
+                  std::vector&lt;int&gt;::difference_type&gt;());
+    static_assert(std::is_same&lt;TRCS::pointer, decltype(s.operator-&gt;())&gt;());
+    static_assert(std::is_same&lt;TRCS::reference, int&amp;&gt;());
+}
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3749">LWG 3749</a> </td> <td>C++20 </td> <td>if <span class="n">std</span><span class="o">::</span><span class="n">iter_difference_t</span><span class="o">&lt;</span><span class="n">I</span><span class="o">&gt;</span> is not an integer type,<br><code>iterator_category</code> was <code><a href="../iterator_tags" title="cpp/iterator/iterator tags">std::input_iterator_tag</a></code> </td> <td>
+<code>iterator_category</code> is<br>undefined in this case </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../iterator_traits" title="cpp/iterator/iterator traits"> <span class="t-lines"><span>iterator_traits</span></span></a></div> </td> <td>provides uniform interface to the properties of an iterator <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="incrementable_traits" title="cpp/iterator/common iterator/incrementable traits"> <span class="t-lines"><span>std::incrementable_traits<span class="t-dsc-small">&lt;std::common_iterator&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>computes the associated difference type of the <code><a href="../common_iterator" title="cpp/iterator/common iterator">std::common_iterator</a></code> type <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/iterator/common_iterator/iterator_traits" class="_attribution-link">https://en.cppreference.com/cpp/iterator/common_iterator/iterator_traits</a>
+  </p>
+</div>

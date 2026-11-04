@@ -1,0 +1,20 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_ios&lt;CharT,Traits&gt;::widen</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">char_type widen( char c ) const;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Converts a character <code>c</code> to its equivalent in the current locale. The result is converted from <span class="kt">char</span> to character type used within the stream if needed.</p>
+<p>Effectively calls <code>std::use_facet&lt; std::ctype&lt;char_type&gt; &gt;(getloc()).widen(c)</code>.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>c </td> <td>- </td> <td>character to convert </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>Character converted to <code>char_type</code></p>
+<h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="narrow" title="cpp/io/basic ios/narrow"> <span class="t-lines"><span>narrow</span></span></a></div> </td> <td>narrows characters <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../locale/ctype/widen" title="cpp/locale/ctype/widen"> <span class="t-lines"><span>do_widen</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>converts a character or characters from <span class="kt">char</span> to <code>CharT</code> <br> <span class="t-mark">(virtual protected member function of <code>std::ctype&lt;CharT&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../string/multibyte/btowc" title="cpp/string/multibyte/btowc"> <span class="t-lines"><span>btowc</span></span></a></div> </td> <td>widens a single-byte narrow character to wide character, if possible <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/io/basic_ios/widen" class="_attribution-link">https://en.cppreference.com/cpp/io/basic_ios/widen</a>
+  </p>
+</div>

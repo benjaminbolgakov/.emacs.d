@@ -1,0 +1,32 @@
+   <h1 id="firstHeading" class="firstHeading">Deduction guides for <code>std::chrono::zoned_time</code>
+</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">zoned_time() -&gt; zoned_time&lt;std::chrono::seconds&gt;;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class Duration &gt;
+zoned_time( std::chrono::sys_time&lt;Duration&gt; )
+    -&gt; zoned_time&lt;std::common_type_t&lt;Duration, std::chrono::seconds&gt;&gt;;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class TimeZonePtrOrName &gt;
+zoned_time( TimeZonePtrOrName&amp;&amp; ) -&gt; zoned_time&lt;std::chrono::seconds, /* see below */&gt;;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class TimeZonePtrOrName, class Duration &gt;
+zoned_time( TimeZonePtrOrName&amp;&amp;, std::chrono::sys_time&lt;Duration&gt; )
+    -&gt; zoned_time&lt;std::common_type_t&lt;Duration, std::chrono::seconds&gt;, /* see below */&gt;;
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class TimeZonePtrOrName, class Duration &gt;
+zoned_time( TimeZonePtrOrName&amp;&amp;, std::chrono::local_time&lt;Duration&gt;,
+            std::chrono::choose = std::chrono::choose::earliest )
+    -&gt; zoned_time&lt;std::common_type_t&lt;Duration, std::chrono::seconds&gt;, /* see below */&gt;;
+</pre>
+</td> <td> (5) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class TimeZonePtrOrName, class Duration, class TimeZonePtr2 &gt;
+zoned_time( TimeZonePtrOrName&amp;&amp;, std::chrono::zoned_time&lt;Duration, TimeZonePtr2&gt;,
+            std::chrono::choose = std::chrono::choose::earliest )
+    -&gt; zoned_time&lt;std::common_type_t&lt;Duration, std::chrono::seconds&gt;, /* see below */&gt;;
+</pre>
+</td> <td> (6) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>These deduction guides normalize <code>Duration</code> to a minimum resolution of <code><a href="../duration" title="cpp/chrono/duration">std::chrono::seconds</a></code>, and provide correct handling for time zone names specified using types convertible to <code>std::string_view</code>.</p>
+<div class="t-li1">
+<span class="t-li">3-6)</span> If <code>std::is_convertible_v&lt;TimeZonePtrOrName, std::string_view&gt;</code> is <code>true</code>, the deduced second template argument is <code>const std::chrono::time_zone*</code>. Otherwise it is <code>std::remove_cvref_t&lt;TimeZonePtrOrName&gt;</code>.</div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/chrono/zoned_time/deduction_guides" class="_attribution-link">https://en.cppreference.com/cpp/chrono/zoned_time/deduction_guides</a>
+  </p>
+</div>

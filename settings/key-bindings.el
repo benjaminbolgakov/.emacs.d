@@ -34,6 +34,8 @@
 
 (global-set-key (kbd "C-c i") 'my-insert-image)
 
+(global-set-key (kbd "C-h D") 'devdocs-lookup)
+
 ;; Hook bindings
 (global-set-key (kbd "C-x C-c") 'my-confirm-kill-emacs)
 

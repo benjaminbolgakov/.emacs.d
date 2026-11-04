@@ -1,0 +1,51 @@
+   <h1 id="firstHeading" class="firstHeading">std::rotr</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/bit" title="cpp/header/bit">&lt;bit&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+constexpr T rotr( T x, int s ) noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Computes the result of bitwise right-rotating the value of <code>x</code> by <code>s</code> positions. This operation is also known as a right <a href="https://en.wikipedia.org/wiki/Circular_shift" class="extiw" title="enwiki:Circular shift">circular shift</a>.</p>
+<p>Formally, let <code>N</code> be <span class="n">std</span><span class="o">::</span><span class="n">numeric_limits</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">digits</span> and <code>r</code> be <code>s % N</code>.</p>
+<ul>
+<li>If <code>r</code> is <code>0</code>, returns <code>x</code>;</li> <li>if <code>r</code> is positive, returns <code>(x &gt;&gt; r) | (x &lt;&lt; (N - r))</code>;</li> <li>if <code>r</code> is negative, returns <code>std::rotl(x, -r)</code>.</li>
+</ul> <p>This overload participates in overload resolution only if <code>T</code> is an unsigned integer type (that is, <span class="kt">unsigned</span><span class="kt">char</span>, <span class="kt">unsigned</span><span class="kt">short</span>, <span class="kt">unsigned</span><span class="kt">int</span>, <span class="kt">unsigned</span><span class="kt">long</span>, <span class="kt">unsigned</span><span class="kt">long</span><span class="kt">long</span>, or an extended unsigned integer type).</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>x </td> <td>- </td> <td>value of unsigned integer type </td>
+</tr> <tr class="t-par"> <td>s </td> <td>- </td> <td>number of positions to shift </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>The result of bitwise right-rotating <code>x</code> by <code>s</code> positions.</p>
+<h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_bitops" title="cpp/feature test"><code>__cpp_lib_bitops</code></a></td> <td><a href="../compiler_support/20#cpp_lib_bitops_201907L" title="cpp/compiler support/20"><code>201907L</code></a></td> <td><span class="t-mark">(C++20)</span></td> <td>
+<a href="../utility/bit" title="cpp/utility/bit">Bit operations</a> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;bit&gt;
+#include &lt;bitset&gt;
+#include &lt;cstdint&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+    using bin = std::bitset&lt;8&gt;;
+    const std::uint8_t x{0b00011101};
+    std::cout &lt;&lt; bin(x) &lt;&lt; " &lt;- x\n";
+    for (const int s : {0, 1, 9, -1, 2})
+        std::cout &lt;&lt; bin(std::rotr(x, s)) &lt;&lt; " &lt;- rotr(x, " &lt;&lt; s &lt;&lt; ")\n";
+}
+</pre> <p>Output:</p>
+<pre data-language="c">00011101 &lt;- x
+00011101 &lt;- rotr(x, 0)
+10001110 &lt;- rotr(x, 1)
+10001110 &lt;- rotr(x, 9)
+00111010 &lt;- rotr(x, -1)
+01000111 &lt;- rotr(x, 2)
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="rotl" title="cpp/numeric/rotl"> <span class="t-lines"><span>rotl</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>computes the result of bitwise left-rotation <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="bit_reverse" title="cpp/numeric/bit reverse"> <span class="t-lines"><span>bit_reverse</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx29">(C++29)</span></span></span></div> </td> <td>reverses the bits in an integer <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../utility/bitset/operator_ltltgtgt" title="cpp/utility/bitset/operator ltltgtgt"> <span class="t-lines"><span>operator&lt;&lt;=</span><span>operator&gt;&gt;=</span><span>operator&lt;&lt;</span><span>operator&gt;&gt;</span></span></a></div> </td> <td>performs binary shift left and shift right <br> <span class="t-mark">(public member function of <code>std::bitset&lt;N&gt;</code>)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/numeric/rotr" class="_attribution-link">https://en.cppreference.com/cpp/numeric/rotr</a>
+  </p>
+</div>

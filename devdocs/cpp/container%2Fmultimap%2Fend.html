@@ -1,0 +1,72 @@
+   <h1 id="firstHeading" class="firstHeading">std::multimap&lt;Key,T,Compare,Allocator&gt;::end, std::multimap&lt;Key,T,Compare,Allocator&gt;::cend</h1>           <div id="mw-content-text">
+  <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">iterator end();
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">const_iterator end() const;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">const_iterator cend() const noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Returns an iterator to the element following the last element of the <code>multimap</code>.</p>
+<p>This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<h3 id="Return_value">Return value</h3> <p>Iterator to the element following the last element.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Notes">Notes</h3> <p>libc++ backports <code>cend()</code> to C++98 mode.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;cassert&gt;
+#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+
+int main()
+{
+    auto show_node = [](const auto&amp; node, char ending = '\n')
+    {
+        std::cout &lt;&lt; "{ " &lt;&lt; node.first &lt;&lt; ", " &lt;&lt; node.second &lt;&lt; " }" &lt;&lt; ending;
+    };
+
+    std::multimap&lt;std::size_t, std::string&gt; mmap;
+    assert(mmap.begin() == mmap.end());   // OK
+    assert(mmap.cbegin() == mmap.cend()); // OK
+
+    mmap.insert({ sizeof(long), "LONG" });
+    show_node(*(mmap.cbegin()));
+    assert(mmap.begin() != mmap.end());   // OK
+    assert(mmap.cbegin() != mmap.cend()); // OK
+    mmap.begin()-&gt;second = "long";
+    show_node(*(mmap.cbegin()));
+
+    mmap.insert({ sizeof(int), "int" });
+    show_node(*mmap.cbegin());
+
+    mmap.insert({ sizeof(short), "short" });
+    show_node(*mmap.cbegin());
+
+    mmap.insert({ sizeof(char), "char" });
+    show_node(*mmap.cbegin());
+
+    mmap.insert({{ sizeof(float), "float" }, { sizeof(double), "double"}});
+ 
+    std::cout &lt;&lt; "mmap = { ";
+    std::for_each(mmap.cbegin(), mmap.cend(), [&amp;](const auto&amp; n) { show_node(n, ' '); });
+    std::cout &lt;&lt; "};\n";
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">{ 8, LONG }
+{ 8, long }
+{ 4, int }
+{ 2, short }
+{ 1, char }
+mmap = { { 1, char } { 2, short } { 4, int } { 4, float } { 8, long } { 8, double } };
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="begin" title="cpp/container/multimap/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>returns an iterator to the beginning <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/end" title="cpp/iterator/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the end of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/multimap/end" class="_attribution-link">https://en.cppreference.com/cpp/container/multimap/end</a>
+  </p>
+</div>

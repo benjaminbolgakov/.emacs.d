@@ -1,0 +1,65 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::rbegin</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">inline namespace /* unspecified */ {
+    inline constexpr /* unspecified */ rbegin = /* unspecified */;
+}
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark">(customization point object)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr std::input_or_output_iterator auto rbegin( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Returns an iterator to the last element of the argument.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-rbegin-rend.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/3/39/range-rbegin-rend.svg" decoding="async" width="589" height="250" class="mw-file-element"></a></span></p>
+<p>If <code>T</code> is an array type and <span class="n">std</span><span class="o">::</span><span class="n">remove_all_extents_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> is incomplete, then the call to <code>ranges::rbegin</code> is ill-formed, no diagnostic required.</p>
+<p>If the argument is an lvalue or <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>true</code>, then a call to <code>ranges::rbegin</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to:</p>
+<ol>
+<li>
+<span class="t-rev-inl t-until-cxx23"><span><code><a href="../standard_library/decay-copy" title="cpp/standard library/decay-copy">decay-copy</a><span class="p">(</span><span class="n">t</span><span class="p">.</span><span class="n">rbegin</span><span class="p">())</span></code></span><span><span class="t-mark-rev t-until-cxx23">(until C++23)</span></span></span><span class="t-rev-inl t-since-cxx23"><span><code>auto(t.rbegin())</code></span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span>, if that expression is valid and its type models <code><a href="../iterator/input_or_output_iterator" title="cpp/iterator/input or output iterator">std::input_or_output_iterator</a></code>.</li> <li>Otherwise, <span class="t-rev-inl t-until-cxx23"><span><code><a href="../standard_library/decay-copy" title="cpp/standard library/decay-copy">decay-copy</a><span class="p">(</span><span class="n">rbegin</span><span class="p">(</span><span class="n">t</span><span class="p">))</span></code></span><span><span class="t-mark-rev t-until-cxx23">(until C++23)</span></span></span><span class="t-rev-inl t-since-cxx23"><span><code>auto(rbegin(t))</code></span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span>, if <code>T</code> is a class or enumeration type, that expression is valid and its type models <code><a href="../iterator/input_or_output_iterator" title="cpp/iterator/input or output iterator">std::input_or_output_iterator</a></code>, where the meaning of <code>rbegin</code> is established as if by performing <a href="../language/adl" title="cpp/language/adl">argument-dependent lookup</a> only.</li> <li>Otherwise, <code>std::make_reverse_iterator(ranges::end(t))</code> if both <code>ranges::begin(t)</code> and <code>ranges::end(t)</code> are valid expressions, have the same type, and that type models <code><a href="../iterator/bidirectional_iterator" title="cpp/iterator/bidirectional iterator">std::bidirectional_iterator</a></code>.</li>
+</ol> <p>In all other cases, a call to <code>ranges::rbegin</code> is ill-formed, which can result in <a href="../language/sfinae" title="cpp/language/sfinae">substitution failure</a> when <code>ranges::rbegin(t)</code> appears in the immediate context of a template instantiation.</p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>ranges::rbegin</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Notes">Notes</h3> <p>If the argument is an rvalue (i.e. <code>T</code> is an object type) and <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>false</code>, the call to <code>ranges::rbegin</code> is ill-formed, which also results in substitution failure.</p>
+<p>The return type models <code><a href="../iterator/input_or_output_iterator" title="cpp/iterator/input or output iterator">std::input_or_output_iterator</a></code> in all cases.</p>
+<p>The C++20 standard requires that if the underlying <code>rbegin</code> function call returns a prvalue, the return value is move-constructed from the materialized temporary object. All implementations directly return the prvalue instead. The requirement is corrected by the post-C++20 proposal <a rel="nofollow" class="external text" href="https://wg21.link/P0849R8">P0849R8</a> to match the implementations.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;span&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector&lt;int&gt; v = {3, 1, 4};
+    auto vi = std::ranges::rbegin(v);
+    std::cout &lt;&lt; *vi &lt;&lt; '\n';
+    *vi = 42; // OK
+    
+    int a[] = {-5, 10, 15};
+    auto ai = std::ranges::rbegin(a);
+    std::cout &lt;&lt; *ai &lt;&lt; '\n';
+    *ai = 42; // OK
+    
+    // auto x_x = std::ranges::rbegin(std::vector{6, 6, 6});
+    // ill-formed: the argument is an rvalue (see Notes ↑)
+    
+    auto si = std::ranges::rbegin(std::span{a}); // OK
+    static_assert(std::ranges::enable_borrowed_range&lt;
+        std::remove_cv_t&lt;decltype(std::span{a})&gt;&gt;);
+    *si = 42; // OK
+}
+</pre> <p>Output:</p>
+<pre data-language="c">4
+15
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2602R2">P2602R2</a> </td> <td>C++20 </td> <td>there's machinery to prohibit certain non-member <code>rbegin</code> found by <a href="../language/adl" title="cpp/language/adl">ADL</a> </td> <td>removed such machinery </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="crbegin" title="cpp/ranges/crbegin"> <span class="t-lines"><span>ranges::crbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns a reverse iterator to a read-only range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/rbegin" title="cpp/iterator/rbegin"> <span class="t-lines"><span>rbegin</span><span>crbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns a reverse iterator to the beginning of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/rbegin" class="_attribution-link">https://en.cppreference.com/cpp/ranges/rbegin</a>
+  </p>
+</div>

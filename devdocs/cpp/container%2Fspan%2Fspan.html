@@ -1,0 +1,195 @@
+   <h1 id="firstHeading" class="firstHeading">std::span&lt;T,Extent&gt;::span</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">constexpr span() noexcept;
+</pre>
+</td> <td> (1)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class It &gt;
+explicit(extent != std::dynamic_extent)
+constexpr span( It first, size_type count );
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class It, class End &gt;
+explicit(extent != std::dynamic_extent)
+constexpr span( It first, End last );
+</pre>
+</td> <td> (3)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; std::size_t N &gt;
+constexpr span( std::type_identity_t&lt;element_type&gt; (&amp;arr)[N] ) noexcept;
+</pre>
+</td> <td> (4)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class U, std::size_t N &gt;
+constexpr span( std::array&lt;U, N&gt;&amp; arr ) noexcept;
+</pre>
+</td> <td> (5)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class U, std::size_t N &gt;
+constexpr span( const std::array&lt;U, N&gt;&amp; arr ) noexcept;
+</pre>
+</td> <td> (6)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class R &gt;
+explicit(extent != std::dynamic_extent)
+constexpr span( R&amp;&amp; r );
+</pre>
+</td> <td> (7)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">template&lt; class U, std::size_t N &gt;
+explicit(extent != std::dynamic_extent &amp;&amp; N == std::dynamic_extent)
+constexpr span( const std::span&lt;U, N&gt;&amp; source ) noexcept;
+</pre>
+</td> <td> (8)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">constexpr span( const span&amp; other ) noexcept = default;
+</pre>
+</td> <td> (9)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr>  </table> <p>Constructs a <code>span</code>.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>first </td> <td>- </td> <td>iterator to the first element of the sequence </td>
+</tr> <tr class="t-par"> <td>count </td> <td>- </td> <td>number of elements in the sequence </td>
+</tr> <tr class="t-par"> <td>last </td> <td>- </td> <td>iterator past the last element of the sequence or another sentinel </td>
+</tr> <tr class="t-par"> <td>arr </td> <td>- </td> <td>array to construct a view for </td>
+</tr> <tr class="t-par"> <td>r </td> <td>- </td> <td>range to construct a view for </td>
+</tr> <tr class="t-par"> <td>source </td> <td>- </td> <td>another <code>span</code> to convert from </td>
+</tr> <tr class="t-par"> <td>other </td> <td>- </td> <td>another <code>span</code> to copy from </td>
+</tr>
+</table> <h3 id="Effects">Effects</h3> <table class="wikitable"> <tr> <th> Overload </th> <th> <a href="data" title="cpp/container/span/data"><code>data()</code></a> after construction </th> <th> <a href="size" title="cpp/container/span/size"><code>size()</code></a> after construction </th>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_1">1</a>)</span> </td> <td>
+<code>nullptr</code> </td> <td>
+<code>0</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_2">2</a>)</span> </td> <td rowspan="2">
+<code>std::to_address(first)</code> </td> <td>
+<code>count</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_3">3</a>)</span> </td> <td>
+<code>last - first</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_4">4</a>)</span> </td> <td rowspan="3">
+<code>std::data(arr)</code> </td> <td rowspan="3">
+<code>N</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_5">5</a>)</span> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_6">6</a>)</span> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_7">7</a>)</span> </td> <td>
+<code>ranges::data(r)</code> </td> <td>
+<code>ranges::size(r)</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_8">8</a>)</span> </td> <td>
+<code>source.data()</code> </td> <td>
+<code>source.size()</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_9">9</a>)</span> </td> <td>
+<code>other.data()</code> </td> <td>
+<code>other.size()</code> </td>
+</tr>
+</table> <h3 id="Constraints_and_supplement_information">Constraints and supplement information</h3> <h4 id="Size_requirements">Size requirements</h4> <p>If <code>extent</code> is not <code>std::dynamic_extent</code> and the size of the source range is different from <code>extent</code>, the <code>span</code> object cannot be constructed.</p>
+<p>These overloads participate in overload resolution only if the result of the following expression is <code>true</code>:</p>
+<div class="t-li1">
+<span class="t-li">1)</span> <code>extent == std::dynamic_extent || extent == 0</code>
+</div> <div class="t-li1">
+<span class="t-li">4-6)</span> <code>extent == std::dynamic_extent || extent == N</code>
+</div> <div class="t-li1">
+<span class="t-li">9)</span> <code>extent == std::dynamic_extent || N == std::dynamic_extent || extent == N</code>
+</div> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx26">
+<td> <p>If the result of the following expression is <code>false</code>, the behavior is undefined.</p>
+</td> <td><span class="t-mark-rev t-until-cxx26">(until C++26)</span></td>
+</tr> <tr class="t-rev t-since-cxx26">
+<td> <p>If the result of the following expression is <code>false</code>:</p>
+<ul>
+<li>If the implementation is <a href="../../standard_library#Standard_library_hardening" title="cpp/standard library">hardened</a>, a <a href="../../language/contracts" title="cpp/language/contracts">contract violation</a> occurs.</li> <li>If the implementation is not hardened, the behavior is undefined.</li>
+</ul> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <div class="t-li1">
+<span class="t-li">2)</span> <code>extent == std::dynamic_extent || extent == count</code>
+</div> <div class="t-li1">
+<span class="t-li">3)</span> <code>extent == std::dynamic_extent || extent == last - first</code>
+</div> <div class="t-li1">
+<span class="t-li">7)</span> <code>extent == std::dynamic_extent || extent == ranges::size(r)</code>
+</div> <div class="t-li1">
+<span class="t-li">8)</span> <code>extent == std::dynamic_extent || extent == source.size()</code>
+</div> <h4 id="Conversion_requirements">Conversion requirements</h4> <p>If <code>element_type</code> is different from the element type of the source range, and the latter cannot be converted to the former by <a href="../../language/implicit_conversion#Qualification_conversion" title="cpp/language/implicit conversion">qualification conversion</a>, the <code>span</code> object cannot be constructed.</p>
+<p>These overloads participate in overload resolution only if <code>std::is_convertible_v&lt;U(*)[], element_type(*)[]&gt;</code> is <code>true</code>, where <code>U</code> is defined as follows:</p>
+<div class="t-li1">
+<span class="t-li">2,3)</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">iter_reference_t</span><span class="o">&lt;</span><span class="n">It</span><span class="o">&gt;&gt;</span>
+</div> <div class="t-li1">
+<span class="t-li">4-6)</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_pointer_t</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">data</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span><span class="o">&gt;</span>
+</div> <div class="t-li1">
+<span class="t-li">7)</span> <span class="n">std</span><span class="o">::</span><span class="n">remove_reference_t</span><span class="o">&lt;</span><span class="n">ranges</span><span class="o">::</span><span class="n">range_reference_t</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;&gt;</span>
+</div> <div class="t-li1">
+<span class="t-li">8)</span> <code>U</code>
+</div> <h4 id="Concept_requirements">Concept requirements</h4> <p>If any template argument does not model certain concept(s), the <code>span</code> object cannot be constructed.</p>
+<p>These overloads participate in overload resolution only if the template argument corresponding to the specified template parameter satisfies the corresponding concept(s). If it does not meet the semantic requirements of any corresponding concept, the behavior is undefined:</p>
+<table class="wikitable"> <tr> <th> Overload </th> <th>Template<br> parameter </th> <th>Concept </th> <th>Remark </th>
+</tr> <tr> <td>
+<span class="t-v">(<a href="#Version_2">2</a>)</span> </td> <td>
+<code>It</code> </td> <td>
+<a href="../../iterator/contiguous_iterator" title="cpp/iterator/contiguous iterator"><code>contiguous_iterator</code></a> </td> <td> </td>
+</tr> <tr> <td rowspan="2">
+<span class="t-v">(<a href="#Version_3">3</a>)</span> </td> <td>
+<code>It</code> </td> <td>
+<a href="../../iterator/contiguous_iterator" title="cpp/iterator/contiguous iterator"><code>contiguous_iterator</code></a> </td> <td> </td>
+</tr> <tr> <td>
+<code>End</code> </td> <td> <a href="../../iterator/sized_sentinel_for" title="cpp/iterator/sized sentinel for"><code>sized_sentinel_for&lt;It&gt;</code></a> </td> <td> </td>
+</tr> <tr> <td rowspan="3">
+<span class="t-v">(<a href="#Version_7">7</a>)</span> </td> <td rowspan="3">
+<code>R</code> </td> <td>
+<a href="../../ranges/contiguous_range" title="cpp/ranges/contiguous range"><code>contiguous_range</code></a> </td> <td> </td>
+</tr> <tr> <td>
+<a href="../../ranges/sized_range" title="cpp/ranges/sized range"><code>sized_range</code></a> </td> <td> </td>
+</tr> <tr> <td>
+<a href="../../ranges/borrowed_range" title="cpp/ranges/borrowed range"><code>borrowed_range</code></a> </td> <td>only required if <code>std::is_const_v&lt;element_type&gt;</code> is <code>false</code> </td>
+</tr>
+</table> <h4 id="Other_constraints">Other constraints</h4> <div class="t-li1">
+<span class="t-li">2)</span> If <code>[</code><code>first</code><code>, </code><code>first + count</code><code>)</code> is not a <a href="../../iterator#Ranges" title="cpp/iterator">valid range</a>, the behavior is undefined.</div> <div class="t-li1">
+<span class="t-li">3)</span> This overload participates in overload resolution only if <code>std::is_convertible_v&lt;End, std::size_t&gt;</code> is <code>false</code>.</div> <div class="t-li1">
+ If <code>[</code><code>first</code><code>, </code><code>last</code><code>)</code> is not a valid range, the behavior is undefined.</div> <span class="t-li">7)</span> This overload participates in overload resolution only if all following conditions are satisfied: <ul>
+<li>
+<span class="n">std</span><span class="o">::</span><span class="n">remove_cvref_t</span><span class="o">&lt;</span><span class="n">R</span><span class="o">&gt;</span> is not a specialization of <code>std::span</code> or <code><a href="../array" title="cpp/container/array">std::array</a></code>.</li> <li>
+<code>std::is_array_v&lt;std::remove_cvref_t&lt;R&gt;&gt;</code> is <code>false</code>.</li>
+</ul> <h3 id="Exceptions">Exceptions</h3> <div class="t-li1">
+<span class="t-li">2)</span> Throws nothing.</div> <div class="t-li1">
+<span class="t-li">3)</span> Throws what and when <code>last - first</code> throws.</div> <div class="t-li1">
+<span class="t-li">7)</span> Throws what and when <code>std::ranges::size(r)</code> and <code>std::ranges::data(r)</code> throw.</div> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;array&gt;
+#include &lt;iostream&gt;
+#include &lt;span&gt;
+#include &lt;vector&gt;
+
+void print_span(std::span&lt;const int&gt; s)
+{
+    for (int n : s)
+        std::cout &lt;&lt; n &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+
+int main()
+{
+    int c[]{1, 2, 3};
+    print_span(c); // constructs from array
+    
+    std::array a{4, 5, 6};
+    print_span(a); // constructs from std::array
+    
+    std::vector v{7, 8, 9};
+    print_span(v); // constructs from std::vector
+
+    // workaround for construction from a initializer list
+    print_span({{0, 1, 2}}); // also constructs from array
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1 2 3 
+4 5 6
+7 8 9
+0 1 2
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="data" title="cpp/container/span/data"> <span class="t-lines"><span>data</span></span></a></div> </td> <td>direct access to the underlying contiguous storage <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="size" title="cpp/container/span/size"> <span class="t-lines"><span>size</span></span></a></div> </td> <td>returns the number of elements <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="operator=" title="cpp/container/span/operator="> <span class="t-lines"><span>operator=</span></span></a></div> </td> <td>assigns a <code>span</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/size" title="cpp/iterator/size"> <span class="t-lines"><span>size</span><span>ssize</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns the size of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/data" title="cpp/iterator/data"> <span class="t-lines"><span>data</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>obtains the pointer to the underlying array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/span/span" class="_attribution-link">https://en.cppreference.com/cpp/container/span/span</a>
+  </p>
+</div>

@@ -1,0 +1,47 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::chunk_by_view&lt;V,Pred&gt;::<i>find_next</i>, std::ranges::chunk_by_view&lt;V,Pred&gt;::<i>find_prev</i>
+</h1>           <div id="mw-content-text"> <h2 id="std::ranges::chunk_by_view::next">std::ranges::chunk_by_view::<i>next</i>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr ranges::iterator_t&lt;V&gt;
+    /*find-next*/( ranges::iterator_t&lt;V&gt; current );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> <br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span> </td> </tr>  </table> <p>Finds the next chunk.</p>
+<p>Let <a href="../chunk_by_view#Data_members" title="cpp/ranges/chunk by view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>base_</i></code></a> and <a href="../chunk_by_view#Data_members" title="cpp/ranges/chunk by view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>pred_</i></code></a> be appropriate underlying data-members of <a href="../chunk_by_view" title="cpp/ranges/chunk by view"><code>chunk_by_view</code></a>.</p>
+<p>Equivalent to</p>
+<pre data-language="c">return ranges::next
+(
+    ranges::adjacent_find
+    (
+        current, ranges::end(base_), std::not_fn(std::ref(*pred_))
+    ),
+    1, ranges::end(base_)
+);
+</pre> <p>The behavior is undefined if <code>pred_.has_value()</code> is <code>false</code> before the call to this function.</p>
+<p>Used in the following non-static member functions:</p>
+<ul><li>
+<code>ranges::chunk_by_view::iterator::</code><a href="iterator/operator_arith" title="cpp/ranges/chunk by view/iterator/operator arith"><code>operator++</code></a>
+</li></ul> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>current </td> <td>- </td> <td>the iterator to current element in adapted view </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>An iterator to the next chunk, as described above.</p>
+<h2 id="std::ranges::chunk_by_view::prev">std::ranges::chunk_by_view::<i>prev</i>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr ranges::iterator_t&lt;V&gt;
+    /*find-prev*/( ranges::iterator_t&lt;V&gt; current )
+        requires ranges::bidirectional_range&lt;V&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> <br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span> </td> </tr>  </table> <p>Finds the previous chunk.</p>
+<p>Let <a href="../chunk_by_view#Data_members" title="cpp/ranges/chunk by view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>base_</i></code></a> and <a href="../chunk_by_view#Data_members" title="cpp/ranges/chunk by view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>pred_</i></code></a> be appropriate underlying data-members of <a href="../chunk_by_view" title="cpp/ranges/chunk by view"><code>chunk_by_view</code></a>.</p>
+<p>Returns an iterator <code>i</code> in the range <code>[</code><code>ranges::begin(base_)</code><code>, </code><code>current</code><code>)</code> such that:</p>
+<ul>
+<li>
+<code>ranges::adjacent_find(i, current, std::not_fn(std::ref(*pred_)))</code> is equal to <code>current</code>, and</li> <li>if <code>i</code> is not equal to <code>ranges::begin(base_)</code>, then <code>bool(std::invoke(*pred_, *ranges::prev(i), *i))</code> is <code>false</code>.</li>
+</ul> <p>The behavior is undefined if before the call to this function <code>current == ranges::begin(base_)</code> or <code>pred_.has_value() != true</code>.</p>
+<p>Used in the following non-static member functions:</p>
+<ul><li>
+<code>ranges::chunk_by_view::iterator::</code><a href="iterator/operator_arith" title="cpp/ranges/chunk by view/iterator/operator arith"><code>operator--</code></a>
+</li></ul> <h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>current </td> <td>- </td> <td>the iterator to current element in adapted view </td>
+</tr>
+</table> <h3 id="Return_value_2">Return value</h3> <p>An iterator to the previous chunk, as described above.</p>
+</div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/chunk_by_view/helpers" class="_attribution-link">https://en.cppreference.com/cpp/ranges/chunk_by_view/helpers</a>
+  </p>
+</div>

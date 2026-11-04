@@ -1,0 +1,330 @@
+   <h1 id="firstHeading" class="firstHeading">operator delete, operator delete[]</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/new" title="cpp/header/new">&lt;new&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl-h"> <td> Replaceable usual deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete  ( void* ptr ) throw();
+</pre>
+</td> <td rowspan="2"> (1)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete  ( void* ptr ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete[]( void* ptr ) throw();
+</pre>
+</td> <td rowspan="2"> (2)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete[]( void* ptr ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, std::align_val_t al ) noexcept;
+</pre>
+</td> <td> (3)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, std::align_val_t al ) noexcept;
+</pre>
+</td> <td> (4)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx14"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, std::size_t sz ) noexcept;
+</pre>
+</td> <td> (5)</td> <td><span class="t-mark-rev t-since-cxx14">(since C++14)</span></td> </tr> <tr class="t-dcl t-since-cxx14"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, std::size_t sz ) noexcept;
+</pre>
+</td> <td> (6)</td> <td><span class="t-mark-rev t-since-cxx14">(since C++14)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, std::size_t sz,
+                        std::align_val_t al ) noexcept;
+</pre>
+</td> <td> (7)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, std::size_t sz,
+                        std::align_val_t al ) noexcept;
+</pre>
+</td> <td> (8)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl-h"> <td> Replaceable placement deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, const std::nothrow_t&amp; tag ) throw();
+</pre>
+</td> <td rowspan="2"> (9)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete  ( void* ptr, const std::nothrow_t&amp; tag ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, const std::nothrow_t&amp; tag ) throw();
+</pre>
+</td> <td rowspan="2"> (10)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete[]( void* ptr, const std::nothrow_t&amp; tag ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, std::align_val_t al,
+                        const std::nothrow_t&amp; tag ) noexcept;
+</pre>
+</td> <td> (11)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, std::align_val_t al,
+                        const std::nothrow_t&amp; tag ) noexcept;
+</pre>
+</td> <td> (12)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl-h"> <td> Non-allocating placement deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, void* place ) throw();
+</pre>
+</td> <td rowspan="2"> (13)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete  ( void* ptr, void* place ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, void* place ) throw();
+</pre>
+</td> <td rowspan="2"> (14)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">void operator delete[]( void* ptr, void* place ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl-h"> <td> User-defined placement deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void operator delete  ( void* ptr, args... );
+</pre>
+</td> <td> (15)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void operator delete[]( void* ptr, args... );
+</pre>
+</td> <td> (16)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl-h"> <td> Class-specific usual deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete  ( void* ptr );
+</pre>
+</td> <td> (17)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete[]( void* ptr );
+</pre>
+</td> <td> (18)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void T::operator delete  ( void* ptr, std::align_val_t al );
+</pre>
+</td> <td> (19)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void T::operator delete[]( void* ptr, std::align_val_t al );
+</pre>
+</td> <td> (20)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete  ( void* ptr, std::size_t sz );
+</pre>
+</td> <td> (21)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete[]( void* ptr, std::size_t sz );
+</pre>
+</td> <td> (22)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void T::operator delete  ( void* ptr, std::size_t sz, std::align_val_t al );
+</pre>
+</td> <td> (23)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td>
+<pre data-language="c">void T::operator delete[]( void* ptr, std::size_t sz, std::align_val_t al );
+</pre>
+</td> <td> (24)</td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td> </tr> <tr class="t-dcl-h"> <td> Class-specific placement deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete  ( void* ptr, args... );
+</pre>
+</td> <td> (25)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void T::operator delete[]( void* ptr, args... );
+</pre>
+</td> <td> (26)</td> <td class="t-dcl-nopad"></td> </tr> <tr class="t-dcl-h"> <td> Class-specific usual destroying deallocation functions</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">void T::operator delete( T* ptr, std::destroying_delete_t );
+</pre>
+</td> <td> (27)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">void T::operator delete( T* ptr, std::destroying_delete_t,
+                         std::align_val_t al );
+</pre>
+</td> <td> (28)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">void T::operator delete( T* ptr, std::destroying_delete_t, std::size_t sz );
+</pre>
+</td> <td> (29)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">void T::operator delete( T* ptr, std::destroying_delete_t,
+                         std::size_t sz, std::align_val_t al );
+</pre>
+</td> <td> (30)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr>  </table> <p>Deallocates storage previously allocated by a matching <code><a href="operator_new" title="cpp/memory/new/operator new">operator new</a></code> or <code><a href="operator_new" title="cpp/memory/new/operator new">operator new[]</a></code>. These deallocation functions are called by <a href="../../language/delete" title="cpp/language/delete"><span class="k">delete</span> and <span class="k">delete</span><span class="p">[]</span> expressions</a> and by <a href="../../language/new#Placement_new" title="cpp/language/new">placement <span class="k">new</span> expressions</a> to deallocate memory after destructing (or failing to construct) objects with dynamic storage duration. They may also be called using regular function call syntax.</p>
+<div class="t-li1">
+<span class="t-li">1-12)</span> <a href="../../language/replacement_function" title="cpp/language/replacement function">Replaceable</a> deallocation functions. The standard library provides default implementations for these functions, for the effects of the default implementations, see <a href="#Global_replacement">below</a>.</div> <div class="t-li2">
+<span class="t-li">1-8)</span> Called by <span class="k">delete</span> and <span class="k">delete</span><span class="p">[]</span> expressions. Invalidates any non-null <code>ptr</code>.</div> <div class="t-li2">
+<span class="t-li">9-12)</span> Called by placement <span class="k">new</span> expressions upon <a href="../../language/new#Initialization_failure" title="cpp/language/new">initialization failure</a>. <span class="k">operator</span><span class="k">delete</span><span class="p">[]</span> invalidates any non-null <code>ptr</code>.</div> If <code>ptr</code> is not a null pointer and one of the following conditions is satisfied, the behavior is undefined: <ul>
+<li>For <span class="k">operator</span><span class="k">delete</span>, the value of <code>ptr</code> does not represent the address of a block of memory allocated by an earlier call to (possibly replaced) <span class="k">operator</span><span class="k">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">)</span> (for overloads <span class="t-v">(1,5,9)</span>) or <span class="k">operator</span><span class="k">new</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">align_val_t</span><span class="p">)</span> (for overloads <span class="t-v">(3,7,11)</span>) which has not been invalidated by an intervening call to <span class="k">operator</span><span class="k">delete</span>.</li> <li>For <span class="k">operator</span><span class="k">delete</span><span class="p">[]</span>, the value of <code>ptr</code> does not represent the address of a block of memory allocated by an earlier call to (possibly replaced) <span class="k">operator</span><span class="k">new</span><span class="p">[](</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">)</span> (for overloads <span class="t-v">(2,6,10)</span>) or <span class="k">operator</span><span class="k">new</span><span class="p">[](</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">align_val_t</span><span class="p">)</span> (for overloads <span class="t-v">(4,8,12)</span>) which has not been invalidated by an intervening call to <span class="k">operator</span><span class="k">delete</span><span class="p">[]</span>.</li>
+</ul> <div class="t-li1">
+<span class="t-li">13,14)</span> Called by placement <span class="k">new</span> expressions that invoked <a href="operator_new#Version_9" title="cpp/memory/new/operator new">non-allocating placement allocation function</a> when any part of the initialization in the expression terminates by throwing an exception. Performs no action.</div> <div class="t-li1">
+<span class="t-li">15-30)</span> User-defined deallocation functions called by <span class="k">delete</span>, <span class="k">delete</span><span class="p">[]</span> and placement <span class="k">new</span> expressions.</div> <div class="t-li2">
+<span class="t-li">27-30)</span> If defined, <span class="k">delete</span> expressions does not execute the destructor for <code>*ptr</code> before placing a call to <span class="k">operator</span><span class="k">delete</span>. Instead, direct invocation of the destructor such as by <code>ptr-&gt;~T();</code> becomes the responsibility of this <span class="k">operator</span><span class="k">delete</span>.</div> <p>Overloads <span class="t-v">(<a href="#Version_1">1-8</a>)</span> are implicitly declared in each translation unit even if the <a href="../../header/new" title="cpp/header/new"><code>&lt;new&gt;</code></a> header is not included.</p>
+<p>See <a href="../../language/delete" title="cpp/language/delete"><span class="k">delete</span> expression</a> for the criteria of selecting overload.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>ptr </td> <td>- </td> <td>pointer to a memory block to deallocate or a null pointer </td>
+</tr> <tr class="t-par"> <td>sz </td> <td>- </td> <td>the size that was passed to the matching allocation function </td>
+</tr> <tr class="t-par"> <td>place </td> <td>- </td> <td>pointer used as the placement parameter in the matching placement new </td>
+</tr> <tr class="t-par"> <td>tag </td> <td>- </td> <td>overload disambiguation tag matching the tag used by non-throwing operator new </td>
+</tr> <tr class="t-par"> <td>al </td> <td>- </td> <td>alignment of the object or array element that was allocated </td>
+</tr> <tr class="t-par"> <td>args </td> <td>- </td> <td>arbitrary parameters matching a placement allocation function (may include <code><a href="../../types/size_t" title="cpp/types/size t">std::size_t</a></code> and <code><a href="align_val_t" title="cpp/memory/new/align val t">std::align_val_t</a></code>) </td>
+</tr>
+</table> <h3 id="Exceptions">Exceptions</h3> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <p>All deallocation functions are <span class="k">noexcept</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> unless specified otherwise in the declaration.</p>
+</td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table> <p>If a deallocation function terminates by throwing an exception, the behavior is undefined<span class="t-rev-inl t-since-cxx11"><span>, even if it is declared with <span class="k">noexcept</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span></span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>.</p>
+<h3 id="Global_replacements">Global replacements</h3> <p>Overloads <span class="t-v">(<a href="#Version_1">1-12</a>)</span> are <a href="../../language/replacement_function" title="cpp/language/replacement function">replaceable</a>. The effects of the default versions are:</p>
+<div class="t-li1">
+<span class="t-li">1)</span> If <code>ptr</code> is null, does nothing. Otherwise, reclaims the storage allocated by the earlier call to <span class="k">operator</span><span class="k">new</span>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Calls <code>operator delete(ptr)</code> as if overload <span class="t-v">(1)</span> can reclaim the storage allocated by the earlier call to <span class="k">operator</span><span class="k">new</span><span class="p">[]</span>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Same as <span class="t-v">(1)</span>.</div> <div class="t-li1">
+<span class="t-li">4)</span> Calls <code>operator delete(ptr, al)</code> as if overload <span class="t-v">(3)</span> can reclaim the storage allocated by the earlier call to <span class="k">operator</span><span class="k">new</span><span class="p">[]</span>.</div> <div class="t-li1">
+<span class="t-li">5)</span> Calls <code>operator delete(ptr)</code>.</div> <div class="t-li1">
+<span class="t-li">6)</span> Calls <code>operator delete[](ptr)</code>.</div> <div class="t-li1">
+<span class="t-li">7)</span> Calls <code>operator delete(ptr, al)</code>.</div> <div class="t-li1">
+<span class="t-li">8)</span> Calls <code>operator delete[](ptr, al)</code>.</div> <div class="t-li1">
+<span class="t-li">9)</span> Calls <code>operator delete(ptr)</code>.</div> <div class="t-li1">
+<span class="t-li">10)</span> Calls <code>operator delete[](ptr)</code>.</div> <div class="t-li1">
+<span class="t-li">11)</span> Calls <code>operator delete(ptr, al)</code>.</div> <div class="t-li1">
+<span class="t-li">12)</span> Calls <code>operator delete[](ptr, al)</code>.</div> <div class="t-example">
+<p>Global <code>operator</code>s <span class="k">new</span>/<span class="k">delete</span> replacement:</p>
+<pre data-language="c">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;new&gt;
+
+// no inline, required by [replacement.functions]/3
+void* operator new(std::size_t sz)
+{
+    std::printf("1) new(size_t), size = %zu\n", sz);
+    if (sz == 0)
+        ++sz; // avoid std::malloc(0) which may return nullptr on success
+
+    if (void *ptr = std::malloc(sz))
+        return ptr;
+
+    throw std::bad_alloc{}; // required by [new.delete.single]/3
+}
+
+// no inline, required by [replacement.functions]/3
+void* operator new[](std::size_t sz)
+{
+    std::printf("2) new[](size_t), size = %zu\n", sz);
+    if (sz == 0)
+        ++sz; // avoid std::malloc(0) which may return nullptr on success
+
+    if (void *ptr = std::malloc(sz))
+        return ptr;
+
+    throw std::bad_alloc{}; // required by [new.delete.single]/3
+}
+
+void operator delete(void* ptr) noexcept
+{
+    std::puts("3) delete(void*)");
+    std::free(ptr);
+}
+
+void operator delete(void* ptr, std::size_t size) noexcept
+{
+    std::printf("4) delete(void*, size_t), size = %zu\n", size);
+    std::free(ptr);
+}
+
+void operator delete[](void* ptr) noexcept
+{
+    std::puts("5) delete[](void* ptr)");
+    std::free(ptr);
+}
+
+void operator delete[](void* ptr, std::size_t size) noexcept
+{
+    std::printf("6) delete[](void*, size_t), size = %zu\n", size);
+    std::free(ptr);
+}
+
+int main()
+{
+    int* p1 = new int;
+    delete p1;
+
+    int* p2 = new int[10]; // guaranteed to call the replacement in C++11
+    delete[] p2;
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">// Compiled with GCC-5 in C++17 mode to obtain the following:
+1) op new(size_t), size = 4
+4) op delete(void*, size_t), size = 4
+2) op new[](size_t), size = 40
+5) op delete[](void* ptr)
+</pre> </div> <p>Overloads of <span class="k">operator</span><span class="k">delete</span> and <span class="k">operator</span><span class="k">delete</span><span class="p">[]</span> with additional user-defined parameters ("placement forms", <span class="t-v">(<a href="#Version_15">15,16</a>)</span>) may be declared at global scope as usual, and are called by the matching placement forms of <span class="k">new</span> expressions if a constructor of the object that is being allocated throws an exception.</p>
+<p>The standard library placement forms of <span class="k">operator</span><span class="k">delete</span> and <span class="k">operator</span><span class="k">delete</span><span class="p">[]</span> <span class="t-v">(<a href="#Version_13">13,14</a>)</span> cannot be replaced and can only be customized if the placement <span class="k">new</span> expression did not use the <span class="o">::</span><span class="k">new</span> syntax, by providing a class-specific placement delete <span class="t-v">(<a href="#Version_25">25,26</a>)</span> with matching signature: <span class="kt">void</span><span class="n">T</span><span class="o">::</span><span class="k">operator</span><span class="k">delete</span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span> or <span class="kt">void</span><span class="n">T</span><span class="o">::</span><span class="k">operator</span><span class="k">delete</span><span class="p">[](</span><span class="kt">void</span><span class="o">*</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span>.</p>
+<h3 id="Class-specific_overloads">Class-specific overloads</h3> <p>Deallocation functions <span class="t-v">(<a href="#Version_17">17-24</a>)</span> may be defined as static member functions of a class. These deallocation functions, if provided, are called by <span class="k">delete</span> expressions when deleting objects <span class="t-v">(<a href="#Version_17">17,19,21</a>)</span> and arrays <span class="t-v">(<a href="#Version_18">18,20,22</a>)</span> of this class, unless the delete expression used the form <span class="o">::</span><span class="k">delete</span> which bypasses class-scope lookup. The keyword <span class="k">static</span> is optional for these function declarations: whether the keyword is used or not, the deallocation function is always a static member function.</p>
+<p>The delete expression looks for appropriate deallocation function's name starting from the class scope (array form looks in the scope of the array element class) and proceeds to the global scope if no members are found as usual. Note, that as per <a href="../../language/lookup" title="cpp/language/lookup">name lookup rules</a>, any deallocation functions declared in class scope hides all global deallocation functions.</p>
+<p>If the static type of the object that is being deleted differs from its dynamic type (such as when deleting a <a href="../../language/object" title="cpp/language/object">polymorphic</a> object through a pointer to base), and if the destructor in the static type is virtual, the single object form of delete begins lookup of the deallocation function's name starting from the point of definition of the final overrider of its virtual destructor. Regardless of which deallocation function would be executed at run time, the statically visible version of <span class="k">operator</span><span class="k">delete</span> must be accessible in order to compile. In other cases, when deleting an array through a pointer to base, or when deleting through pointer to base with non-virtual destructor, the behavior is undefined.</p>
+<p>If the single-argument overload <span class="t-v">(<a href="#Version_17">17,18</a>)</span> is not provided, but the size-aware overload taking <code><a href="../../types/size_t" title="cpp/types/size t">std::size_t</a></code> as the second parameter <span class="t-v">(<a href="#Version_21">21,22</a>)</span> is provided, the size-aware form is called for normal deallocation, and the C++ runtime passes the size of the object to be deallocated as the second argument. If both forms are defined, the size-unaware version is called.</p>
+<div class="t-example"> <pre data-language="c">#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+
+// sized class-specific deallocation functions
+struct X
+{
+    static void operator delete(void* ptr, std::size_t sz)
+    {
+        std::cout &lt;&lt; "custom delete for size " &lt;&lt; sz &lt;&lt; '\n';
+        ::operator delete(ptr);
+    }
+    
+    static void operator delete[](void* ptr, std::size_t sz)
+    {
+        std::cout &lt;&lt; "custom delete for size " &lt;&lt; sz &lt;&lt; '\n';
+        ::operator delete[](ptr);
+    }
+};
+
+int main()
+{
+    X* p1 = new X;
+    delete p1;
+    
+    X* p2 = new X[10];
+    delete[] p2;
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">custom delete for size 1
+custom delete for size 18</pre> </div> <p>Overloads of operator delete and operator delete[] with additional user-defined parameters ("placement forms", <span class="t-v">(<a href="#Version_25">25,26</a>)</span>) may also be defined as class members. When the failed placement new expression looks for the corresponding placement delete function to call, it begins lookup at class scope before examining the global scope, and looks for the function with the signature matching the placement new:</p>
+<div class="t-example"> <pre data-language="c">#include &lt;cstddef&gt;
+#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+ 
+struct X
+{
+    X() { throw std::runtime_error("X(): std::runtime_error"); }
+    
+    // custom placement new
+    static void* operator new(std::size_t sz, bool b)
+    {
+        std::cout &lt;&lt; "custom placement new called, b = " &lt;&lt; b &lt;&lt; '\n';
+        return ::operator new(sz);
+    }
+    
+    // custom placement delete
+    static void operator delete(void* ptr, bool b)
+    {
+        std::cout &lt;&lt; "custom placement delete called, b = " &lt;&lt; b &lt;&lt; '\n';
+        ::operator delete(ptr);
+    }
+};
+
+int main()
+{
+    try
+    {
+        [[maybe_unused]] X* p1 = new (true) X;
+    }
+    catch (const std::exception&amp; ex)
+    {
+        std::cout &lt;&lt; ex.what() &lt;&lt; '\n';
+    }
+}</pre> <p>Output:</p>
+<pre data-language="c">custom placement new called, b = 1
+custom placement delete called, b = 1
+X(): std::runtime_error</pre> </div> <p>If class-level operator delete is a template function, it must have the return type of void, the first argument void*, and it must have two or more parameters. In other words, only placement forms can be templates. A template instance is never a usual deallocation function, regardless of its signature. The specialization of the template operator delete is chosen with <a href="../../language/template_argument_deduction" title="cpp/language/template argument deduction">template argument deduction</a>.</p>
+<h3 id="Notes">Notes</h3> <p>The call to the class-specific T::operator delete on a polymorphic class is the only case where a static member function is called through dynamic dispatch.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <p>The following functions are required to be thread-safe:</p>
+<ul>
+<li>The library versions of <a href="operator_new" title="cpp/memory/new/operator new"><code>operator new</code></a> and <a class="mw-selflink selflink"><code>operator delete</code></a>
+</li> <li>User replacement versions of global <a href="operator_new" title="cpp/memory/new/operator new"><code>operator new</code></a> and <a class="mw-selflink selflink"><code>operator delete</code></a>
+</li> <li>
+<code><a href="../c/calloc" title="cpp/memory/c/calloc">std::calloc</a></code>, <code><a href="../c/malloc" title="cpp/memory/c/malloc">std::malloc</a></code>, <code><a href="../c/realloc" title="cpp/memory/c/realloc">std::realloc</a></code><span class="t-rev-inl t-since-cxx17"><span>, <code><a href="../c/aligned_alloc" title="cpp/memory/c/aligned alloc">std::aligned_alloc</a></code></span><span><span class="t-mark-rev t-since-cxx17">(since C++17)</span></span></span>, <code><a href="../c/free" title="cpp/memory/c/free">std::free</a></code>
+</li>
+</ul> <p>Calls to these functions that allocate or deallocate a particular unit of storage occur in a single total order, and each such deallocation call <a href="../../atomic/memory_order" title="cpp/atomic/memory order">happens-before</a> the next allocation (if any) in this order.</p>
+</td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table> <table class="wikitable sortable ftm-begin"> <tr> <th>
+<a href="../../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../../feature_test#cpp_sized_deallocation" title="cpp/feature test"><code>__cpp_sized_deallocation</code></a></td> <td><a href="../../compiler_support/14#cpp_sized_deallocation_201309L" title="cpp/compiler support/14"><code>201309L</code></a></td> <td><span class="t-mark">(C++14)</span></td> <td>Sized deallocation </td>
+</tr> <tr> <td><a href="../../feature_test#cpp_impl_destroying_delete" title="cpp/feature test"><code>__cpp_impl_destroying_delete</code></a></td> <td><a href="../../compiler_support/20#cpp_impl_destroying_delete_201806L" title="cpp/compiler support/20"><code>201806L</code></a></td> <td><span class="t-mark">(C++20)</span></td> <td>Destroying operator delete (compiler support) </td>
+</tr> <tr> <td><a href="../../feature_test#cpp_lib_destroying_delete" title="cpp/feature test"><code>__cpp_lib_destroying_delete</code></a></td> <td><a href="../../compiler_support/20#cpp_lib_destroying_delete_201806L" title="cpp/compiler support/20"><code>201806L</code></a></td> <td><span class="t-mark">(C++20)</span></td> <td>Destroying operator delete (library support) </td>
+</tr>
+</table> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/220.html">CWG 220</a> </td> <td>C++98 </td> <td>user-defined deallocation functions were permitted to throw </td> <td>throwing from a deallocation function<br>results in undefined behavior </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/1438.html">CWG 1438</a> </td> <td>C++98 </td> <td>any use of an invalid pointer value was undefined behavior </td> <td>only indirection and deallocation are </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue206">LWG 206</a> </td> <td>C++98 </td> <td>replacing <span class="t-v">(<a href="#Version_2">2</a>)</span> did not affect the default behavior of <span class="t-v">(<a href="#Version_10">10</a>)</span> </td> <td>the default behavior<br>changes accordingly </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue298">LWG 298</a> </td> <td>C++98 </td> <td>replacing <span class="t-v">(<a href="#Version_1">1</a>)</span> did not affect the default behavior of <span class="t-v">(<a href="#Version_9">9</a>)</span> </td> <td>the default behavior<br>changes accordingly </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue404">LWG 404</a> </td> <td>C++98 </td> <td>replacements of the replaceable deallocation<br>functions could be declared inline </td> <td>prohibited, no diagnostic required </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2458">LWG 2458</a> </td> <td>C++14 </td> <td>overloads taking (void*, std::size_t, const<br>std::nothrow_t&amp;) were specified, but could never be called </td> <td>removed spurious overloads </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../coroutine/generator/promise_type/operator_delete" title="cpp/coroutine/generator/promise type/operator delete"> <span class="t-lines"><span>operator delete</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span> <span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>deallocates memory previously obtained from <code>operator new</code> <br> <span class="t-mark">(public static member function of <code>std::generator&lt;Ref,V,Allocator&gt;::promise_type</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="operator_new" title="cpp/memory/new/operator new"> <span class="t-lines"><span>operator new</span><span>operator new[]</span></span></a></div> </td> <td>allocation functions <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../return_temporary_buffer" title="cpp/memory/return temporary buffer"> <span class="t-lines"><span>return_temporary_buffer</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark">(deprecated in C++17)</span></span><span><span class="t-mark-rev t-until-cxx20">(removed in C++20)</span></span></span></div> </td> <td>frees uninitialized storage <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../c/free" title="cpp/memory/c/free"> <span class="t-lines"><span>free</span></span></a></div> </td> <td>deallocates previously allocated memory <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/new/operator_delete" class="_attribution-link">https://en.cppreference.com/cpp/memory/new/operator_delete</a>
+  </p>
+</div>

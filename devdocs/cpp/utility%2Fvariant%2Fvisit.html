@@ -1,0 +1,69 @@
+   <h1 id="firstHeading" class="firstHeading">std::variant&lt;Types...&gt;::visit</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx26"> <td> <pre data-language="c">template&lt; class Self, class Visitor &gt;
+constexpr decltype(auto) visit( this Self&amp;&amp; self, Visitor&amp;&amp; vis );
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx26">(since C++26)</span> </td> </tr> <tr class="t-dcl t-since-cxx26"> <td> <pre data-language="c">template&lt; class R, class Self, class Visitor &gt;
+constexpr R visit( this Self&amp;&amp; self, Visitor&amp;&amp; vis );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx26">(since C++26)</span> </td> </tr>  </table> <p>Applies the visitor <code>vis</code> (a <a href="../../named_req/callable" title="cpp/named req/Callable">Callable</a> that can be called with any combination of types from the variant) to the variant held by <code>self</code>.</p>
+<p>Given type <code>V</code> as <code>decltype(std::forward_like&lt;Self&gt;(std::declval&lt;variant&gt;()))</code>, the equivalent call is:</p>
+<div class="t-li1">
+<span class="t-li">1)</span> <code>return std::visit(std::forward&lt;Visitor&gt;(vis), (V) self);</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> <code>return std::visit&lt;R&gt;(std::forward&lt;Visitor&gt;(vis), (V) self);</code>.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>vis </td> <td>- </td> <td>a <a href="../../named_req/callable" title="cpp/named req/Callable">Callable</a> that accepts every possible alternative from the variant </td>
+</tr> <tr class="t-par"> <td>self </td> <td>- </td> <td>variant to pass to the visitor </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <div class="t-li1">
+<span class="t-li">1)</span> The result of the <code>std::visit</code> invocation.</div> <div class="t-li1">
+<span class="t-li">2)</span> Nothing if <code>R</code> is (possibly cv-qualified) <span class="kt">void</span>; otherwise the result of the <code>std::visit&lt;R&gt;</code> invocation.</div> <h3 id="Exceptions">Exceptions</h3> <p>Only throws if the call to <code>std::visit</code> throws.</p>
+<h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../../feature_test#cpp_lib_variant" title="cpp/feature test"><code>__cpp_lib_variant</code></a></td> <td><a href="../../compiler_support/26#cpp_lib_variant_202306L" title="cpp/compiler support/26"><code>202306L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>member <code>visit</code> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;print&gt;
+#include &lt;string&gt;
+#include &lt;string_view&gt;
+#include &lt;variant&gt;
+ 
+struct Base {};
+struct Derived : Base {};
+
+// helper type for the visitor
+template&lt;class... Ts&gt;
+struct overloads : Ts... { using Ts::operator()...; };
+ 
+// the variant to visit
+using var_t = std::variant&lt;int, std::string, Derived&gt;;
+
+int main()
+{
+    const auto visitor = overloads
+    {
+        [](int i){ std::print("int = {}\n", i); },
+        [](std::string_view s){ std::println("string = “{}”", s); },
+        [](const Base&amp;){ std::println("base"); }
+    };
+
+    const var_t var1 = 42, var2 = "abc", var3 = Derived();
+
+#if (__cpp_lib_variant &gt;= 202306L)
+    var1.visit(visitor);
+    var2.visit(visitor);
+    var3.visit(visitor);
+#else
+    std::visit(visitor, var1);
+    std::visit(visitor, var2);
+    std::visit(visitor, var3);
+#endif
+}
+</pre> <p>Output:</p>
+<pre data-language="c">int = 42
+string = “abc”
+base
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="visit2" title="cpp/utility/variant/visit2"> <span class="t-lines"><span>visit</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>calls the provided functor with the arguments held by one or more <code>variant</code>s <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/variant/visit" class="_attribution-link">https://en.cppreference.com/cpp/utility/variant/visit</a>
+  </p>
+</div>

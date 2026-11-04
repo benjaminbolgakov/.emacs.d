@@ -1,0 +1,124 @@
+   <h1 id="firstHeading" class="firstHeading"><i>node-handle</i></h1>            <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td><pre data-language="c">template&lt;/* unspecified */&gt;
+class /*node-handle*/;
+</pre></td> <td class="t-dcl-nopad"> </td> <td>
+<span class="t-mark-rev t-since-cxx17">(since C++17)</span> <br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span>
+</td> </tr>  </table> <p>A <i>node handle</i> is an object that accepts ownership of a single element from an <a href="../container#Associative_containers" title="cpp/container">associative containers</a> and <a href="../container#Unordered_associative_containers" title="cpp/container">unordered associative containers</a>. It may be used to transfer that ownership to another container with compatible nodes.</p>
+<p>A node handle has two possible states:</p>
+<ul>
+<li>It refers to an element extracted from a container, or</li> <li>it is <i>empty ﻿</i>.</li>
+</ul> <p>If a node handle is not empty, then it contains an allocator that is equal to the allocator of the previously extracted container.</p>
+<p>For all map containers (<code><a href="map" title="cpp/container/map">std::map</a></code>, <code><a href="multimap" title="cpp/container/multimap">std::multimap</a></code>, <code><a href="unordered_map" title="cpp/container/unordered map">std::unordered_map</a></code>, and <code><a href="unordered_multimap" title="cpp/container/unordered multimap">std::unordered_multimap</a></code>) whose <code>key_type</code> is <code>Key</code> and <code>mapped_type</code> is <code>T</code>, the behavior of operations involving node handles is undefined if a user-defined specialization of <code><a href="../utility/pair" title="cpp/utility/pair">std::pair</a></code> exists for <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">Key</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;</span> or <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="k">const</span><span class="n">Key</span><span class="p">,</span><span class="n">T</span><span class="o">&gt;</span>.</p>
+<h3 id="Nested_types">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>key_type</code> <span class="t-mark">(map containers only)</span> </td> <td>the key stored in the node </td>
+</tr> <tr class="t-dsc"> <td>
+<code>mapped_type</code> <span class="t-mark">(map containers only)</span> </td> <td>the mapped part of the element stored in the node </td>
+</tr> <tr class="t-dsc"> <td>
+<code>value_type</code> <span class="t-mark">(set containers only)</span> </td> <td>the element stored in the node </td>
+</tr> <tr class="t-dsc"> <td>
+<code>allocator_type</code> </td> <td>the allocator to be used when destroying the element </td>
+</tr> <tr class="t-dsc"> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>container_node_type</i></code> </td> <td>unspecified<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member type*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">allocator_traits</span><span class="o">&lt;</span><span class="n">allocator_type</span><span class="o">&gt;</span><br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member type*</span>)</span> </td>
+</tr> </table> <p>See <a href="../named_req/associativecontainer" title="cpp/named req/AssociativeContainer">AssociativeContainer</a> and <a href="../named_req/unorderedassociativecontainer" title="cpp/named req/UnorderedAssociativeContainer">UnorderedAssociativeContainer</a> for the actual definitions of the non-exposition-only nested types.</p>
+<h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"> <p><span class="k">typename</span><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> ﻿<span class="o">::</span><span class="k">template</span><br> <span class="n">rebind_traits</span><span class="o">&lt;</span><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>container_node_type</i></code> ﻿<span class="o">&gt;::</span><span class="n">pointer</span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ptr_</i></code></p></span>
+</td> <td>a pointer to a container node containing the referred object<sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup><br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><span class="n">std</span><span class="o">::</span><span class="n">optional</span><span class="o">&lt;</span><span class="n">allocator_type</span><span class="o">&gt;</span></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>alloc_</i></code> </td> <td>the allocator stored<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> </table> <div class="mw-references-wrap"><ol class="references"> <li id="cite_note-1"> <span class="reference-text">The ownership of the pointed-to container node was already detached from the source container while extracting the element. Even if the lifetime of the source container has ended, the container node and the contained element are still accessible.</span> </li> </ol></div> <h3 id="Member_functions">Member functions</h3> <div class="t-member"> <h2 id="node-handle_﻿::node-handle">
+<i>node-handle ﻿</i>::<i>node-handle</i>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">constexpr /*node-handle*/() noexcept;
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">/*node-handle*/( /*node-handle*/&amp;&amp; other ) noexcept;
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> The default constructor initializes the node handle to the empty state.</div> <span class="t-li">2)</span> The move constructor takes ownership of the container element from <code>other</code>. <ul>
+<li>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ptr_</i></code> is initialized with <code>other.ptr_</code>.</li> <li>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>alloc_</i></code> is move constructed with <code>other.alloc_</code>.</li> <li>Assigns <code>nullptr</code> to <code>other.ptr_</code>.</li> <li>Assigns <code>std::nullopt</code> to <code>other.ptr_</code>.</li>
+</ul> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another node handle </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <p>There is no user-provided copy destructor. <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>node-handle</i></code> is not <a href="../named_req/copyconstructible" title="cpp/named req/CopyConstructible">CopyConstructible</a>.</p>
+<p>Besides move construction and move assignment, a non-empty <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>node-handle</i></code> can only be created by calling the <code>extract</code> member functions of (unordered) associative containers.</p>
+</div>  <h2 id="node-handle_﻿::operator=">
+<i>node-handle ﻿</i>::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">/*node-handle*/&amp; operator=( /*node-handle*/&amp;&amp; other );
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>The move assignment operator replaces state of <code>*this</code> with the state of <code>other</code> using move semantics.</p>
+<ol>
+<li>If <code>ptr_ != nullptr</code> is <code>true</code>, destroys the element referred to by <code>*this</code> by calling <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> ﻿<span class="o">::</span><span class="n">destroy</span>, then deallocates the storage for the referred element by calling <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> ﻿<span class="o">::</span><span class="n">rebind_traits</span><span class="o">&lt;</span><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>container-node-type</i></code> ﻿<span class="o">&gt;::</span><span class="n">deallocate</span>.</li> <li>Assigns <code>other.ptr_</code> to <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ptr_</i></code> ﻿.</li> <li>If <code>ator_traits ﻿::propagate_on_container_move_assignment</code> is <code>true</code>, move assigns <code>other.alloc_</code> to <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>alloc_</i></code> ﻿.</li> <li>Assigns <code>nullptr</code> to <code>other.ptr_</code> and assigns <code>std::nullopt</code> to <code>other.alloc_</code>.</li>
+</ol> <p>If the following values are all <code>false</code>, the behavior is undefined:</p>
+<ul>
+<li><code>ator_traits ﻿::propagate_on_container_move_assignment</code></li> <li><code>!alloc_</code></li> <li><code>alloc_ == other.alloc_</code></li>
+</ul> <h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another node handle </td>
+</tr>
+</table> <h3 id="Return">Return</h3> <p><code>*this</code></p>
+<h3 id="Exceptions">Exceptions</h3> <p>Throws nothing.</p>
+<h3 id="Notes_2">Notes</h3> <p>There is no user-provided copy assignment operator. <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>node-handle</i></code> is not <a href="../named_req/copyassignable" title="cpp/named req/CopyAssignable">CopyAssignable</a>.</p>
+<div class="t-member"> <h2 id="node-handle_﻿::~node-handle">
+<i>node-handle ﻿</i>::~<i>node-handle</i>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">~/*node-handle*/();
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>If <code>ptr_ != nullptr</code> is <code>true</code>, destroys the element referred to by <code>*this</code> by calling <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> ﻿<span class="o">::</span><span class="n">destroy</span>, then deallocates the container element by calling <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>ator_traits</i></code> ﻿<span class="o">::</span><span class="n">rebind_traits</span><span class="o">&lt;</span><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>container-node-type</i></code> ﻿<span class="o">&gt;::</span><span class="n">deallocate</span>.</p>
+<p>Otherwise, does nothing.</p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::empty">
+<i>node-handle ﻿</i>::empty</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">bool empty() const noexcept;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Returns <code>true</code> if the node handle is empty, <code>false</code> otherwise.</p>
+<h3 id="Return_value">Return value</h3> <p><code>ptr_ == nullptr</code></p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::operator_bool">
+<i>node-handle ﻿</i>::operator bool</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">explicit operator bool() const noexcept;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Converts to <code>false</code> if the node handle is empty, <code>true</code> otherwise.</p>
+<h3 id="Return_value_2">Return value</h3> <p><code>ptr_ != nullptr</code></p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::get_allocator">
+<i>node-handle ﻿</i>::get_allocator</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">allocator_type get_allocator() const;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Returns a copy of the stored allocator.</p>
+<p>If <code>empty()</code> is <code>true</code>, the behavior is undefined.</p>
+<h3 id="Return_value_3">Return value</h3> <p><code>*alloc_</code></p>
+<h3 id="Exceptions_2">Exceptions</h3> <p>Throws nothing.</p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::value_(set_containers_only)">
+<i>node-handle ﻿</i>::value <span class="t-mark">(set containers only)</span>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">value_type&amp; value() const;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Returns a reference to the element referred to by <code>*this</code>.</p>
+<p>If <code>empty()</code> is <code>true</code>, the behavior is undefined.</p>
+<h3 id="Return_value_4">Return value</h3> <p>As described above.</p>
+<h3 id="Exceptions_3">Exceptions</h3> <p>Throws nothing.</p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::key_(map_containers_only)">
+<i>node-handle ﻿</i>::key <span class="t-mark">(map containers only)</span>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">key_type&amp; key() const;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Returns a non-const reference to the <code>key_type</code> member of the element referred to by <code>*this</code>.</p>
+<p>If <code>empty()</code> is <code>true</code>, the behavior is undefined.</p>
+<h3 id="Return_value_5">Return value</h3> <p>As described above.</p>
+<h3 id="Exceptions_4">Exceptions</h3> <p>Throws nothing.</p>
+<h3 id="Notes_3">Notes</h3> <p>This function makes it possible to modify the key of a node extracted from a map, and then re-insert it into the map, without ever copying or moving the element.</p>
+</div> <div class="t-member"> <h2 id="node-handle_﻿::mapped_(map_containers_only)">
+<i>node-handle ﻿</i>::mapped <span class="t-mark">(map containers only)</span>
+</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">mapped_type&amp; mapped() const;
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Returns a reference to the <code>mapped_type</code> member of the element referred to by <code>*this</code>.</p>
+<p>If <code>empty()</code> is <code>true</code>, the behavior is undefined.</p>
+<h3 id="Return_value_6">Return value</h3> <p>As described above.</p>
+<h3 id="Exceptions_5">Exceptions</h3> <p>Throws nothing.</p>
+</div>  <h2 id="node-handle_﻿::swap">
+<i>node-handle ﻿</i>::swap</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">void swap( /*node-handle*/&amp; other ) noexcept(/* see below */);
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Calls <code>swap(ptr_ ﻿, nh.ptr_ ﻿)</code>. If any of the following values is <code>true</code>, also calls <code>swap(alloc_ ﻿, nh.alloc_ ﻿)</code>:</p>
+<ul>
+<li><code>ator_traits ﻿::propagate_on_container_swap</code></li> <li><code>!alloc_</code></li> <li><code>!other.alloc_</code></li>
+</ul> <p>If the following values are all <code>false</code>, the behavior is undefined:</p>
+<ul>
+<li><code>ator_traits ﻿::propagate_on_container_swap</code></li> <li><code>!alloc_</code></li> <li><code>!other.alloc_</code></li> <li><code>alloc_ == other.alloc_</code></li>
+</ul> <h3 id="Exceptions_6">Exceptions</h3> <div class="t-noexcept-full">
+<a href="../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(ator_traits::propagate_on_container_swap::value ||
+         ator_traits::is_always_equal::value)
+</pre>
+</div>
+</div>  <h3 id="Non-member_functions">Non-member functions</h3> <div class="t-member"> <h2 id="std::swap(node-handle_﻿)">std::swap(<i>node-handle ﻿</i>)</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td><pre data-language="c">friend void swap(/*node-handle*/&amp; lhs, /*node-handle*/&amp; rhs)
+    noexcept(noexcept(lhs.swap(rhs)));
+</pre></td> <td class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <p>Effectively executes <code>x.swap(y)</code>.</p>
+<p>This function is not visible to ordinary <a href="../language/unqualified_lookup" title="cpp/language/unqualified lookup">unqualified</a> or <a href="../language/qualified_lookup" title="cpp/language/qualified lookup">qualified lookup</a>, and can only be found by <a href="../language/adl" title="cpp/language/adl">argument-dependent lookup</a> when <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>node-handle</i></code> is an associated class of the arguments.</p>
+</div>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/node_handle" class="_attribution-link">https://en.cppreference.com/cpp/container/node_handle</a>
+  </p>
+</div>

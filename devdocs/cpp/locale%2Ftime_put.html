@@ -1,0 +1,69 @@
+   <h1 id="firstHeading" class="firstHeading">std::time_put</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt; 
+    class CharT, 
+    class OutputIt = std::ostreambuf_iterator&lt;CharT&gt; 
+&gt; class time_put;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Class template <code>std::time_put</code> encapsulates date and time formatting rules. The I/O manipulator <code><a href="../io/manip/put_time" title="cpp/io/manip/put time">std::put_time</a></code> uses the <code>std::time_put</code> facet of the I/O stream's locale to generate text representation of an <code><a href="../chrono/c/tm" title="cpp/chrono/c/tm">std::tm</a></code> object.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/4/4b/std-time_put-inheritance.svg" decoding="async" width="277" height="88" class="mw-file-element" usemap="#ImageMap_7bd02b246e18ff3e"></span><map name="ImageMap_7bd02b246e18ff3e"><area href="/cpp/locale/time_base" shape="rect" coords="5,4,107,36" alt="cpp/locale/time base" title="cpp/locale/time base">
+<area href="/cpp/locale/locale/facet" shape="rect" coords="5,52,107,85" alt="cpp/locale/locale/facet" title="cpp/locale/locale/facet"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div> <p>If a <code>std::time_put</code> specialization is not guaranteed to be provided by the standard library (see below), the behaviors of its <code><a href="time_put/put" title="cpp/locale/time put/put">put()</a></code> and <code><a href="time_put/put" title="cpp/locale/time put/put">do_put()</a></code> are not guaranteed as specified.</p>
+<h3 id="Specializations">Specializations</h3> <p>The standard library is guaranteed to provide the following specializations (they are <a href="locale" title="cpp/locale/locale">required to be implemented by any locale object</a>):</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code>  </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">time_put</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td> <td>creates narrow string representations of date and time </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">time_put</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td> <td>creates wide string representations of date and time </td>
+</tr> </table> <p>In addition, the standard library is also guaranteed to provide every specialization that satisfies the following type requirements:</p>
+<ul>
+<li>
+<code>CharT</code> is one of <span class="kt">char</span> and <span class="kt">wchar_t</span>, and</li> <li>
+<code>OutputIt</code> must meet the requirements of <a href="../named_req/outputiterator" title="cpp/named req/OutputIterator">LegacyOutputIterator</a>.</li>
+</ul> <h3 id="Nested_types">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>char_type</code> </td> <td>
+<code>CharT</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iter_type</code> </td> <td>
+<code>OutputIt</code> </td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code><a href="locale/id" title="cpp/locale/locale/id">std::locale::id</a></code></span> <code>id</code> <span class="t-cmark">[static]</span> </td> <td>the identifier of the <a href="locale/facet#Facet_class" title="cpp/locale/locale/facet">facet</a> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="time_put/time_put" title="cpp/locale/time put/time put"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a new <code>time_put</code> facet <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="time_put/~time_put" title="cpp/locale/time put/~time put"> <span class="t-lines"><span>(destructor)</span></span></a></div> </td> <td>destructs a <code>time_put</code> facet <br> <span class="t-mark">(protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="time_put/put" title="cpp/locale/time put/put"> <span class="t-lines"><span>put</span></span></a></div> </td> <td>invokes <code>do_put</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <h3 id="Protected_member_functions">Protected member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="time_put/put" title="cpp/locale/time put/put"> <span class="t-lines"><span>do_put</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>formats date/time and writes to output stream <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;codecvt&gt;
+#include &lt;ctime&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+    std::time_t t = std::time(nullptr);
+    std::wbuffer_convert&lt;std::codecvt_utf8&lt;wchar_t&gt;&gt; conv(std::cout.rdbuf());
+    std::wostream out(&amp;conv);
+    out.imbue(std::locale("ja_JP.utf8"));
+    
+    // this I/O manipulator std::put_time uses std::time_put&lt;wchar_t&gt;
+    out &lt;&lt; std::put_time(std::localtime(&amp;t), L"%A %c") &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">水曜日 2011年11月09日 12時32分05秒
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="time_put_byname" title="cpp/locale/time put byname"> <span class="t-lines"><span>time_put_byname</span></span></a></div> </td> <td>represents the system-supplied <code><a class="mw-selflink selflink">std::time_put</a></code> for the named locale <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="time_get" title="cpp/locale/time get"> <span class="t-lines"><span>time_get</span></span></a></div> </td> <td>parses time/date values from an input character sequence into <code><a href="../chrono/c/tm" title="cpp/chrono/c/tm">std::tm</a></code> <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../io/manip/put_time" title="cpp/io/manip/put time"> <span class="t-lines"><span>put_time</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>formats and outputs a date/time value according to the specified format <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/locale/time_put" class="_attribution-link">https://en.cppreference.com/cpp/locale/time_put</a>
+  </p>
+</div>

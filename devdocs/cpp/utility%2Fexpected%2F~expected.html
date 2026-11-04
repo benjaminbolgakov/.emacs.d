@@ -1,0 +1,47 @@
+   <h1 id="firstHeading" class="firstHeading">std::expected&lt;T,E&gt;::~expected</h1>            <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr ~expected();
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <h3 id="Main_template_destructor">Main template destructor</h3> <p>Destroys the contained value:</p>
+<ul>
+<li>If <a href="operator_bool" title="cpp/utility/expected/operator bool"><code>has_value()</code></a> is <code>true</code>, destroys the expected value.</li> <li>Otherwise, destroys the unexpected value.</li>
+</ul> <p>This destructor is trivial if <code>std::is_trivially_destructible_v&lt;T&gt;</code> and <code>std::is_trivially_destructible_v&lt;E&gt;</code> are both <code>true</code>.</p>
+<h3 id="void_partial_specialization_destructor">
+<span class="kt">void</span> partial specialization destructor</h3> <p>If <a href="operator_bool" title="cpp/utility/expected/operator bool"><code>has_value()</code></a> is <code>false</code>, destroys the unexpected value.</p>
+<p>This destructor is trivial if <code>std::is_trivially_destructible_v&lt;E&gt;</code> is <code>true</code>.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;expected&gt;
+#include &lt;iostream&gt;
+#include &lt;source_location&gt;
+
+inline
+void name(int x, std::source_location sloc = std::source_location::current())
+{
+    std::cout &lt;&lt; sloc.function_name() &lt;&lt; " : " &lt;&lt; x &lt;&lt; '\n';
+}
+
+struct Value
+{
+    int m{};
+    ~Value() { name(m); }
+};
+
+struct Error
+{
+    int e{};
+    ~Error() { name(e); }
+};
+
+int main()
+{
+    std::expected&lt;Value, Error&gt; e1 {42};
+    std::expected&lt;Value, Error&gt; e2 {std::unexpect, 13};
+    std::expected&lt;void, Error&gt;  e3 {std::unexpect, 37};
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">Error::~Error : 37
+Error::~Error : 13
+Value::~Value : 42
+</pre> </div>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/expected/~expected" class="_attribution-link">https://en.cppreference.com/cpp/utility/expected/~expected</a>
+  </p>
+</div>

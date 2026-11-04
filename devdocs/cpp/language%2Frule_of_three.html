@@ -1,0 +1,136 @@
+   <h1 id="firstHeading" class="firstHeading">The rule of three/five/zero</h1>           <div id="mw-content-text">  <h3 id="Rule_of_three">Rule of three</h3> <p>If a class requires a user-defined <a href="destructor" title="cpp/language/destructor">destructor</a>, a user-defined <a href="copy_constructor" title="cpp/language/copy constructor">copy constructor</a>, or a user-defined <a href="as_operator" class="mw-redirect" title="cpp/language/as operator">copy assignment operator</a>, it almost certainly requires all three.</p>
+<p>Because C++ copies and copy-assigns objects of user-defined types in various situations (passing/returning by value, manipulating a container, etc), these special member functions will be called, if accessible, and if they are not user-defined, they are implicitly-defined by the compiler.</p>
+<p>The implicitly-defined special member functions should not be used if the class <a href="raii" title="cpp/language/raii">manages a resource</a> whose handle is an object of non-class type (raw pointer, POSIX file descriptor, etc), whose destructor does nothing and copy constructor/assignment operator performs a "shallow copy" (copies the value of the handle, without duplicating the underlying resource).</p>
+<div class="t-example"> <pre data-language="c">#include &lt;cstddef&gt;
+#include &lt;cstring&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+
+class rule_of_three
+{
+    char* cstring; // raw pointer used as a handle to a
+                   // dynamically-allocated memory block
+
+public:
+    explicit rule_of_three(const char* s = "") : cstring(nullptr)
+    {   
+        if (s)
+        {   
+            cstring = new char[std::strlen(s) + 1]; // allocate
+            std::strcpy(cstring, s); // populate
+        }
+    }
+    
+    ~rule_of_three() // I. destructor
+    {
+        delete[] cstring; // deallocate
+    }
+    
+    rule_of_three(const rule_of_three&amp; other) // II. copy constructor
+        : rule_of_three(other.cstring) {}
+    
+    rule_of_three&amp; operator=(const rule_of_three&amp; other) // III. copy assignment
+    {
+        // implemented through copy-and-swap for brevity
+        // note that this prevents potential storage reuse
+        rule_of_three temp(other);
+        std::swap(cstring, temp.cstring);
+        return *this;
+    }
+    
+    const char* c_str() const // accessor
+    {
+        return cstring;
+    }
+};
+
+int main()
+{
+    rule_of_three o1{"abc"};
+    std::cout &lt;&lt; o1.c_str() &lt;&lt; ' ';
+    auto o2{o1}; // II. uses copy constructor
+    std::cout &lt;&lt; o2.c_str() &lt;&lt; ' ';
+    rule_of_three o3("def");
+    std::cout &lt;&lt; o3.c_str() &lt;&lt; ' ';
+    o3 = o2; // III. uses copy assignment
+    std::cout &lt;&lt; o3.c_str() &lt;&lt; '\n';
+}   // I. all destructors are called here
+</pre> <p>Output:</p>
+<pre data-language="c">abc abc def abc
+</pre> </div> <p>Classes that manage non-copyable resources through copyable handles may have to <span class="t-rev-inl t-until-cxx11"><span>declare copy assignment and copy constructor <span class="k">private</span> and not provide their definitions</span><span><span class="t-mark-rev t-until-cxx11">(until C++11)</span></span></span><span class="t-rev-inl t-since-cxx11"><span>define copy assignment and copy constructor as <code>= delete</code></span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>. This is another application of the rule of three: deleting one and leaving the other to be implicitly-defined typically incorrect.</p>
+<h3 id="Rule_of_five">Rule of five</h3> <p>Because the presence of a user-defined (include <code>= default</code> or <code>= delete</code> declared) destructor, copy-constructor, or copy-assignment operator prevents implicit definition of the <a href="move_constructor" title="cpp/language/move constructor">move constructor</a> and the <a href="move_operator" class="mw-redirect" title="cpp/language/move operator">move assignment operator</a>, any class for which move semantics are desirable, has to declare all five special member functions:</p>
+<pre data-language="c">class rule_of_five
+{
+    char* cstring; // raw pointer used as a handle to a
+                   // dynamically-allocated memory block
+public:
+    explicit rule_of_five(const char* s = "") : cstring(nullptr)
+    { 
+        if (s)
+        {
+            cstring = new char[std::strlen(s) + 1]; // allocate
+            std::strcpy(cstring, s); // populate 
+        } 
+    }
+ 
+    ~rule_of_five()
+    {
+        delete[] cstring; // deallocate
+    }
+ 
+    rule_of_five(const rule_of_five&amp; other) // copy constructor
+        : rule_of_five(other.cstring) {}
+ 
+    rule_of_five(rule_of_five&amp;&amp; other) noexcept // move constructor
+        : cstring(std::exchange(other.cstring, nullptr)) {}
+ 
+    rule_of_five&amp; operator=(const rule_of_five&amp; other) // copy assignment
+    {
+        // implemented as move-assignment from a temporary copy for brevity
+        // note that this prevents potential storage reuse
+        return *this = rule_of_five(other);
+    }
+ 
+    rule_of_five&amp; operator=(rule_of_five&amp;&amp; other) noexcept // move assignment
+    {
+        std::swap(cstring, other.cstring);
+        return *this;
+    }
+ 
+// alternatively, replace both assignment operators with copy-and-swap
+// implementation, which also fails to reuse storage in copy-assignment.
+//  rule_of_five&amp; operator=(rule_of_five other) noexcept
+//  {
+//      std::swap(cstring, other.cstring);
+//      return *this;
+//  }
+};
+</pre> <p>Unlike Rule of Three, failing to provide move constructor and move assignment is usually not an error, but a missed optimization opportunity.</p>
+<h3 id="Rule_of_zero">Rule of zero</h3> <p>Classes that have custom destructors, copy/move constructors or copy/move assignment operators should deal exclusively with ownership (which follows from the <a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" class="extiw" title="enwiki:Single responsibility principle">Single Responsibility Principle</a>). Other classes should not have custom destructors, copy/move constructors or copy/move assignment operators<sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup>.</p>
+<p>This rule also appears in the C++ Core Guidelines as <a rel="nofollow" class="external text" href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rc-zero">C.20: If you can avoid defining default operations, do</a>.</p>
+<pre data-language="c">class rule_of_zero
+{
+    std::string cppstring;
+public:
+    rule_of_zero(const std::string&amp; arg) : cppstring(arg) {}
+};
+</pre> <p>When a base class is intended for polymorphic use, its destructor may have to be declared <span class="k">public</span> and <span class="k">virtual</span>. This blocks implicit moves (and deprecates implicit copies), and so the special member functions have to be defined as <code>= default</code><sup id="cite_ref-2" class="reference"><a href="#cite_note-2"><span class="cite-bracket">[</span>2<span class="cite-bracket">]</span></a></sup>.</p>
+<pre data-language="c">class base_of_five_defaults
+{
+public:
+    base_of_five_defaults(const base_of_five_defaults&amp;) = default;
+    base_of_five_defaults(base_of_five_defaults&amp;&amp;) = default;
+    base_of_five_defaults&amp; operator=(const base_of_five_defaults&amp;) = default;
+    base_of_five_defaults&amp; operator=(base_of_five_defaults&amp;&amp;) = default;
+    virtual ~base_of_five_defaults() = default;
+};
+</pre> <p>However, this makes the class prone to slicing, which is why polymorphic classes often define copy as <code>= delete</code> (see <a rel="nofollow" class="external text" href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c67-a-polymorphic-class-should-suppress-public-copymove">C.67: A polymorphic class should suppress public copy/move</a> in C++ Core Guidelines), which leads to the following generic wording for the Rule of Five:  <a rel="nofollow" class="external text" href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#c21-if-you-define-or-delete-any-copy-move-or-destructor-function-define-or-delete-them-all">C.21: If you define or =delete any copy, move, or destructor function, define or =delete them all.</a></p>
+<h3 id="External_links">External links</h3> <table> <tr> <td>
+<ol class="references"> <li id="cite_note-1"> <span class="reference-text"><a rel="nofollow" class="external text" href="https://web.archive.org/web/20130211035910/http://flamingdangerzone.com/cxx11/2012/08/15/rule-of-zero.html">"Rule of Zero", R. Martinho Fernandes 08/15/2012</a></span> </li> <li id="cite_note-2"> <span class="reference-text"><a rel="nofollow" class="external text" href="https://scottmeyers.blogspot.fr/2014/03/a-concern-about-rule-of-zero.html">"A Concern about the Rule of Zero", Scott Meyers, 3/13/2014</a>.</span> </li> </ol> </td>
+</tr>
+</table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/language/rule_of_three" class="_attribution-link">https://en.cppreference.com/cpp/language/rule_of_three</a>
+  </p>
+</div>

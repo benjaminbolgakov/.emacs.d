@@ -1,0 +1,56 @@
+   <h1 id="firstHeading" class="firstHeading">std::variant&lt;Types...&gt;::swap</h1>            <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td><pre data-language="c">void swap( variant&amp; rhs ) noexcept(/* see below */);
+</pre></td> <td class="t-dcl-nopad"> </td> <td>
+<span class="t-mark-rev t-since-cxx17">(since C++17)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span>
+</td> </tr>  </table> <p>Swaps two <a href="../variant" title="cpp/utility/variant"><code>variant</code></a> objects.</p>
+<ul>
+<li>If both <code>*this</code> and <code>rhs</code> are valueless by exception, does nothing.</li> <li>Otherwise, if both <code>*this</code> and <code>rhs</code> hold the same alternative, calls <code>swap(*std::get_if&lt;i&gt;(this), *std::get_if&lt;i&gt;(std::addressof(rhs)))</code> where <code>i</code> is <a href="index" title="cpp/utility/variant/index"><code>index()</code></a>. If an exception is thrown, the state of the values depends on the exception safety of the <code>swap</code> function called.</li> <li>Otherwise, exchanges values of <code>rhs</code> and <code>*this</code>. If an exception is thrown, the state of <code>*this</code> and <code>rhs</code> depends on exception safety of variant's move constructor.</li>
+</ul> <p>The program is ill-formed unless type <code>T_i</code> are <a href="../../named_req/swappable" title="cpp/named req/Swappable">Swappable</a> and <code>std::is_move_constructible_v&lt;T_i&gt;</code> is <code>true</code> for all <code>T_i</code> in <code>Types...</code>.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>rhs </td> <td>- </td> <td>a <code>variant</code> object to swap with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>(none)</p>
+<h3 id="Exceptions">Exceptions</h3> <p>If <code>this-&gt;index() == rhs.index()</code>, may throw any exception thrown by <code>swap(*std::get_if&lt;i&gt;(this), *std::get_if&lt;i&gt;(std::addressof(rhs)))</code> with <code>i</code> being <a href="index" title="cpp/utility/variant/index"><code>index()</code></a>.</p>
+<p>Otherwise, may throw any exception thrown by the move constructors of the alternatives currently held by <code>*this</code> and <code>rhs</code>.</p>
+<div class="t-noexcept-full">
+<a href="../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(((std::is_nothrow_move_constructible_v&lt;Types&gt; &amp;&amp;
+           std::is_nothrow_swappable_v&lt;Types&gt;) &amp;&amp; ...))
+</pre>
+</div>
+</div> <h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../../feature_test#cpp_lib_variant" title="cpp/feature test"><code>__cpp_lib_variant</code></a></td> <td><a href="../../compiler_support/20#cpp_lib_variant_202106L" title="cpp/compiler support/20"><code>202106L</code></a></td> <td>
+<span class="t-mark">(C++20)</span><br><span class="t-mark">(DR)</span>
+</td> <td>Fully <span class="k">constexpr</span> <code>std::variant</code> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;variant&gt;
+
+int main()
+{
+    std::variant&lt;int, std::string&gt; v1{2}, v2{"abc"};
+    std::visit([](auto&amp;&amp; x) { std::cout &lt;&lt; x &lt;&lt; ' '; }, v1);
+    std::visit([](auto&amp;&amp; x) { std::cout &lt;&lt; x &lt;&lt; '\n'; }, v2);
+    v1.swap(v2);
+    std::visit([](auto&amp;&amp; x) { std::cout &lt;&lt; x &lt;&lt; ' '; }, v1);
+    std::visit([](auto&amp;&amp; x) { std::cout &lt;&lt; x &lt;&lt; '\n'; }, v2);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">2 abc
+abc 2
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2231R1">P2231R1</a> </td> <td>C++20 </td> <td>
+<code>swap</code> was not <span class="k">constexpr</span> while non-trivial destructors can be <span class="k">constexpr</span> in C++20 </td> <td>made <span class="k">constexpr</span> </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="swap2" title="cpp/utility/variant/swap2"> <span class="t-lines"><span>std::swap<span class="t-dsc-small">(std::variant)</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>specializes the <code><a href="../../algorithm/swap" title="cpp/algorithm/swap">std::swap</a></code> algorithm <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/variant/swap" class="_attribution-link">https://en.cppreference.com/cpp/utility/variant/swap</a>
+  </p>
+</div>

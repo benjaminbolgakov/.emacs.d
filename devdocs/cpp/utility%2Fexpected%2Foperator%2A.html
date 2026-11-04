@@ -1,0 +1,81 @@
+   <h1 id="firstHeading" class="firstHeading">std::expected&lt;T,E&gt;::operator-&gt;, std::expected&lt;T,E&gt;::operator*</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl-h"> <td> Primary template</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr const T* operator-&gt;() const noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr T* operator-&gt;() noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr const T&amp; operator*() const&amp; noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr T&amp; operator*() &amp; noexcept;
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr const T&amp;&amp; operator*() const&amp;&amp; noexcept;
+</pre>
+</td> <td> (5) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr T&amp;&amp; operator*() &amp;&amp; noexcept;
+</pre>
+</td> <td> (6) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl-h"> <td> <span class="kt">void</span> partial specialization</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr void operator*() const noexcept;
+</pre>
+</td> <td> (7) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>Accesses the expected value contained in <code>*this</code>.</p>
+<div class="t-li1">
+<span class="t-li">1,2)</span> Returns a pointer to the expected value.</div> <div class="t-li1">
+<span class="t-li">3-6)</span> Returns a reference to the expected value.</div> <div class="t-li1">
+<span class="t-li">7)</span> Returns nothing.</div> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx26">
+<td> <p>If <code>has_value()</code> is <code>false</code>, the behavior is undefined.</p>
+</td> <td><span class="t-mark-rev t-until-cxx26">(until C++26)</span></td>
+</tr> <tr class="t-rev t-since-cxx26">
+<td> <p>If <code>has_value()</code> is <code>false</code>:</p>
+<ul>
+<li>If the implementation is <a href="../../standard_library#Standard_library_hardening" title="cpp/standard library">hardened</a>, a <a href="../../language/contracts" title="cpp/language/contracts">contract violation</a> occurs.</li> <li>If the implementation is not hardened, the behavior is undefined.</li>
+</ul> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table>  <h3 id="Return_value">Return value</h3> <div class="t-li1">
+<span class="t-li">1,2)</span> <code><span class="n">std</span><span class="o">::</span><span class="n">addressof</span><span class="p">(</span><i><a href="../expected#val" title="cpp/utility/expected">val</a></i> ﻿<span class="p">)</span></code>
+</div> <div class="t-li1">
+<span class="t-li">3,4)</span> <code><i><a href="../expected#val" title="cpp/utility/expected">val</a></i></code>
+</div> <div class="t-li1">
+<span class="t-li">5,6)</span> <code><span class="n">std</span><span class="o">::</span><a href="../move" title="cpp/utility/move">move</a><span class="p">(</span><i><a href="../expected#val" title="cpp/utility/expected">val</a></i> ﻿<span class="p">)</span></code>
+</div> <h3 id="Notes">Notes</h3> <p>These operators do not check whether the optional represents an expected value, users can do so manually by using <a href="operator_bool" title="cpp/utility/expected/operator bool"><code>has_value()</code></a> or <a href="operator_bool" title="cpp/utility/expected/operator bool"><code>operator bool()</code></a>. Alternatively, if checked access is needed, <a href="value" title="cpp/utility/expected/value"><code>value()</code></a> or <a href="value_or" title="cpp/utility/expected/value or"><code>value_or()</code></a> may be used.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cassert&gt;
+#include &lt;expected&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main()
+{
+    using namespace std::string_literals;
+    
+    std::expected&lt;int, std::string&gt; ex1 = 6;
+    assert(*ex1 == 6);
+    
+    *ex1 = 9;
+    assert(*ex1 == 9);
+    
+    // *ex1 = "error"s; // error, ex1 contains an expected value of type int
+    ex1 = std::unexpected("error"s);
+    // *ex1 = 13; // UB, ex1 contains an unexpected value
+    assert(ex1.value_or(42) == 42);
+    
+    std::expected&lt;std::string, bool&gt; ex2 = "Moon"s;
+    std::cout &lt;&lt; "ex2: " &lt;&lt; std::quoted(*ex2) &lt;&lt; ", size: " &lt;&lt; ex2-&gt;size() &lt;&lt; '\n';
+    
+    // You can "take" the expected value by calling operator* on an std::expected rvalue
+    
+    auto taken = *std::move(ex2);
+    std::cout &lt;&lt; "taken " &lt;&lt; std::quoted(taken) &lt;&lt; "\n"
+                 "ex2: " &lt;&lt; std::quoted(*ex2) &lt;&lt; ", size: " &lt;&lt; ex2-&gt;size() &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">ex2: "Moon", size: 4
+taken "Moon"
+ex2: "", size: 0
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="value" title="cpp/utility/expected/value"> <span class="t-lines"><span>value</span></span></a></div> </td> <td>returns the expected value <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="value_or" title="cpp/utility/expected/value or"> <span class="t-lines"><span>value_or</span></span></a></div> </td> <td>returns the expected value if present, another value otherwise <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="operator_bool" title="cpp/utility/expected/operator bool"> <span class="t-lines"><span>operator bool</span><span>has_value</span></span></a></div> </td> <td>checks whether the object contains an expected value <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="error" title="cpp/utility/expected/error"> <span class="t-lines"><span>error</span></span></a></div> </td> <td>returns the unexpected value <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/expected/operator*" class="_attribution-link">https://en.cppreference.com/cpp/utility/expected/operator*</a>
+  </p>
+</div>

@@ -1,0 +1,54 @@
+   <h1 id="firstHeading" class="firstHeading">std::domain_error</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/stdexcept" title="cpp/header/stdexcept">&lt;stdexcept&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">class domain_error;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Defines a type of object to be thrown as exception. It may be used by the implementation to report domain errors, that is, situations where the inputs are outside of the domain on which an operation is defined.</p>
+<p>The standard library components do not throw this exception (mathematical functions report domain errors as specified in <code><a href="../numeric/math/math_errhandling" title="cpp/numeric/math/math errhandling">math_errhandling</a></code>). Third-party libraries, however, use this. For example, <a rel="nofollow" class="external text" href="https://www.boost.org/doc/libs/1_55_0/libs/math/doc/html/math_toolkit/error_handling.html">boost.math</a> throws <code>std::domain_error</code> if <code>boost::math::policies::throw_on_error</code> is enabled (the default setting).</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/2/26/std-domain_error-inheritance.svg" decoding="async" width="374" height="40" class="mw-file-element" usemap="#ImageMap_f4c6d41936e07522"></span><map name="ImageMap_f4c6d41936e07522"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception">
+<area href="/cpp/error/logic_error" shape="rect" coords="135,4,238,36" alt="cpp/error/logic error" title="cpp/error/logic error"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>(constructor)</span></span></div> </td> <td>constructs a new <code>domain_error</code> object with the given message <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>operator=</span></span></div> </td> <td>replaces the <code>domain_error</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <div class="t-member"> <h2 id="std::domain_error::domain_error">std::domain_error::domain_error</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">domain_error( const std::string&amp; what_arg );
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">domain_error( const char* what_arg );
+</pre>
+</td> <td> (2) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">domain_error( const domain_error&amp; other );
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Constructs the exception object with <code>what_arg</code> as explanatory string. After construction, <code>std::strcmp(what(), what_arg.c_str()) == 0</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Constructs the exception object with <code>what_arg</code> as explanatory string. After construction, <code>std::strcmp(what(), what_arg) == 0</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Copy constructor. If <code>*this</code> and <code>other</code> both have dynamic type <code>std::domain_error</code> then <code>std::strcmp(what(), other.what()) == 0</code>. No exception can be thrown from the copy constructor.</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>what_arg </td> <td>- </td> <td>explanatory string </td>
+</tr> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to copy </td>
+</tr>
+</table> <h3 id="Exceptions">Exceptions</h3> <div class="t-li1">
+<span class="t-li">1,2)</span> May throw <code><a href="../memory/new/bad_alloc" title="cpp/memory/new/bad alloc">std::bad_alloc</a></code>.</div> <h3 id="Notes">Notes</h3> <p>Because copying <code>std::domain_error</code> is not permitted to throw exceptions, this message is typically stored internally as a separately-allocated reference-counted string. This is also why there is no constructor taking <code>std::string&amp;&amp;</code>: it would have to copy the content anyway.</p>
+<p>Before the resolution of <a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue254">LWG issue 254</a>, the non-copy constructor can only accept <code><a href="../string/basic_string" title="cpp/string/basic string">std::string</a></code>. It makes dynamic allocation mandatory in order to construct a <code><a href="../string/basic_string" title="cpp/string/basic string">std::string</a></code> object.</p>
+<p>After the resolution of <a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue471">LWG issue 471</a>, a derived standard exception class must have a publicly accessible copy constructor. It can be implicitly defined as long as the explanatory strings obtained by <code>what()</code> are the same for the original object and the copied object.</p>
+</div> <div class="t-member"> <h2 id="std::domain_error::operator=">std::domain_error::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">domain_error&amp; operator=( const domain_error&amp; other );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr>  </table> <p>Assigns the contents with those of <code>other</code>. If <code>*this</code> and <code>other</code> both have dynamic type <code>std::domain_error</code> then <code>std::strcmp(what(), other.what()) == 0</code> after assignment. No exception can be thrown from the copy assignment operator.</p>
+<h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to assign with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+<h3 id="Notes_2">Notes</h3> <p>After the resolution of <a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue471">LWG issue 471</a>, a derived standard exception class must have a publicly accessible copy assignment operator. It can be implicitly defined as long as the explanatory strings obtained by <code>what()</code> are the same for the original object and the copied object.</p>
+</div> <div class="t-inherited"> <h2 id="Inherited_from_std::logic_error">Inherited from <a href="logic_error" title="cpp/error/logic error">std::logic_error</a>
+</h2> </div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue254">LWG 254</a> </td> <td>C++98 </td> <td>the constructor accepting <code>const char*</code> was missing </td> <td>added </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue471">LWG 471</a> </td> <td>C++98 </td> <td>the explanatory strings of <code>std::domain_error</code>'s<br>copies were implementation-defined </td> <td>they are the same as that of the<br>original <code>std::domain_error</code> object </td>
+</tr>
+</table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/error/domain_error" class="_attribution-link">https://en.cppreference.com/cpp/error/domain_error</a>
+  </p>
+</div>

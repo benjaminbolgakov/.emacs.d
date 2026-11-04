@@ -1,0 +1,38 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::drop_while_view&lt;V,Pred&gt;::drop_while_view</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">drop_while_view() requires std::default_initializable&lt;V&gt; &amp;&amp;
+                           std::default_initializable&lt;Pred&gt; = default;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr explicit drop_while_view( V base, Pred pred );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Constructs a <code>drop_while_view</code>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Default constructor. <a href="../../language/value_initialization" title="cpp/language/value initialization">Value-initializes</a> the underlying view <a href="../drop_while_view#Data_members" title="cpp/ranges/drop while view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>base_</i></code></a> and the predicate <a href="../drop_while_view#Data_members" title="cpp/ranges/drop while view"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>pred_</i></code></a>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Move constructs the underlying view <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>base_</i></code> from <code>base</code> and the predicate <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>pred_</i></code> from <code>pred</code>.</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>base </td> <td>- </td> <td>underlying view </td>
+</tr> <tr class="t-par"> <td>pred </td> <td>- </td> <td>predicate </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;functional&gt;
+#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+
+int main()
+{
+    static constexpr auto a = {-2, -7, -1, -8, -2, +-+8, 3, 1, 4, 1, 5};
+    auto positive = [](int x) { return 0 &lt; x; };
+    for (auto v = std::ranges::drop_while_view{a, std::not_fn(positive)}; int x : v)
+        std::cout &lt;&lt; x &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">3 1 4 1 5
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3714">LWG 3714</a><br>(<a rel="nofollow" class="external text" href="https://wg21.link/P2711R1">P2711R1</a>) </td> <td>C++20 </td> <td>the multi-parameter constructor was not explicit </td> <td>made explicit </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2325R3">P2325R3</a> </td> <td>C++20 </td> <td>if <code>Pred</code> is not <a href="../../concepts/default_initializable" title="cpp/concepts/default initializable"><code>default_initializable</code></a>, the default constructor<br>constructs a <code>drop_while_view</code> which does not contain an <code>Pred</code> </td> <td>the <code>drop_while_view</code> is also<br>not <a href="../../concepts/default_initializable" title="cpp/concepts/default initializable"><code>default_initializable</code></a> </td>
+</tr>
+</table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/drop_while_view/drop_while_view" class="_attribution-link">https://en.cppreference.com/cpp/ranges/drop_while_view/drop_while_view</a>
+  </p>
+</div>

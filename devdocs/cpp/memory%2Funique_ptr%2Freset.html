@@ -1,0 +1,77 @@
+   <h1 id="firstHeading" class="firstHeading">std::unique_ptr&lt;T,Deleter&gt;::reset</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl-h"> <td> members of the primary template, unique_ptr&lt;T&gt;</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void reset( pointer ptr = pointer() ) noexcept;
+</pre>
+</td> <td> (1)</td> <td><span class="t-mark-rev t-since-cxx23">(constexpr since C++23)</span></td> </tr> <tr class="t-dcl-h"> <td> members of the specialization unique_ptr&lt;T[]&gt;</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class U &gt; 
+void reset( U ptr ) noexcept;
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx23">(constexpr since C++23)</span></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">void reset( std::nullptr_t = nullptr ) noexcept;
+</pre>
+</td> <td> (3)</td> <td><span class="t-mark-rev t-since-cxx23">(constexpr since C++23)</span></td> </tr>  </table> <p>Replaces the managed object.</p>
+<div class="t-li1">
+<span class="t-li">1,2)</span> Equivalent to <code>auto old_ptr = get();/* assigns “ptr” to the stored pointer */if (old_ptr)get_deleter()(old_ptr);</code>.</div> <div class="t-li1">
+ If <code>get_deleter()(old_ptr)</code> throws an exception, the behavior is undefined.</div> <span class="t-li">2)</span> This overload participates in overload resolution only if <code>U</code> is the same type as <code>pointer</code>, or all following conditions are satisfied: <ul>
+<li>
+<code>pointer</code> is the same type as <code>element_type*</code>.</li> <li>
+<code>U</code> is a pointer type <code>V*</code> such that <code>V(*)[]</code> is convertible to <code>element_type(*)[]</code>.</li>
+</ul> <div class="t-li1">
+<span class="t-li">3)</span> Equivalent to <code>reset(pointer())</code>.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>ptr </td> <td>- </td> <td>pointer to a new object to manage </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <p>To replace the managed object while supplying a new deleter as well, move assignment operator may be used.</p>
+<p>A test for self-reset, i.e. whether <code>ptr</code> points to an object already managed by <code>*this</code>, is not performed, except where provided as a compiler extension or as a debugging assert. Note that code such as <code>p.reset(p.release())</code> does not involve self-reset, only code like <code>p.reset(p.get())</code> does.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+struct Foo // object to manage
+{
+    Foo() { std::cout &lt;&lt; "Foo...\n"; }
+    ~Foo() { std::cout &lt;&lt; "~Foo...\n"; }
+};
+
+struct D // deleter
+{
+    void operator() (Foo* p)
+    {
+        std::cout &lt;&lt; "Calling delete for Foo object... \n";
+        delete p;
+    }
+};
+
+int main()
+{
+    std::cout &lt;&lt; "Creating new Foo...\n";
+    std::unique_ptr&lt;Foo, D&gt; up(new Foo(), D()); // up owns the Foo pointer (deleter D)
+    
+    std::cout &lt;&lt; "Replace owned Foo with a new Foo...\n";
+    up.reset(new Foo());  // calls deleter for the old one
+    
+    std::cout &lt;&lt; "Release and delete the owned Foo...\n";
+    up.reset(nullptr);      
+}
+</pre> <p>Output:</p>
+<pre data-language="c">Creating new Foo...
+Foo...
+Replace owned Foo with a new Foo...
+Foo...
+Calling delete for Foo object...
+~Foo...
+Release and delete the owned Foo...
+Calling delete for Foo object...
+~Foo...
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2118">LWG 2118</a> </td> <td>C++11 </td> <td>
+<code>unique_ptr&lt;T[]&gt;::reset</code> rejected qualification conversions </td> <td>accepts </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2169">LWG 2169</a> </td> <td>C++11 </td> <td>the overload <code>unique_ptr&lt;T[]&gt;::reset(pointer)</code> existed </td> <td>removed the overload </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="release" title="cpp/memory/unique ptr/release"> <span class="t-lines"><span>release</span></span></a></div> </td> <td>returns a pointer to the managed object and releases the ownership <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/unique_ptr/reset" class="_attribution-link">https://en.cppreference.com/cpp/memory/unique_ptr/reset</a>
+  </p>
+</div>

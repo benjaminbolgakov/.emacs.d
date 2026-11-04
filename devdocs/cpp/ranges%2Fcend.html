@@ -1,0 +1,50 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::cend</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">inline namespace /* unspecified */ {
+    inline constexpr /* unspecified */ cend = /* unspecified */;
+}
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark">(customization point object)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr /* see below */ auto cend( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Returns a sentinel<span class="t-rev-inl t-since-cxx23"><span> for the constant iterator</span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span> indicating the end of a <span class="t-rev-inl t-until-cxx23"><span>const-qualified</span><span><span class="t-mark-rev t-until-cxx23">(until C++23)</span></span></span> range.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>Let <code>CT</code> be</p>
+<ul>
+<li>
+<code>const std::remove_reference_t&lt;T&gt;&amp;</code> if the argument is an lvalue (i.e. <code>T</code> is an lvalue reference type),</li> <li>
+<code>const T</code> otherwise.</li>
+</ul> <p>A call to <code>ranges::cend</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to <code>ranges::end(static_cast&lt;CT&amp;&amp;&gt;(t))</code>.</p>
+</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>If the argument is an lvalue or <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>true</code>, then a call to <code>ranges::cend</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to:</p>
+<ul><li>
+<code>std::const_sentinel&lt;decltype(U)&gt;(U)</code> for some expression <code>U</code> equivalent to <code><span class="n">ranges</span><span class="o">::</span><span class="n">end</span><span class="p">(</span><i><a href="../ranges#possibly-const-range" title="cpp/ranges">possibly-const-range</a></i><span class="p">(</span><span class="n">t</span><span class="p">))</span></code>.</li></ul> <p>In all other cases, a call to <code>ranges::cend</code> is ill-formed, which can result in <a href="../language/sfinae" title="cpp/language/sfinae">substitution failure</a> when the call appears in the immediate context of a template instantiation.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table> <p>If <code>ranges::cend(e)</code> is valid for an expression <code>e</code>, where <code>decltype((e))</code> is <code>T</code>, then <span class="t-rev-inl t-until-cxx23"><span><code>CT</code> models <code><a href="range" title="cpp/ranges/range">std::ranges::range</a></code>, and</span><span><span class="t-mark-rev t-until-cxx23">(until C++23)</span></span></span> <code>std::sentinel_for&lt;S, I&gt;</code> is <code>true</code> in all cases, where <code>S</code> is <code>decltype(ranges::cend(e))</code>, and <code>I</code> is <code>decltype(ranges::cbegin(e))</code>. <span class="t-rev-inl t-since-cxx23"><span>Additionally, <code>S</code> models <a href="constant_range" title="cpp/ranges/constant range"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>constant-iterator</i></code></a> if it models <a href="../iterator/input_iterator" title="cpp/iterator/input iterator"><code>input_iterator</code></a>.</span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span></p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>ranges::cend</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;cassert&gt;
+#include &lt;ranges&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector vec{3, 1, 4};
+    int arr[]{5, 10, 15};
+
+    assert(std::ranges::find(vec, 5) == std::ranges::cend(vec));
+    assert(std::ranges::find(arr, 5) != std::ranges::cend(arr));
+}
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="end" title="cpp/ranges/end"> <span class="t-lines"><span>ranges::end</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns a sentinel indicating the end of a range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/end" title="cpp/iterator/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the end of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/cend" class="_attribution-link">https://en.cppreference.com/cpp/ranges/cend</a>
+  </p>
+</div>

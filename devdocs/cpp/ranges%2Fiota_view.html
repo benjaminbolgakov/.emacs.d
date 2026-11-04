@@ -1,0 +1,159 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::views::iota, std::ranges::iota_view, std::ranges::views::indices</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; std::weakly_incrementable W,
+          std::semiregular Bound = std::unreachable_sentinel_t &gt;
+    requires /*weakly-equality-comparable-with*/&lt;W, Bound&gt; &amp;&amp; std::copyable&lt;W&gt;
+class iota_view
+    : public ranges::view_interface&lt;iota_view&lt;W, Bound&gt;&gt;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">namespace views {
+    inline constexpr /* unspecified */ iota = /* unspecified */;
+}
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx26"> <td>
+<pre data-language="c">namespace views {
+    inline constexpr /* unspecified */ indices = /* unspecified */;
+}
+</pre>
+</td> <td> (3)</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class W &gt;
+    requires /* see below */
+constexpr /* see below */ iota( W&amp;&amp; value );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class W, class Bound &gt;
+    requires /* see below */
+constexpr /* see below */ iota( W&amp;&amp; value, Bound&amp;&amp; bound );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx26"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /*is-integer-like*/&lt;T&gt;
+constexpr /* see below */ indices( T bound );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx26">(since C++26)</span> </td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> A range factory that generates a sequence of elements by repeatedly incrementing an initial value. Can be either bounded or unbounded (infinite).</div> <div class="t-li1">
+<span class="t-li">2)</span> <code>views::iota(e)</code> and <code>views::iota(e, f)</code> are <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to <code>iota_view&lt;std::decay_t&lt;decltype((e))&gt;&gt;(e)</code> and <code>iota_view(e, f)</code> respectively for any suitable subexpressions <code>e</code> and <code>f</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> Let <code>T</code> be <code>std::remove_cvref_t&lt;decltype((e))&gt;</code>. Then <code>views::indices(e)</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to <code>views::iota(T(0), e)</code> for any suitable subexpression <code>e</code> if <code>T</code> is an <a href="../iterator/is-integer-like" title="cpp/iterator/is-integer-like">integer-like type</a>.</div>  <h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>views::iota</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>The name <code>views::indices</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code>W</code></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>value_</i></code> </td> <td>the beginning value<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code>Bound</code></span> <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>bound_</i></code> </td> <td>the sentinel value, may be unreachable<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member object*</span>)</span> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="iota_view/iota_view" title="cpp/ranges/iota view/iota view"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>creates an <code>iota_view</code> <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iota_view/begin" title="cpp/ranges/iota view/begin"> <span class="t-lines"><span>begin</span></span></a></div> </td> <td>obtains the beginning iterator of an <code>iota_view</code> <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iota_view/end" title="cpp/ranges/iota view/end"> <span class="t-lines"><span>end</span></span></a></div> </td> <td>obtains the sentinel denoting the end of an <code>iota_view</code> <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iota_view/empty" title="cpp/ranges/iota view/empty"> <span class="t-lines"><span>empty</span></span></a></div> </td> <td>tests whether the <code>iota_view</code> is empty (i.e. the iterator and the sentinel compare equal) <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iota_view/size" title="cpp/ranges/iota view/size"> <span class="t-lines"><span>size</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark">(optional)</span></span></span></div> </td> <td>obtains the size of an <code>iota_view</code> (only provided if it is bounded) <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr> <td colspan="2">
+<h5 id="Inherited_from_std::ranges::view_interface"> Inherited from <code><a href="view_interface" title="cpp/ranges/view interface">std::ranges::view_interface</a></code> </h5> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/cbegin" title="cpp/ranges/view interface/cbegin"> <span class="t-lines"><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>returns a constant iterator to the beginning of the range <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/cend" title="cpp/ranges/view interface/cend"> <span class="t-lines"><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>returns a sentinel for the constant iterator of the range <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/operator_bool" title="cpp/ranges/view interface/operator bool"> <span class="t-lines"><span>operator bool</span></span></a></div> </td> <td>returns whether the derived view is not empty, provided only if <code><a href="empty" title="cpp/ranges/empty">ranges::empty</a></code> is applicable to it <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/front" title="cpp/ranges/view interface/front"> <span class="t-lines"><span>front</span></span></a></div> </td> <td>returns the first element in the derived view, provided if it satisfies <a href="forward_range" title="cpp/ranges/forward range"><code>forward_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/back" title="cpp/ranges/view interface/back"> <span class="t-lines"><span>back</span></span></a></div> </td> <td>returns the last element in the derived view, provided only if it satisfies <a href="bidirectional_range" title="cpp/ranges/bidirectional range"><code>bidirectional_range</code></a> and <a href="common_range" title="cpp/ranges/common range"><code>common_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="view_interface/operator_at" title="cpp/ranges/view interface/operator at"> <span class="t-lines"><span>operator[]</span></span></a></div> </td> <td>returns the <code>n</code><sup>th</sup> element in the derived view, provided only if it satisfies <a href="random_access_range" title="cpp/ranges/random access range"><code>random_access_range</code></a> <br> <span class="t-mark">(public member function of <code>std::ranges::view_interface&lt;D&gt;</code>)</span>  </td>
+</tr> </table> <h3 id="Deduction_guides"><a href="iota_view/deduction_guides" title="cpp/ranges/iota view/deduction guides">Deduction guides</a></h3> <h3 id="Nested_classes">Nested classes</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="iota_view/iterator" title="cpp/ranges/iota view/iterator"><i><span class="t-lines"><span>iterator</span></span></i></a></div> </td> <td>the iterator type<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member class*</span>)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="iota_view/sentinel" title="cpp/ranges/iota view/sentinel"><i><span class="t-lines"><span>sentinel</span></span></i></a></div> </td> <td>the sentinel type used when the <code>iota_view</code> is bounded and <code>Bound</code> and <code>W</code> are not the same type<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only member class*</span>)</span> </td>
+</tr> </table> <h3 id="Helper_templates">Helper templates</h3> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; std::weakly_incrementable W, std::semiregular Bound &gt;
+constexpr bool ranges::enable_borrowed_range&lt;ranges::iota_view&lt;W, Bound&gt;&gt; = true;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>This specialization of <span class="n">ranges</span><span class="o">::</span><span class="n">enable_borrowed_range</span> makes <code>iota_view</code> satisfy <a href="borrowed_range" title="cpp/ranges/borrowed range"><code>borrowed_range</code></a>.</p>
+<h3 id="Possible_implementation">Possible implementation</h3> <p>See also the implementation in <a rel="nofollow" class="external text" href="https://github.com/gcc-mirror/gcc/blob/6f3c04e20625dee7c32b1ec43cb0812e38f4394b/libstdc%2B%2B-v3/include/std/ranges#L919">libstdc++</a>.</p>
+<table class="eq-fun-cpp-table"> <tr> <th>
+<a href="#Version_3">views::indices (3)</a> </th>
+</tr> <tr> <td> <pre data-language="c">namespace views {
+    inline constexpr auto indices = []&lt;/*is-integer-like*/ I&gt;(I n)
+    {
+        return views::iota(I{}, n);
+    };
+}
+</pre> </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_ranges_indices" title="cpp/feature test"><code>__cpp_lib_ranges_indices</code></a></td> <td><a href="../compiler_support/26#cpp_lib_ranges_indices_202506L" title="cpp/compiler support/26"><code>202506L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>
+<code>ranges::views::indices</code> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;print&gt;
+#include &lt;ranges&gt;
+    
+struct Bound
+{
+    int bound;
+    bool operator==(int x) const { return x == bound; }
+};
+
+int main()
+{
+    std::print("{}\n", std::ranges::iota_view{1, 10});
+    std::print("{}\n", std::views::iota(1, 10));
+    std::print("{}\n", std::views::iota(1, Bound{10}));
+    std::print("{}\n", std::views::iota(1) | std::views::take(9));
+    
+    constexpr int v[]{9, 8, 7, 6, 5, 4, 3, 2, 1};
+
+    // auto broken_indices = views::iota(0, std::ranges::size(v));
+    //     does not compile due to types (int VS size_t) mismatch
+
+    auto good_indices = std::views::indices(std::ranges::size(v));
+    std::print("{}\n", good_indices);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+[0, 1, 2, 3, 4, 5, 6, 7, 8]
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue4096">LWG 4096</a> </td> <td>C++20 </td> <td>
+<code>views::iota</code> could copy an <code>iota_view</code> as-is </td> <td>forbidden </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://wg21.link/P2325R3">P2325R3</a> </td> <td>C++20 </td> <td>
+<code>iota_view</code> required that <code>W</code> is <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a><br>as <a href="view" title="cpp/ranges/view"><code>view</code></a> required <a href="../concepts/default_initializable" title="cpp/concepts/default initializable"><code>default_initializable</code></a> </td> <td>only requires that <code>W</code> is <a href="../concepts/copyable" title="cpp/concepts/copyable"><code>copyable</code></a> </td>
+</tr>
+</table> <h3 id="References">References</h3>  <ul>
+<li>C++26 standard (ISO/IEC 14882:2026):</li>
+<ul><li>25.6.4 Iota view [range.iota] </li></ul>
+<li>C++23 standard (ISO/IEC 14882:2024):</li>
+<ul><li>26.6.4 Iota view [range.iota] </li></ul>
+<li>C++20 standard (ISO/IEC 14882:2020):</li>
+<ul><li>24.6.4 Iota view [range.iota] </li></ul>
+</ul>           <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../algorithm/iota" title="cpp/algorithm/iota"> <span class="t-lines"><span>iota</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td rowspan="2">fills a range with successive increments of the starting value<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../algorithm/ranges/iota" title="cpp/algorithm/ranges/iota"> <span class="t-lines"><span>ranges::iota</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../algorithm/ranges/iota" title="cpp/algorithm/ranges/iota"> <span class="t-lines"><span>ranges::iota</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>fills a range with successive increments of the starting value<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="repeat_view" title="cpp/ranges/repeat view"> <span class="t-lines"><span>ranges::repeat_view</span><span>views::repeat</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>a <a href="view" title="cpp/ranges/view"><code>view</code></a> consisting of a generated sequence by repeatedly producing the same value<br><span class="t-mark">(class template)</span> <span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="enumerate_view" title="cpp/ranges/enumerate view"> <span class="t-lines"><span>ranges::enumerate_view</span><span>views::enumerate</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>a <a href="view" title="cpp/ranges/view"><code>view</code></a> that maps each element of adapted sequence to a tuple of both the element's position and its value<br><span class="t-mark">(class template)</span> <span class="t-mark">(range adaptor object)</span> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/iota_view" class="_attribution-link">https://en.cppreference.com/cpp/ranges/iota_view</a>
+  </p>
+</div>

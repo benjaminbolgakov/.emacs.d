@@ -1,0 +1,23 @@
+   <h1 id="firstHeading" class="firstHeading">iter_swap(ranges::zip_view::<i>iterator</i>)</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">friend constexpr void iter_swap( const /*iterator*/&amp; x, const /*iterator*/&amp; y )
+    noexcept(/* see below */)
+        requires (std::indirectly_swappable&lt;ranges::iterator_t&lt;
+            /*maybe-const*/&lt;Const, Views&gt;&gt;&gt; &amp;&amp; ...);
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>Performs <code>ranges::iter_swap(std::get&lt;i&gt;(x.current_), std::get&lt;i&gt;(y.current_))</code> for every integer <code>i</code> in <code>[</code><code>0</code><code>, </code><code>sizeof...(Views)</code><code>)</code>, where <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>current_</i></code> denotes the underlying tuple-like object that holds iterators to elements of adapted views.</p>
+<p>This function is not visible to ordinary <a href="../../../language/unqualified_lookup" title="cpp/language/unqualified lookup">unqualified</a> or <a href="../../../language/qualified_lookup" title="cpp/language/qualified lookup">qualified lookup</a>, and can only be found by <a href="../../../language/adl" title="cpp/language/adl">argument-dependent lookup</a> when <code>zip_view::<i>iterator</i>&lt;Const&gt;</code> is an associated class of the arguments.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>x, y </td> <td>- </td> <td>iterators to the elements to swap </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>(none)</p>
+<h3 id="Exceptions">Exceptions</h3> <div class="t-noexcept-full">
+<a href="../../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(
+  (noexcept(ranges::iter_swap(
+    declval&lt;const ranges::iterator_t&lt;/*maybe-const*/&lt;Const, Views&gt;&gt;&amp;&gt;(),
+    declval&lt;const ranges::iterator_t&lt;/*maybe-const*/&lt;Const, Views&gt;&gt;&amp;&gt;())) &amp;&amp;...))
+</pre>
+</div>
+</div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/zip_view/iterator/iter_swap" class="_attribution-link">https://en.cppreference.com/cpp/ranges/zip_view/iterator/iter_swap</a>
+  </p>
+</div>

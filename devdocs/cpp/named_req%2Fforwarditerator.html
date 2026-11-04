@@ -1,0 +1,78 @@
+   <h1 id="firstHeading" class="firstHeading">C++ named requirements: LegacyForwardIterator</h1>            <p>A <a class="mw-selflink selflink">LegacyForwardIterator</a> is a <a href="iterator" title="cpp/named req/Iterator">LegacyIterator</a> that can read data from the pointed-to element.</p>
+<p>Unlike <a href="inputiterator" title="cpp/named req/InputIterator">LegacyInputIterator</a> and <a href="outputiterator" title="cpp/named req/OutputIterator">LegacyOutputIterator</a>, it can be used in multipass algorithms.</p>
+<p>If a <a class="mw-selflink selflink">LegacyForwardIterator</a> <code>it</code> originates from a <a href="container" title="cpp/named req/Container">Container</a>, then <code>it</code>'s value type is the same as the container's, so dereferencing (<code>*it</code>) obtains the container's value type.</p>
+<h3 id="Requirements">Requirements</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>X</code> </td> <td>A forward iterator type </td>
+</tr> <tr class="t-dsc"> <td>
+<code>T</code> </td> <td>The <a href="../iterator#Types_and_writability" title="cpp/iterator">value type</a> of <code>X</code> (i.e. <span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;::</span><span class="n">value_type</span>) </td>
+</tr> <tr class="t-dsc"> <td>
+<code>Ref</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">iterator_traits</span><span class="o">&lt;</span><span class="n">X</span><span class="o">&gt;::</span><span class="n">reference</span> </td>
+</tr> <tr class="t-dsc-hitem"> <th>Value </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>i</code>, <code>j</code> </td> <td>Values of type <code>X</code> or <span class="k">const</span><span class="n">X</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>r</code> </td> <td>A value of type <code>X&amp;</code> </td>
+</tr> </table> <p><code>X</code> satisfies LegacyForwardIterator if all following conditions are satisfied:</p>
+<ul>
+<li>
+<code>X</code> satisfies <a href="inputiterator" title="cpp/named req/InputIterator">LegacyInputIterator</a>.</li> <li>
+<code>X</code> satisfies <a href="defaultconstructible" title="cpp/named req/DefaultConstructible">DefaultConstructible</a>.</li> <li>If <code>X</code> is a <a href="../iterator" title="cpp/iterator">mutable iterator</a>, <code>Ref</code> is a reference to <code>T</code>.</li> <li>If <code>X</code> is a constant iterator, <code>Ref</code> is a reference to <span class="k">const</span><span class="n">T</span>.</li> <li>Objects of the type <code>X</code> provide <a href="#Multi-pass_guarantee">multi-pass guarantee</a>.</li> <li>If <code>i</code> and <code>j</code> are equal, then either <code>i</code> and <code>j</code> are both <a href="../iterator#Dereferenceability_and_validity" title="cpp/iterator">dereferenceable</a> or else neither is dereferenceable.</li> <li>If <code>i</code> and <code>j</code> are both dereferenceable, then <code>i == j</code> if and only if <code>*i</code> and <code>*j</code> are bound to the same object.</li> <li>The following expressions must be valid and have their specified effects:</li>
+</ul> <table class="wikitable"> <tr> <th> Expression </th> <th>Type </th> <th>Effects </th>
+</tr> <tr> <td>
+<code>r++</code> </td> <td>convertible to <span class="k">const</span><span class="n">X</span><span class="o">&amp;</span> </td> <td>Equivalent to <code>X x = r;++r;return x;</code>. </td>
+</tr> <tr> <td>
+<code>*i++</code> </td> <td>
+<code>Ref</code> </td> <td> </td>
+</tr> </table> <h3 id="Equality_domain">Equality domain</h3> <p>The <a href="inputiterator#Equality_domain" title="cpp/named req/InputIterator">domain</a> of <code>==</code> for forward iterators is that of iterators over the same <a href="../iterator#Dereferenceability_and_validity" title="cpp/iterator">underlying sequence</a>.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx14">
+<td> <p>However, <a href="../language/value_initialization" title="cpp/language/value initialization">value-initialized</a> forward iterators can be compared, and must compare equal to other value-initialized iterators of the same type.</p>
+<p>In other words, value-initialized forward iterators behave as if they refer past the end of the same empty sequence.</p>
+</td> <td><span class="t-mark-rev t-since-cxx14">(since C++14)</span></td>
+</tr> </table> <h3 id="Multi-pass_guarantee">Multi-pass guarantee</h3> <p>Two dereferenceable iterators <code>a</code> and <code>b</code> of type <code>X</code> offer the <i>multi-pass guarantee</i> if all following conditions are satisfied:</p>
+<ul>
+<li>
+<code>a == b</code> implies <code>++a == ++b</code>.</li> <li>Any of the following conditions is satisfied:</li>
+<ul>
+<li>
+<code>X</code> is a pointer type.</li> <li>The expression <code>(void)++X(a), *a</code> is equivalent to the expression <code>*a</code>.</li>
+</ul>
+</ul>  <table class="t-rev-begin"> <tr class="t-rev t-since-cxx20">
+<td> <h3 id="Concept">Concept</h3> <p>For the definition of <code><a href="../iterator/iterator_traits" title="cpp/iterator/iterator traits">std::iterator_traits</a></code>, the following exposition-only concept is defined.</p>
+<table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt;class It&gt;
+concept __LegacyForwardIterator =
+    __LegacyInputIterator&lt;It&gt; &amp;&amp; std::constructible_from&lt;It&gt; &amp;&amp;
+    std::is_reference_v&lt;std::iter_reference_t&lt;It&gt;&gt; &amp;&amp;
+    std::same_as&lt;
+        std::remove_cvref_t&lt;std::iter_reference_t&lt;It&gt;&gt;,
+        typename std::indirectly_readable_traits&lt;It&gt;::value_type&gt; &amp;&amp;
+    requires(It it) {
+        {  it++ } -&gt; std::convertible_to&lt;const It&amp;&gt;;
+        { *it++ } -&gt; std::same_as&lt;std::iter_reference_t&lt;It&gt;&gt;;
+    };
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>where the exposition-only concept <code>__LegacyInputIterator&lt;T&gt;</code> is described in <a href="inputiterator#Concept" title="cpp/named req/InputIterator">LegacyInputIterator</a>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table> <h3 id="Notes">Notes</h3> <p>Unlike the <code><a href="../iterator/forward_iterator" title="cpp/iterator/forward iterator">std::forward_iterator</a></code> concept, the LegacyForwardIterator requirements requires dereference to return a reference.</p>
+<h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue1212">LWG 1212</a><br>(<a rel="nofollow" class="external text" href="https://wg21.link/N3066">N3066</a>) </td> <td>C++98 </td> <td>the type of <code>*i++</code> did not match the type of<br><code>*i--</code> required by <a href="bidirectionaliterator" title="cpp/named req/BidirectionalIterator">LegacyBidirectionalIterator</a> </td> <td>changed the<br>type to <code>Ref</code> </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue1311">LWG 1311</a><br>(<a rel="nofollow" class="external text" href="https://wg21.link/N3066">N3066</a>) </td> <td>C++98 </td> <td>“<code>a == b</code> implies <code>++a == ++b</code>” alone<br>did not offer multipass guarantee<sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup> </td> <td>also requires “<code>a == b</code><br>implies <code>++a != b</code>”<sup id="cite_ref-2" class="reference"><a href="#cite_note-2"><span class="cite-bracket">[</span>2<span class="cite-bracket">]</span></a></sup> </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3798">LWG 3798</a> </td> <td>C++20 </td> <td>
+<code>__LegacyForwardIterator</code> required<br><span class="n">std</span><span class="o">::</span><span class="n">iter_reference_t</span><span class="o">&lt;</span><span class="n">It</span><span class="o">&gt;</span> to be an lvalue reference type </td> <td>also allows rvalue<br>reference types </td>
+</tr>
+</table> <div class="mw-references-wrap"><ol class="references"> <li id="cite_note-1"> <span class="reference-text">In the scenario where <code>a</code> and <code>b</code> use the same underlying iterator, evaluating the expression <code>++a == ++b</code> actually increments the underlying container twice, but the result is still <code>true</code>.</span> </li> <li id="cite_note-2"> <span class="reference-text">Formally also requires implying <code>++b != a</code>.</span> </li> </ol></div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../iterator/forward_iterator" title="cpp/iterator/forward iterator"> <span class="t-lines"><span>forward_iterator</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>specifies that an <a href="../iterator/input_iterator" title="cpp/iterator/input iterator"><code>input_iterator</code></a> is a forward iterator, supporting equality comparison and multi-pass <br> <span class="t-mark">(concept)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<a href="../iterator" title="cpp/iterator"><b>Iterator library</b></a> </td> <td>provides definitions for iterators, iterator traits, adaptors, and utility functions </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/named_req/ForwardIterator" class="_attribution-link">https://en.cppreference.com/cpp/named_req/ForwardIterator</a>
+  </p>
+</div>

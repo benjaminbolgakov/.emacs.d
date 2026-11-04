@@ -1,0 +1,117 @@
+   <h1 id="firstHeading" class="firstHeading">std::atan2, std::atan2f, std::atan2l</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/cmath" title="cpp/header/cmath">&lt;cmath&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-until-cxx23"> <td>
+<pre data-language="c">float       atan2 ( float y, float x );
+double      atan2 ( double y, double x );
+long double atan2 ( long double y, long double x );
+</pre>
+</td> <td rowspan="2"> (1)</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td> </tr> <tr class="t-dcl t-since-cxx23"> <td><pre data-language="c">/*floating-point-type*/
+            atan2 ( /*floating-point-type*/ y,
+                    /*floating-point-type*/ x );
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td>
+<span class="t-mark-rev t-since-cxx23">(since C++23)</span> <br><span class="t-mark">(constexpr since C++26)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx11"> <td>
+<pre data-language="c">float       atan2f( float y, float x );
+</pre>
+</td> <td> (2)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span>
+</td> </tr> <tr class="t-dcl t-since-cxx11"> <td>
+<pre data-language="c">long double atan2l( long double y, long double x );
+</pre>
+</td> <td> (3)</td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span>
+</td> </tr> <tr class="t-dcl-h"> <td> <a href="../simd#Math_functions" title="cpp/numeric/simd">SIMD overload</a> <span class="t-mark-rev t-since-cxx26">(since C++26)</span>
+</td> <td></td> <td></td> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/simd" title="cpp/header/simd">&lt;simd&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx26"> <td> <pre data-language="c">template&lt; class V0, class V1 &gt;
+constexpr /*math-common-simd-t*/&lt;V0, V1&gt;
+            atan2 ( const V0&amp; v_y, const V1&amp; v_x );
+</pre>
+</td> <td> (S) </td> <td> <span class="t-mark-rev t-since-cxx26">(since C++26)</span> </td> </tr> <tr class="t-dcl-h"> <td> <a href="#Notes">Additional overloads</a> <span class="t-mark-rev t-since-cxx11">(since C++11)</span>
+</td> <td></td> <td></td> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/cmath" title="cpp/header/cmath">&lt;cmath&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class Integer &gt;
+double      atan2 ( Integer y, Integer x );
+</pre>
+</td> <td> (A)</td> <td><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span></td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1-3)</span> Computes the arc tangent of <code>y / x</code> using the signs of arguments to determine the correct quadrant.<span class="t-rev-inl t-since-cxx23"><span> The library provides overloads of <code>std::atan2</code> for all cv-unqualified floating-point types as the type of the parameters.</span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span>
+</div> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <span class="t-li">S)</span> The SIMD overload performs an element-wise <code>std::atan2</code> on <code>v_y</code>and <code>v_x</code>. <small>(See <a href="../simd#math-common-simd-t" title="cpp/numeric/simd"><code>math-common-simd-t</code></a> for its definition.)</small> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <span class="t-li">A)</span> Additional overloads are provided for all integer types, which are treated as <span class="kt">double</span>. </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>y, x </td> <td>- </td> <td>floating-point or integer values </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3>
+<p>If no errors occur, the arc tangent of <code>y / x</code> (arctan(</p>
+<span><span>y</span><span>/</span><span>x</span></span>)<p>) in the range [-π, +π] radians, is returned.</p>
+<div class="t-plot"> <div class="t-plot-left">
+<code>y</code> argument</div> <div class="t-plot-right">Return value</div> <div class="t-plot-image-left-right"><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:math-atan2.png" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/thumb/9/91/math-atan2.png/285px-math-atan2.png" decoding="async" width="285" height="240" class="mw-file-element" srcset="https://upload.cppreference.com/mwiki/images/thumb/9/91/math-atan2.png/428px-math-atan2.png 1.5x, https://upload.cppreference.com/mwiki/images/thumb/9/91/math-atan2.png/570px-math-atan2.png 2x"></a></span></div> <div class="t-plot-bottom">
+<code>x</code> argument</div> </div> <p>If a domain error occurs, an implementation-defined value is returned (NaN where supported).</p>
+<p>If a range error occurs due to underflow, the correct result (after rounding) is returned.</p>
+<h3 id="Error_handling">Error handling</h3> <p>Errors are reported as specified in <code><a href="math_errhandling" title="cpp/numeric/math/math errhandling">math_errhandling</a></code>.</p>
+<p>Domain error may occur if <code>x</code> and <code>y</code> are both zero.</p>
+<p>If the implementation supports IEEE floating-point arithmetic (IEC 60559),</p>
+<ul>
+<li>If <code>x</code> and <code>y</code> are both zero, domain error <i>does not</i> occur.</li> <li>If <code>x</code> and <code>y</code> are both zero, range error does not occur either.</li> <li>If <code>y</code> is zero, pole error does not occur.</li> <li>If <code>y</code> is ±0 and <code>x</code> is negative or -0, ±π is returned.</li> <li>If <code>y</code> is ±0 and <code>x</code> is positive or +0, ±0 is returned.</li> <li>If <code>y</code> is ±∞ and <code>x</code> is finite, ±π/2 is returned.</li> <li>If <code>y</code> is ±∞ and <code>x</code> is -∞, ±3π/4 is returned.</li> <li>If <code>y</code> is ±∞ and <code>x</code> is +∞, ±π/4 is returned.</li> <li>If <code>x</code> is ±0 and <code>y</code> is negative, -π/2 is returned.</li> <li>If <code>x</code> is ±0 and <code>y</code> is positive, +π/2 is returned.</li> <li>If <code>x</code> is -∞ and <code>y</code> is finite and positive, +π is returned.</li> <li>If <code>x</code> is -∞ and <code>y</code> is finite and negative, -π is returned.</li> <li>If <code>x</code> is +∞ and <code>y</code> is finite and positive, +0 is returned.</li> <li>If <code>x</code> is +∞ and <code>y</code> is finite and negative, -0 is returned.</li> <li>If either <code>x</code> is NaN or <code>y</code> is NaN, NaN is returned.</li>
+</ul> <h3 id="Notes">Notes</h3> <p><code>std::atan2(y, x)</code> is equivalent to <code>std::arg(std::complex&lt;std::common_type_t&lt;decltype(x), decltype(y)&gt;&gt;(x, y))</code>.</p>
+<p><a rel="nofollow" class="external text" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/atan2.html">POSIX specifies</a> that in case of underflow, the value <code>y / x</code> is returned, and if that is not supported, an implementation-defined value no greater than <code><a href="../../types/climits" title="cpp/types/climits">DBL_MIN</a></code>, <code><a href="../../types/climits" title="cpp/types/climits">FLT_MIN</a></code>, and <code><a href="../../types/climits" title="cpp/types/climits">LDBL_MIN</a></code> is returned.</p>
+<p>The additional overloads are not required to be provided exactly as <span class="t-v">(A)</span>. They only need to be sufficient to ensure that for their first argument <code>num1</code> and second argument <code>num2</code>:</p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <ul>
+<li>If <code>num1</code> or <code>num2</code> has type <span class="kt">long</span><span class="kt">double</span>, then <code>std::atan2(num1, num2)</code> has the same effect as <code>std::atan2(static_cast&lt;long double&gt;(num1),static_cast&lt;long double&gt;(num2))</code>.</li> <li>Otherwise, if <code>num1</code> and/or <code>num2</code> has type <span class="kt">double</span> or an integer type, then <code>std::atan2(num1, num2)</code> has the same effect as <code>std::atan2(static_cast&lt;double&gt;(num1),static_cast&lt;double&gt;(num2))</code>.</li> <li>Otherwise, if <code>num1</code> or <code>num2</code> has type <span class="kt">float</span>, then <code>std::atan2(num1, num2)</code> has the same effect as <code>std::atan2(static_cast&lt;float&gt;(num1),static_cast&lt;float&gt;(num2))</code>.</li>
+</ul> </td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>If <code>num1</code> and <code>num2</code> have arithmetic types, then <code>std::atan2(num1, num2)</code> has the same effect as <code>std::atan2(static_cast&lt;/*common-floating-point-type*/&gt;(num1),static_cast&lt;/*common-floating-point-type*/&gt;(num2))</code>, where <span class="cm">/*common-floating-point-type*/</span> is the floating-point type with the greatest <a href="../../language/usual_arithmetic_conversions#Floating-point_conversion_rank" title="cpp/language/usual arithmetic conversions">floating-point conversion rank</a> and greatest <a href="../../language/usual_arithmetic_conversions#Floating-point_conversion_subrank" title="cpp/language/usual arithmetic conversions">floating-point conversion subrank</a> between the types of <code>num1</code> and <code>num2</code>, arguments of integer type are considered to have the same floating-point conversion rank as <span class="kt">double</span>.</p>
+<p>If no such floating-point type with the greatest rank and subrank exists, then <a href="../../language/overload_resolution" title="cpp/language/overload resolution">overload resolution</a> does not result in a usable candidate from the overloads provided.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+
+void print_coordinates(int x, int y)
+{
+    std::cout &lt;&lt; std::showpos
+              &lt;&lt; "(x:" &lt;&lt; x &lt;&lt; ", y:" &lt;&lt; y &lt;&lt; ") cartesian is "
+              &lt;&lt; "(r:" &lt;&lt; std::hypot(x, y)
+              &lt;&lt; ", phi:" &lt;&lt; std::atan2(y, x) &lt;&lt; ") polar\n";
+}
+
+int main()
+{
+    // normal usage: the signs of the two arguments determine the quadrant
+    print_coordinates(+1, +1); // atan2( 1,  1) =  +pi/4, Quad I
+    print_coordinates(-1, +1); // atan2( 1, -1) = +3pi/4, Quad II
+    print_coordinates(-1, -1); // atan2(-1, -1) = -3pi/4, Quad III
+    print_coordinates(+1, -1); // atan2(-1,  1) =  -pi/4, Quad IV
+    
+    // special values
+    std::cout &lt;&lt; std::noshowpos
+              &lt;&lt; "atan2(0, 0) = " &lt;&lt; atan2(0, 0) &lt;&lt; '\n'
+              &lt;&lt; "atan2(0,-0) = " &lt;&lt; atan2(0, -0.0) &lt;&lt; '\n'
+              &lt;&lt; "atan2(7, 0) = " &lt;&lt; atan2(7, 0) &lt;&lt; '\n'
+              &lt;&lt; "atan2(7,-0) = " &lt;&lt; atan2(7, -0.0) &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">(x:+1, y:+1) cartesian is (r:1.41421, phi:0.785398) polar
+(x:-1, y:+1) cartesian is (r:1.41421, phi:2.35619) polar
+(x:-1, y:-1) cartesian is (r:1.41421, phi:-2.35619) polar
+(x:+1, y:-1) cartesian is (r:1.41421, phi:-0.785398) polar
+atan2(0, 0) = 0
+atan2(0,-0) = 3.14159
+atan2(7, 0) = 1.5708
+atan2(7,-0) = 1.5708
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="asin" title="cpp/numeric/math/asin"> <span class="t-lines"><span>asin</span><span>asinf</span><span>asinl</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>computes arc sine (\({\small\arcsin{x}}\)arcsin(x)) <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="acos" title="cpp/numeric/math/acos"> <span class="t-lines"><span>acos</span><span>acosf</span><span>acosl</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>computes arc cosine (\({\small\arccos{x}}\)arccos(x)) <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="atan" title="cpp/numeric/math/atan"> <span class="t-lines"><span>atan</span><span>atanf</span><span>atanl</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>computes arc tangent (\({\small\arctan{x}}\)arctan(x)) <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../complex/arg" title="cpp/numeric/complex/arg"> <span class="t-lines"><span>arg</span></span></a></div> </td> <td>returns the phase angle <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../valarray/atan2" title="cpp/numeric/valarray/atan2"> <span class="t-lines"><span>atan2<span class="t-dsc-small">(std::valarray)</span></span></span></a></div> </td> <td>applies the function <code><a class="mw-selflink selflink">std::atan2</a></code> to a valarray and a value <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td colspan="2">
+<span><a href="https://en.cppreference.com/c/numeric/math/atan2" title="c/numeric/math/atan2">C documentation</a></span> for <code>atan2</code> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/numeric/math/atan2" class="_attribution-link">https://en.cppreference.com/cpp/numeric/math/atan2</a>
+  </p>
+</div>

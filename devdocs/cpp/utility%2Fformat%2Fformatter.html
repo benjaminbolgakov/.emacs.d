@@ -1,0 +1,255 @@
+   <h1 id="firstHeading" class="firstHeading">std::formatter</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/format" title="cpp/header/format">&lt;format&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T, class CharT = char &gt;
+struct formatter;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>The enabled specializations of <code>std::formatter</code> define formatting rules for a given type. Enabled specializations meet the <a href="../../named_req/basicformatter" title="cpp/named req/BasicFormatter">BasicFormatter</a> requirements, and, unless otherwise specified, also meet the <a href="../../named_req/formatter" title="cpp/named req/Formatter">Formatter</a> requirements.</p>
+<p>For all types <code>T</code> and <code>CharT</code> for which no specialization <code>std::formatter&lt;T, CharT&gt;</code> is enabled, that specialization is a complete type and is disabled.</p>
+<p>Disabled specializations do not meet the <a href="../../named_req/formatter" title="cpp/named req/Formatter">Formatter</a> requirements, and the following are all <code>false</code>:</p>
+<ul>
+<li><code><a href="../../types/is_default_constructible" title="cpp/types/is default constructible">std::is_default_constructible_v</a></code></li> <li><code><a href="../../types/is_copy_constructible" title="cpp/types/is copy constructible">std::is_copy_constructible_v</a></code></li> <li><code><a href="../../types/is_move_constructible" title="cpp/types/is move constructible">std::is_move_constructible_v</a></code></li> <li><code><a href="../../types/is_copy_assignable" title="cpp/types/is copy assignable">std::is_copy_assignable_v</a></code></li> <li>
+<code><a href="../../types/is_move_assignable" title="cpp/types/is move assignable">std::is_move_assignable_v</a></code>.</li>
+</ul>  <h3 id="Basic_standard_specializations">Basic standard specializations</h3> <p>In the following list, <code>CharT</code> is either <span class="kt">char</span> or <span class="kt">wchar_t</span>, <code>ArithmeticT</code> is any cv-unqualified arithmetic type other than <span class="kt">char</span>, <span class="kt">wchar_t</span>, <span class="kt">char8_t</span>, <span class="kt">char16_t</span>, or <span class="kt">char32_t</span>:</p>
+<table class="t-dcl-begin"> <tr class="t-dcl-h"> <td> Character formatters</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;char, char&gt;;
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;char, wchar_t&gt;;
+</pre>
+</td> <td> (2) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;wchar_t, wchar_t&gt;;
+</pre>
+</td> <td> (3) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl-h"> <td> String formatters</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;CharT*, CharT&gt;;
+</pre>
+</td> <td> (4) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;const CharT*, CharT&gt;;
+</pre>
+</td> <td> (5) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; std::size_t N &gt;
+struct formatter&lt;CharT[N], CharT&gt;;
+</pre>
+</td> <td> (6) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; class Traits, class Alloc &gt;
+struct formatter&lt;std::basic_string&lt;CharT, Traits, Alloc&gt;, CharT&gt;;
+</pre>
+</td> <td> (7) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; class Traits &gt;
+struct formatter&lt;std::basic_string_view&lt;CharT, Traits&gt;, CharT&gt;;
+</pre>
+</td> <td> (8) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl-h"> <td> Arithmetic formatters</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;ArithmeticT, CharT&gt;;
+</pre>
+</td> <td> (9) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl-h"> <td> Pointer formatters</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;std::nullptr_t, CharT&gt;;
+</pre>
+</td> <td> (10) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;void*, CharT&gt;;
+</pre>
+</td> <td> (11) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;const void*, CharT&gt;;
+</pre>
+</td> <td> (12) </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Formatters for other pointers and pointers to members are disabled.</p>
+<p>Specializations such as <span class="n">std</span><span class="o">::</span><span class="n">formatter</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="p">,</span><span class="kt">char</span><span class="o">&gt;</span> and <span class="n">std</span><span class="o">::</span><span class="n">formatter</span><span class="o">&lt;</span><span class="k">const</span><span class="kt">char</span><span class="o">*</span><span class="p">,</span><span class="kt">wchar_t</span><span class="o">&gt;</span> that would require encoding conversions are disabled.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx23">
+<td> <p>The following specialization are still disabled in C++23 to avoid formatting some <span class="kt">char</span> sequences as ranges of <span class="kt">wchar_t</span>:</p>
+<table class="t-dcl-begin"> <tr class="t-dcl-h"> <td> Disabled formatters for <span class="kt">wchar_t</span>
+</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;char*, wchar_t&gt;;
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt;&gt;
+struct formatter&lt;const char*, wchar_t&gt;;
+</pre>
+</td> <td> (2) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; std::size_t N &gt;
+struct formatter&lt;char[N], wchar_t&gt;;
+</pre>
+</td> <td> (3) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; class Traits, class Allocator &gt;
+struct formatter&lt;std::basic_string&lt;char, Traits, Allocator&gt;, wchar_t&gt;;
+</pre>
+</td> <td> (4) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; class Traits &gt;
+struct formatter&lt;std::basic_string_view&lt;char, Traits&gt;, wchar_t&gt;;
+</pre>
+</td> <td> (5) </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>A <i>debug-enabled</i> formatter specialization additionally provides a public non-static member function <code>constexpr void set_debug_format();</code> which modifies the state of the formatter object so that it will format the values as <a href="spec#Formatting_escaped_characters_and_strings" title="cpp/utility/format/spec">escaped and quoted</a>, as if the <span class="t-spar">type</span> of the format specifier parsed by the last call to <code>parse</code> were <code>?</code>.</p>
+<p>Each formatter specialization for string or character type is <i>debug-enabled</i>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table> <h3 id="Standard_format_specification">Standard format specification</h3>  <h3 id="Standard_specializations_for_library_types">Standard specializations for library types</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/duration/formatter" title="cpp/chrono/duration/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::duration&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>duration</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/system_clock/formatter" title="cpp/chrono/system clock/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::sys_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>sys_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/utc_clock/formatter" title="cpp/chrono/utc clock/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::utc_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>utc_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/tai_clock/formatter" title="cpp/chrono/tai clock/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::tai_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>tai_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/gps_clock/formatter" title="cpp/chrono/gps clock/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::gps_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>gps_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/file_clock/formatter" title="cpp/chrono/file clock/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::file_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>file_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/local_t/formatter" title="cpp/chrono/local t/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::local_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>local_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/day/formatter" title="cpp/chrono/day/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::day&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>day</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/month/formatter" title="cpp/chrono/month/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::month&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>month</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year/formatter" title="cpp/chrono/year/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/weekday/formatter" title="cpp/chrono/weekday/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::weekday&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>weekday</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/weekday_indexed/formatter" title="cpp/chrono/weekday indexed/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::weekday_indexed&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>weekday_indexed</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/weekday_last/formatter" title="cpp/chrono/weekday last/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::weekday_last&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>weekday_last</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/month_day/formatter" title="cpp/chrono/month day/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::month_day&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>month_day</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/month_day_last/formatter" title="cpp/chrono/month day last/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::month_day_last&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>month_day_last</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/month_weekday/formatter" title="cpp/chrono/month weekday/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::month_weekday&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>month_weekday</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/month_weekday_last/formatter" title="cpp/chrono/month weekday last/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::month_weekday_last&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>month_weekday_last</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year_month/formatter" title="cpp/chrono/year month/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year_month&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year_month</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year_month_day/formatter" title="cpp/chrono/year month day/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year_month_day&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year_month_day</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year_month_day_last/formatter" title="cpp/chrono/year month day last/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year_month_day_last&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year_month_day_last</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year_month_weekday/formatter" title="cpp/chrono/year month weekday/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year_month_weekday&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year_month_weekday</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/year_month_weekday_last/formatter" title="cpp/chrono/year month weekday last/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::year_month_weekday_last&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>year_month_weekday_last</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/hh_mm_ss/formatter" title="cpp/chrono/hh mm ss/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::hh_mm_ss&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>hh_mm_ss</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/sys_info/formatter" title="cpp/chrono/sys info/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::sys_info&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>sys_info</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/local_info/formatter" title="cpp/chrono/local info/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::local_info&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>local_info</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../chrono/zoned_time/formatter" title="cpp/chrono/zoned time/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::chrono::zoned_time&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting support for <code>zoned_time</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_stacktrace/formatter" title="cpp/utility/basic stacktrace/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::basic_stacktrace&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>basic_stacktrace</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../stacktrace_entry/formatter" title="cpp/utility/stacktrace entry/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::stacktrace_entry&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>stacktrace_entry</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../thread/thread/id/formatter" title="cpp/thread/thread/id/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::thread::id&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>thread::id</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../container/vector_bool/reference#Helper_classes" title="cpp/container/vector bool/reference"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::vector&lt;bool&gt;::reference&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>vector&lt;bool&gt;::reference</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="tuple_formatter" title="cpp/utility/format/tuple formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;<i>pair-or-tuple</i>&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>pair</code> and <code>tuple</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges_formatter" title="cpp/utility/format/ranges formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;<i>range</i>&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for ranges <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../container/stack/formatter" title="cpp/container/stack/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::stack&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>std::stack</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../container/queue/formatter" title="cpp/container/queue/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::queue&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>std::queue</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../container/priority_queue/formatter" title="cpp/container/priority queue/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::priority_queue&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>formatting support for <code>std::priority_queue</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../filesystem/path/formatter" title="cpp/filesystem/path/formatter"> <span class="t-lines"><span>std::formatter<span class="t-dsc-small">&lt;std::filesystem::path&gt;</span></span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx26">(C++26)</span></span></span></div> </td> <td>formatting support for <code>filesystem::path</code> <br> <span class="t-mark">(class template specialization)</span>  </td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;format&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string_view&gt;
+ 
+struct QuotableString : std::string_view
+{};
+ 
+template&lt;&gt;
+struct std::formatter&lt;QuotableString, char&gt;
+{
+    bool quoted = false;
+
+    template&lt;class ParseContext&gt;
+    constexpr ParseContext::iterator parse(ParseContext&amp; ctx)
+    {
+        auto it = ctx.begin();
+        if (it == ctx.end())
+            return it;
+            
+        if (*it == '#')
+        {
+            quoted = true;
+            ++it;
+        }
+        if (it != ctx.end() &amp;&amp; *it != '}')
+            throw std::format_error("Invalid format args for QuotableString.");
+            
+        return it;
+    }
+ 
+    template&lt;class FmtContext&gt;
+    FmtContext::iterator format(QuotableString s, FmtContext&amp; ctx) const
+    {
+        std::ostringstream out;
+        if (quoted)
+            out &lt;&lt; std::quoted(s);
+        else
+            out &lt;&lt; s;
+
+        return std::ranges::copy(std::move(out).str(), ctx.out()).out;
+    }
+};
+ 
+int main()
+{
+    QuotableString a("be"), a2(R"( " be " )");
+    QuotableString b("a question");
+    std::cout &lt;&lt; std::format("To {0} or not to {0}, that is {1}.\n", a, b);
+    std::cout &lt;&lt; std::format("To {0:} or not to {0:}, that is {1:}.\n", a, b);
+    std::cout &lt;&lt; std::format("To {0:#} or not to {0:#}, that is {1:#}.\n", a2, b);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">To be or not to be, that is a question.
+To be or not to be, that is a question.
+To " \" be \" " or not to " \" be \" ", that is "a question".
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3944">LWG 3944</a> </td> <td>C++23 </td> <td>some <span class="kt">char</span> sequences were formattable as ranges of <span class="kt">wchar_t</span> </td> <td>disable specializations added </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="basic_format_context" title="cpp/utility/format/basic format context"> <span class="t-lines"><span>basic_format_context</span><span>format_context</span><span>wformat_context</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>formatting state, including all formatting arguments and the output iterator <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="formattable" title="cpp/utility/format/formattable"> <span class="t-lines"><span>formattable</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>specifies that a type is formattable, that is, it specializes <code><a class="mw-selflink selflink">std::formatter</a></code> and provides member functions <code>parse</code> and <code>format</code> <br> <span class="t-mark">(concept)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="range_formatter" title="cpp/utility/format/range formatter"> <span class="t-lines"><span>range_formatter</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>class template that helps implementing <code><a class="mw-selflink selflink">std::formatter</a></code> specializations for range types <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/format/formatter" class="_attribution-link">https://en.cppreference.com/cpp/utility/format/formatter</a>
+  </p>
+</div>

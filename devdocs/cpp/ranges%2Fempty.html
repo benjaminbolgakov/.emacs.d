@@ -1,0 +1,93 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::empty</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">inline namespace /*unspecified*/ {
+    inline constexpr auto empty = /*unspecified*/;
+}
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark">(customization point object)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr bool empty( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Determines whether or not <code>t</code> has any elements.</p>
+<p>A call to <code>ranges::empty</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to:</p>
+<ol>
+<li>
+<code>bool(t.empty())</code>, if that expression is valid.</li> <li>Otherwise, <code>(ranges::size(t) == 0)</code>, if that expression is valid.</li> <li>Otherwise, <code>bool(ranges::begin(t) == ranges::end(t))</code>, if that expression is valid and <code>decltype(ranges::begin(t))</code> models <code><a href="../iterator/forward_iterator" title="cpp/iterator/forward iterator">std::forward_iterator</a></code>.</li>
+</ol> <p>In all other cases, a call to <code>ranges::empty</code> is ill-formed, which can result in <a href="../language/sfinae" title="cpp/language/sfinae">substitution failure</a> when <code>ranges::empty(t)</code> appears in the immediate context of a template instantiation.</p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>ranges::empty</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;vector&gt;
+
+template&lt;std::ranges::input_range R&gt;
+void print(char id, R&amp;&amp; r)
+{
+    if (std::ranges::empty(r))
+    {
+        std::cout &lt;&lt; '\t' &lt;&lt; id &lt;&lt; ") Empty\n";
+        return;
+    }
+
+    std::cout &lt;&lt; '\t' &lt;&lt; id &lt;&lt; ") Elements:";
+    for (const auto&amp; element : r)
+        std::cout &lt;&lt; ' ' &lt;&lt; element;
+    std::cout &lt;&lt; '\n';
+}
+
+int main()
+{
+    {
+        auto v = std::vector&lt;int&gt;{1, 2, 3};
+        std::cout &lt;&lt; "(1) ranges::empty uses std::vector::empty:\n";
+        print('a', v);
+
+        v.clear();
+        print('b', v);
+    }
+    {
+        std::cout &lt;&lt; "(2) ranges::empty uses ranges::size(initializer_list):\n";
+        auto il = {7, 8, 9};
+        print('a', il);
+
+        print('b', std::initializer_list&lt;int&gt;{});
+    }
+    {
+        std::cout &lt;&lt; "(2) ranges::empty on a raw array uses ranges::size:\n";
+        int array[] = {4, 5, 6}; // array has a known bound
+        print('a', array);
+    }
+    {
+        struct Scanty : private std::vector&lt;int&gt;
+        {
+            using std::vector&lt;int&gt;::begin;
+            using std::vector&lt;int&gt;::end;
+            using std::vector&lt;int&gt;::push_back;
+            // Note: both empty() and size() are hidden
+        };
+
+        std::cout &lt;&lt; "(3) calling ranges::empty on an object w/o empty() or size():\n";
+        Scanty y;
+        print('a', y);
+        y.push_back(42);
+        print('b', y);
+    }
+}
+</pre> <p>Output:</p>
+<pre data-language="c">(1) ranges::empty uses std::vector::empty:
+        a) Elements: 1 2 3
+        b) Empty
+(2) ranges::empty uses ranges::size(initializer_list):
+        a) Elements: 7 8 9
+        b) Empty
+(2) ranges::empty on a raw array uses ranges::size:
+        a) Elements: 4 5 6
+(3) calling ranges::empty on an object w/o empty() or size():
+        a) Empty
+        b) Elements: 42
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../iterator/empty" title="cpp/iterator/empty"> <span class="t-lines"><span>empty</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>checks whether the container is empty <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/empty" class="_attribution-link">https://en.cppreference.com/cpp/ranges/empty</a>
+  </p>
+</div>

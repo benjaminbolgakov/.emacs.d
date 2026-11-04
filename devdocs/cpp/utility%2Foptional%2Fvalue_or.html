@@ -1,0 +1,49 @@
+   <h1 id="firstHeading" class="firstHeading">std::optional&lt;T&gt;::value_or</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class U = std::remove_cv_t&lt;T&gt; &gt; 
+constexpr T value_or( U&amp;&amp; default_value ) const&amp;;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class U = std::remove_cv_t&lt;T&gt; &gt; 
+constexpr T value_or( U&amp;&amp; default_value ) &amp;&amp;;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Returns the contained value if <code>*this</code> contains a value, otherwise returns <code>default_value</code>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> If <code>std::is_copy_constructible_v&lt;T&gt; &amp;&amp; std::is_convertible_v&lt;U&amp;&amp;, T&gt;</code> is <code>false</code>, the program is ill-formed.</div> <div class="t-li1">
+<span class="t-li">2)</span> If <code>std::is_move_constructible_v&lt;T&gt; &amp;&amp; std::is_convertible_v&lt;U&amp;&amp;, T&gt;</code> is <code>false</code>, the program is ill-formed.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>default_value </td> <td>- </td> <td>the value to be returned if <code>*this</code> does not contain a value </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <div class="t-li1">
+<span class="t-li">1)</span> <code>has_value() ? **this : static_cast&lt;T&gt;(std::forward&lt;U&gt;(default_value));</code>
+</div> <div class="t-li1">
+<span class="t-li">2)</span> <code>has_value() ? std::move(**this) : static_cast&lt;T&gt;(std::forward&lt;U&gt;(default_value))</code>
+</div> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;optional&gt;
+
+std::optional&lt;const char*&gt; maybe_getenv(const char* n)
+{
+    if (const char* x = std::getenv(n))
+        return x;
+    else
+        return {};
+}
+
+int main()
+{
+    std::cout &lt;&lt; maybe_getenv("SHELL").value_or("(none)") &lt;&lt; '\n';
+    std::cout &lt;&lt; maybe_getenv("MYPWD").value_or("(none)") &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">/usr/bin/zsh
+(none)
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3886">LWG 3886</a> </td> <td>C++17 </td> <td>
+<code>U</code> does not have a default template argument </td> <td>specified </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="value" title="cpp/utility/optional/value"> <span class="t-lines"><span>value</span></span></a></div> </td> <td>returns the contained value <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/optional/value_or" class="_attribution-link">https://en.cppreference.com/cpp/utility/optional/value_or</a>
+  </p>
+</div>

@@ -1,0 +1,54 @@
+   <h1 id="firstHeading" class="firstHeading">std::unordered_set&lt;Key,Hash,KeyEqual,Allocator&gt;::begin, std::unordered_set&lt;Key,Hash,KeyEqual,Allocator&gt;::cbegin</h1>           <div id="mw-content-text">
+  <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">iterator begin() noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">const_iterator begin() const noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">const_iterator cbegin() const noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Returns an iterator to the first element of the <code>unordered_set</code>.</p>
+<p>If the <code>unordered_set</code> is empty, the returned iterator will be equal to <code><a href="end" title="cpp/container/unordered set/end">end()</a></code>.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<h3 id="Return_value">Return value</h3> <p>Iterator to the first element.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Notes">Notes</h3> <p>Because both <code>iterator</code> and <code>const_iterator</code> are constant iterators (and may in fact be the same type), it is not possible to mutate the elements of the container through an iterator returned by any of these member functions.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;unordered_set&gt;
+
+struct Point { double x, y; };
+
+int main()
+{
+    Point pts[3] = {{1, 0}, {2, 0}, {3, 0}};
+    
+    // points is a set containing the addresses of points
+    std::unordered_set&lt;Point*&gt; points = { pts, pts + 1, pts + 2 };
+    
+    // Change each y-coordinate of (i, 0) from 0 into i^2 and print the point
+    for (auto iter = points.begin(); iter != points.end(); ++iter)
+    {
+        (*iter)-&gt;y = ((*iter)-&gt;x) * ((*iter)-&gt;x); // iter is a pointer-to-Point*
+        std::cout &lt;&lt; "(" &lt;&lt; (*iter)-&gt;x &lt;&lt; ", " &lt;&lt; (*iter)-&gt;y &lt;&lt; ") ";
+    }
+    std::cout &lt;&lt; '\n';
+    
+    // Now using the range-based for loop, we increase each y-coordinate by 10
+    for (Point* i : points)
+    {
+        i-&gt;y += 10;
+        std::cout &lt;&lt; "(" &lt;&lt; i-&gt;x &lt;&lt; ", " &lt;&lt; i-&gt;y &lt;&lt; ") ";
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">(3, 9) (1, 1) (2, 4) 
+(3, 19) (1, 11) (2, 14)
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="end" title="cpp/container/unordered set/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div> </td> <td>returns an iterator to the end <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/begin" title="cpp/iterator/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the beginning of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/unordered_set/begin" class="_attribution-link">https://en.cppreference.com/cpp/container/unordered_set/begin</a>
+  </p>
+</div>

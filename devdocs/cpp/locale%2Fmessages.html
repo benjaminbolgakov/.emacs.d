@@ -1,0 +1,56 @@
+   <h1 id="firstHeading" class="firstHeading">std::messages</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt; class CharT &gt;
+class messages;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Class template <code>std::messages</code> is a standard locale facet that encapsulates retrieval of strings from message catalogs, such as the ones provided by GNU <a rel="nofollow" class="external text" href="https://www.gnu.org/s/gettext/">gettext</a> or by POSIX <a rel="nofollow" class="external text" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/catgets.html"><code>catgets</code></a>.</p>
+<p>The source of the messages is implementation-defined.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/4/48/std-messages-inheritance.svg" decoding="async" width="248" height="88" class="mw-file-element" usemap="#ImageMap_54d007fbe21037bf"></span><map name="ImageMap_54d007fbe21037bf"><area href="/cpp/locale/messages_base" shape="rect" coords="4,4,114,36" alt="cpp/locale/messages base" title="cpp/locale/messages base">
+<area href="/cpp/locale/locale/facet" shape="rect" coords="7,52,110,85" alt="cpp/locale/locale/facet" title="cpp/locale/locale/facet"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Specializations">Specializations</h3> <p>The standard library is guaranteed to provide the following specializations (they are <a href="locale" title="cpp/locale/locale">required to be implemented by any locale object</a>):</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code>  </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">messages</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td> <td>accesses narrow string message catalog </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">messages</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td> <td>accesses wide string message catalog </td>
+</tr> </table> <h3 id="Nested_types">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>char_type</code> </td> <td>
+<code>CharT</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>string_type</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="n">CharT</span><span class="o">&gt;</span> </td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code><a href="locale/id" title="cpp/locale/locale/id">std::locale::id</a></code></span> <code>id</code> <span class="t-cmark">[static]</span> </td> <td>the identifier of the <a href="locale/facet#Facet_class" title="cpp/locale/locale/facet">facet</a> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="messages/messages" title="cpp/locale/messages/messages"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a new <code>messages</code> facet <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/~messages" title="cpp/locale/messages/~messages"> <span class="t-lines"><span>(destructor)</span></span></a></div> </td> <td>destructs a <code>messages</code> facet <br> <span class="t-mark">(protected member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/open" title="cpp/locale/messages/open"> <span class="t-lines"><span>open</span></span></a></div> </td> <td>invokes <code>do_open</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/get" title="cpp/locale/messages/get"> <span class="t-lines"><span>get</span></span></a></div> </td> <td>invokes <code>do_get</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/close" title="cpp/locale/messages/close"> <span class="t-lines"><span>close</span></span></a></div> </td> <td>invokes <code>do_close</code> <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table> <h3 id="Protected_member_functions">Protected member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="messages/open" title="cpp/locale/messages/open"> <span class="t-lines"><span>do_open</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>opens a named message catalog <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/get" title="cpp/locale/messages/get"> <span class="t-lines"><span>do_get</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>retrieves a message from an open message catalog <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages/close" title="cpp/locale/messages/close"> <span class="t-lines"><span>do_close</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>closes a message catalog <br> <span class="t-mark">(virtual protected member function)</span>  </td>
+</tr> </table> <div class="t-inherited"> <h2 id="Inherited_from_std::messages_base">Inherited from <a href="messages_base" title="cpp/locale/messages base">std::messages_base</a>
+</h2> <h3 id="Nested_types_2">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>catalog</code> </td> <td>an unspecified signed integer type </td>
+</tr> </table> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="messages_base" title="cpp/locale/messages base"> <span class="t-lines"><span>messages_base</span></span></a></div> </td> <td>defines messages catalog type <br> <span class="t-mark">(class)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="messages_byname" title="cpp/locale/messages byname"> <span class="t-lines"><span>messages_byname</span></span></a></div> </td> <td>represents the system-supplied <code><a class="mw-selflink selflink">std::messages</a></code> for the named locale <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/locale/messages" class="_attribution-link">https://en.cppreference.com/cpp/locale/messages</a>
+  </p>
+</div>

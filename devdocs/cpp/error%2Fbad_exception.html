@@ -1,0 +1,71 @@
+   <h1 id="firstHeading" class="firstHeading">std::bad_exception</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/exception" title="cpp/header/exception">&lt;exception&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">class bad_exception;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p><code>std::bad_exception</code> is the type of the exception thrown by the C++ runtime in the following situations:</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <ul><li>If <code><a href="exception_ptr" title="cpp/error/exception ptr">std::exception_ptr</a></code> stores a copy of the caught exception and if the copy constructor of the exception object caught by <code><a href="current_exception" title="cpp/error/current exception">std::current_exception</a></code> throws an exception, the captured exception is an instance of <code>std::bad_exception</code>.</li></ul> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> <tr class="t-rev t-until-cxx17">
+<td> <ul><li>If a <a href="../language/except_spec" title="cpp/language/except spec">dynamic exception specification</a> is violated and <code><a href="unexpected" title="cpp/error/unexpected">std::unexpected</a></code> throws or rethrows an exception that still violates the exception specification, but the exception specification allows <code>std::bad_exception</code>, <code>std::bad_exception</code> is thrown.</li></ul> </td> <td><span class="t-mark-rev t-until-cxx17">(until C++17)</span></td>
+</tr> </table> <div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/0/02/std-bad_exception-inheritance.svg" decoding="async" width="243" height="40" class="mw-file-element" usemap="#ImageMap_03d43e23e22f8885"></span><map name="ImageMap_03d43e23e22f8885"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>All member functions of <code>std::bad_exception</code> are <span class="k">constexpr</span>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="bad_exception/bad_exception" title="cpp/error/bad exception/bad exception"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs the <code>bad_exception</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="bad_exception/operator=" title="cpp/error/bad exception/operator="> <span class="t-lines"><span>operator=</span></span></a></div> </td> <td>copies the object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="bad_exception/what" title="cpp/error/bad exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns the explanatory string <br> <span class="t-mark">(virtual public member function)</span> </td>
+</tr> </table> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Notes">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro </th> <th>
+<abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr> </th> <th>
+<abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr> </th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_constexpr_exceptions" title="cpp/feature test"><code>__cpp_lib_constexpr_exceptions</code></a></td> <td><a href="../compiler_support/26#cpp_lib_constexpr_exceptions_202411L" title="cpp/compiler support/26"><code>202411L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>
+<span class="k">constexpr</span> for exception types </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example">
+<p>Compiles only in C++14 or earlier modes (may issue warnings).</p>
+<pre data-language="c">#include &lt;exception&gt;
+#include &lt;iostream&gt;
+#include &lt;stdexcept&gt;
+
+void my_unexp()
+{
+    throw;
+}
+
+void test()
+    throw(std::bad_exception) // Dynamic exception specifications
+                              // are deprecated in C++11
+{
+    throw std::runtime_error("test");
+}
+
+int main()
+{
+    std::set_unexpected(my_unexp); // Deprecated in C++11, removed in C++17
+
+    try
+    {
+        test();
+    }
+    catch (const std::bad_exception&amp; e)
+    {
+        std::cerr &lt;&lt; "Caught " &lt;&lt; e.what() &lt;&lt; '\n';
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">Caught std::bad_exception
+</pre> </div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/error/bad_exception" class="_attribution-link">https://en.cppreference.com/cpp/error/bad_exception</a>
+  </p>
+</div>

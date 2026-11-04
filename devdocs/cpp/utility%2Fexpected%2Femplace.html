@@ -1,0 +1,30 @@
+   <h1 id="firstHeading" class="firstHeading">std::expected&lt;T,E&gt;::emplace</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl-h"> <td> Primary template</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">template&lt; class... Args &gt;
+constexpr T&amp; emplace( Args&amp;&amp;... args ) noexcept;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">template&lt; class U, class... Args &gt;
+constexpr T&amp; emplace( std::initializer_list&lt;U&gt; il, Args&amp;&amp;... args ) noexcept;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl-h"> <td> <span class="kt">void</span> partial specialization</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">constexpr void emplace() noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>Constructs an expected value in-place. After the call, <a href="operator_bool" title="cpp/utility/expected/operator bool"><code>has_value()</code></a> returns true.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Destroys the contained value, then <a href="../../language/direct_initialization" title="cpp/language/direct initialization">direct-initializes</a> the expected value contained in <code>*this</code> with <code>std::forward&lt;Args&gt;(args)...</code>.</div> <div class="t-li1">
+ This overload participates in overload resolution only if <code>std::is_nothrow_constructible_v&lt;T, Args...&gt;</code> is <code>true</code>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Destroys the contained value, then direct-initializes the expected value contained in <code>*this</code> with <code>il</code> and <code>std::forward&lt;Args&gt;(args)...</code>.</div> <div class="t-li1">
+ This overload participates in overload resolution only if <code>std::is_nothrow_constructible_v&lt;T, std::initializer_list&lt;U&gt;&amp;, Args...&gt;</code> is <code>true</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> If <code>*this</code> contains an unexpected value, destroys that value.</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>args </td> <td>- </td> <td>the arguments to pass to the constructor </td>
+</tr> <tr class="t-par"> <td>il </td> <td>- </td> <td>the initializer list to pass to the constructor </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <div class="t-li1">
+<span class="t-li">1)</span> <code><span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">construct_at</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">addressof</span><span class="p">(</span><a href="../expected#Data_members" title="cpp/utility/expected"><i>val</i></a><span class="p">),</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...)</span></code>
+</div> <div class="t-li1">
+<span class="t-li">2)</span> <code><span class="o">*</span><span class="n">std</span><span class="o">::</span><span class="n">construct_at</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">addressof</span><span class="p">(</span><a href="../expected#Data_members" title="cpp/utility/expected"><i>val</i></a><span class="p">),</span><span class="n">il</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...)</span></code>
+</div> <h3 id="Notes">Notes</h3> <p>If the construction of <code>T</code> is potentially-throwing, <a href="operator=" title="cpp/utility/expected/operator="><code>operator=</code></a> can be used instead.</p>
+<h3 id="Example">Example</h3>  <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="operator=" title="cpp/utility/expected/operator="> <span class="t-lines"><span>operator=</span></span></a></div> </td> <td>assigns contents <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/expected/emplace" class="_attribution-link">https://en.cppreference.com/cpp/utility/expected/emplace</a>
+  </p>
+</div>

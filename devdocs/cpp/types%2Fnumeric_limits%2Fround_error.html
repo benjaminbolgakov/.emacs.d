@@ -1,0 +1,75 @@
+   <h1 id="firstHeading" class="firstHeading">std::numeric_limits&lt;T&gt;::round_error</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td><pre data-language="c">static T round_error() throw();
+</pre></td> <td rowspan="2" class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">static constexpr T round_error() noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <p>Returns the largest possible rounding error in ULPs (units in the last place) as defined by ISO 10967, which can vary from <code>0.5</code> (rounding to the nearest digit) to <code>1.0</code> (rounding to zero or to infinity). It is only meaningful if <code>std::numeric_limits&lt;T&gt;::is_integer == false</code>.</p>
+<h3 id="Return_value">Return value</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>
+<code>T</code> </th> <th>
+<code>std::numeric_limits&lt;T&gt;::round_error()</code> </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="cm">/* non-specialized */</span> </td> <td>
+<code>T()</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">bool</span> </td> <td>
+<code>false</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">signed</span><span class="kt">char</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">char</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">wchar_t</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char8_t</span> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char16_t</span> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">char32_t</span> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">short</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">short</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">int</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">int</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">long</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span><span class="kt">long</span> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">unsigned</span><span class="kt">long</span><span class="kt">long</span> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<code>0</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">float</span> </td> <td>
+<code>0.5F</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">double</span> </td> <td>
+<code>0.5</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="kt">long</span><span class="kt">double</span> </td> <td>
+<code>0.5L</code> </td>
+</tr> </table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="round_style" title="cpp/types/numeric limits/round style"> <span class="t-lines"><span>round_style</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>identifies the rounding style used by the type <br> <span class="t-mark">(public static member constant)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/types/numeric_limits/round_error" class="_attribution-link">https://en.cppreference.com/cpp/types/numeric_limits/round_error</a>
+  </p>
+</div>

@@ -1,0 +1,47 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::lazy_split_view&lt;V,Pattern&gt;::begin</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">constexpr auto begin();
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td>
+<pre data-language="c">constexpr auto begin() const
+    requires ranges::forward_range&lt;V&gt; &amp;&amp;
+             ranges::forward_range&lt;const V&gt; &amp;&amp;
+             ranges::forward_range&lt;const Pattern&gt;;
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td> </tr>  </table> <p>Returns an <a href="outer_iterator" title="cpp/ranges/lazy split view/outer iterator"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>outer_iterator</i></code></a> to the first element of the <a href="lazy_split_view" title="cpp/ranges/lazy split view/lazy split view"><code>lazy_split_view</code></a>.</p>
+<p>Let <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../lazy_split_view#base" title="cpp/ranges/lazy split view">base_</a></i></code> be the underlying view and <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../lazy_split_view#current" title="cpp/ranges/lazy split view">current_</a></i></code> be the underlying caching object (present only if <code>ranges::forward_range&lt;V&gt;</code> is false).</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Equivalent to <pre data-language="c">constexpr auto begin()
+{
+    if constexpr (ranges::forward_range&lt;V&gt;)
+    {
+        constexpr bool simple = /*simple_view*/&lt;V&gt; &amp;&amp; /*simple_view*/&lt;Pattern&gt;;
+        return /*outer_iterator*/&lt;simple&gt;{*this, ranges::begin(base_)};
+    }
+    else
+    {
+        current_ = ranges::begin(base_);
+        return /*outer_iterator*/&lt;false&gt;{*this};
+    }
+}
+</pre>
+</div> <div class="t-li1">
+<span class="t-li">2)</span> Equivalent to <code>return /*outer_iterator*/&lt;true&gt;{*this, ranges::begin(base_)};</code>.</div>  <h3 id="Return_value">Return value</h3> <p><a href="outer_iterator" title="cpp/ranges/lazy split view/outer iterator"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>outer_iterator</i></code></a> to the first element.</p>
+<h3 id="Example">Example</h3>  <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3592">LWG 3592</a> </td> <td>C++20 </td> <td>
+<code>lazy_split_view</code> does not check if <code>Pattern</code> is a <a href="../../ranges#Helper_concepts" title="cpp/ranges">simple view</a> </td> <td>
+<code>/*simple_view*/&lt;Pattern&gt;</code> is examined </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue3599">LWG 3599</a> </td> <td>C++20 </td> <td>the const overload <span class="t-v">(<a href="#Version_2">2</a>)</span> is not constrained by<br><code>ranges::forward_range&lt;const Pattern&gt;</code> </td> <td>constrained </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="end" title="cpp/ranges/lazy split view/end"> <span class="t-lines"><span>end</span></span></a></div> </td> <td>returns an iterator or a sentinel to the end <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../begin" title="cpp/ranges/begin"> <span class="t-lines"><span>ranges::begin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns an iterator to the beginning of a range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/lazy_split_view/begin" class="_attribution-link">https://en.cppreference.com/cpp/ranges/lazy_split_view/begin</a>
+  </p>
+</div>

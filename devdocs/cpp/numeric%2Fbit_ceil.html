@@ -1,0 +1,68 @@
+   <h1 id="firstHeading" class="firstHeading">std::bit_ceil</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/bit" title="cpp/header/bit">&lt;bit&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+constexpr T bit_ceil( T x );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <p>Calculates the smallest integral power of two that is not smaller than <code>x</code>.</p>
+<p>If that value is not representable in <code>T</code>, the behavior is undefined. Call to this function is permitted in <a href="../language/constant_expression" title="cpp/language/constant expression">constant evaluation</a> only if the undefined behavior does not occur.</p>
+<p>This overload participates in overload resolution only if <code>T</code> is an unsigned integer type (that is, <span class="kt">unsigned</span><span class="kt">char</span>, <span class="kt">unsigned</span><span class="kt">short</span>, <span class="kt">unsigned</span><span class="kt">int</span>, <span class="kt">unsigned</span><span class="kt">long</span>, <span class="kt">unsigned</span><span class="kt">long</span><span class="kt">long</span>, or an extended unsigned integer type).</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>x </td> <td>- </td> <td>value of unsigned integer type </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>The smallest integral power of two that is not smaller than <code>x</code>.</p>
+<h3 id="Exceptions">Exceptions</h3> <p>Throws nothing.</p>
+<h3 id="Notes">Notes</h3> <p><small>Prior to <a rel="nofollow" class="external text" href="https://wg21.link/P1956R1">P1956R1</a>, the proposed name for this function template was <code>ceil2</code>.</small></p>
+<table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_int_pow2" title="cpp/feature test"><code>__cpp_lib_int_pow2</code></a></td> <td><a href="../compiler_support/20#cpp_lib_int_pow2_202002L" title="cpp/compiler support/20"><code>202002L</code></a></td> <td><span class="t-mark">(C++20)</span></td> <td>
+<a href="../utility/bit" title="cpp/utility/bit">Integral power-of-2 operations</a> </td>
+</tr>
+</table> <h3 id="Possible_implementation">Possible implementation</h3> <p>See possible implementations in <a rel="nofollow" class="external text" href="https://github.com/gcc-mirror/gcc/blob/62c25d7adb1a5664982449dda0e7f9ca63cf4735/libstdc%2B%2B-v3/include/std/bit#L217-L248">libstdc++ (gcc)</a> and <a rel="nofollow" class="external text" href="https://github.com/llvm/llvm-project/blob/llvmorg-14.0.4/libcxx/include/bit#L304-L321">libc++ (clang)</a>.</p>
+<table class="eq-fun-cpp-table"> <tr> <td> <pre data-language="c">template&lt;typename T, typename ... U&gt;
+concept neither = (!std::same_as&lt;T, U&gt; &amp;&amp; ...);
+
+template&lt;std::unsigned_integral T&gt;
+    requires neither&lt;T, bool, char, char8_t, char16_t, char32_t, wchar_t&gt;
+constexpr T bit_ceil(T x) noexcept
+{
+    if (x &lt;= 1u)
+        return T(1);
+    if constexpr (std::same_as&lt;T, decltype(+x)&gt;)
+        return T(1) &lt;&lt; std::bit_width(T(x - 1));
+    else
+    {   // for types subject to integral promotion
+        constexpr int offset_for_ub =
+            std::numeric_limits&lt;unsigned&gt;::digits - std::numeric_limits&lt;T&gt;::digits;
+        return T(1u &lt;&lt; (std::bit_width(T(x - 1)) + offset_for_ub) &gt;&gt; offset_for_ub);
+    }
+}
+</pre> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;bit&gt;
+#include &lt;bitset&gt;
+#include &lt;iostream&gt;
+
+int main()
+{
+    using bin = std::bitset&lt;8&gt;;
+    for (auto x{0U}; 0XA != x; ++x)
+        std::cout &lt;&lt; "bit_ceil( " &lt;&lt; bin(x) &lt;&lt; " ) = "
+                  &lt;&lt; bin(std::bit_ceil(x)) &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">bit_ceil( 00000000 ) = 00000001
+bit_ceil( 00000001 ) = 00000001
+bit_ceil( 00000010 ) = 00000010
+bit_ceil( 00000011 ) = 00000100
+bit_ceil( 00000100 ) = 00000100
+bit_ceil( 00000101 ) = 00001000
+bit_ceil( 00000110 ) = 00001000
+bit_ceil( 00000111 ) = 00001000
+bit_ceil( 00001000 ) = 00001000
+bit_ceil( 00001001 ) = 00010000
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="bit_floor" title="cpp/numeric/bit floor"> <span class="t-lines"><span>bit_floor</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>finds the largest integral power of 2 not greater than the given value <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/numeric/bit_ceil" class="_attribution-link">https://en.cppreference.com/cpp/numeric/bit_ceil</a>
+  </p>
+</div>

@@ -1,0 +1,40 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_ostream&lt;CharT,Traits&gt;::tellp</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">pos_type tellp();
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Returns the output position indicator of the current associated <code>streambuf</code> object.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <p>Behaves as <a href="../../named_req/unformattedoutputfunction" title="cpp/named req/UnformattedOutputFunction">UnformattedOutputFunction</a> (except without actually performing output). After constructing and checking the sentry object,</p>
+</td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table> <p>If <code>fail()==true</code>, returns <code>pos_type(-1)</code>. Otherwise, returns <code>rdbuf()-&gt;pubseekoff(0, std::ios_base::cur, std::ios_base::out)</code>.</p>
+<h3 id="Parameters">Parameters</h3> <p>(none)</p>
+<h3 id="Return_value">Return value</h3> <p>current output position indicator on success, <code>pos_type(-1)</code> if a failure occurs.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+int main()
+{
+    std::ostringstream s;
+    std::cout &lt;&lt; s.tellp() &lt;&lt; '\n';
+    s &lt;&lt; 'h';
+    std::cout &lt;&lt; s.tellp() &lt;&lt; '\n';
+    s &lt;&lt; "ello, world ";
+    std::cout &lt;&lt; s.tellp() &lt;&lt; '\n';
+    s &lt;&lt; 3.14 &lt;&lt; '\n';
+    std::cout &lt;&lt; s.tellp() &lt;&lt; '\n' &lt;&lt; s.str();
+}
+</pre> <p>Output:</p>
+<pre data-language="c">0
+1
+13
+18
+hello, world 3.14
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="seekp" title="cpp/io/basic ostream/seekp"> <span class="t-lines"><span>seekp</span></span></a></div> </td> <td>sets the output position indicator <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_istream/tellg" title="cpp/io/basic istream/tellg"> <span class="t-lines"><span>tellg</span></span></a></div> </td> <td>returns the input position indicator <br> <span class="t-mark">(public member function of <code>std::basic_istream&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_istream/seekg" title="cpp/io/basic istream/seekg"> <span class="t-lines"><span>seekg</span></span></a></div> </td> <td>sets the input position indicator <br> <span class="t-mark">(public member function of <code>std::basic_istream&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/io/basic_ostream/tellp" class="_attribution-link">https://en.cppreference.com/cpp/io/basic_ostream/tellp</a>
+  </p>
+</div>

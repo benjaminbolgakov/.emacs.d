@@ -1,0 +1,80 @@
+   <h1 id="firstHeading" class="firstHeading">Strings library</h1>             <h3 id="Characters">Characters</h3> <p>In the C++ standard library, a <i>character</i> is an object which, when treated sequentially, can represent text.</p>
+<p>The term means not only objects of <a href="language/type" title="cpp/language/type">character types</a>, but also any value that can be represented by a type that provides the definitions specified in the strings library and following libraries:</p>
+<ul>
+<li><a href="locale" title="cpp/locale">localization library</a></li> <li><a href="io" title="cpp/io">input/output library</a></li>
+</ul> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx11">
+<td> <ul><li><a href="regex" title="cpp/regex">regular expressions library</a></li></ul> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td>
+</tr> </table> <p>In the strings library<span class="t-rev-inl t-since-cxx11"><span> and regular expressions library</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>, a character can be of only <i>char-like types</i>, i.e. those non-array types that satisfy the requirements of <span class="t-rev-inl t-until-cxx20"><span><a href="named_req/podtype" title="cpp/named req/PODType">PODType</a></span><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span><span class="t-rev-inl t-since-cxx20 t-until-cxx26"><span><a href="named_req/trivialtype" title="cpp/named req/TrivialType">TrivialType</a> and <a href="named_req/standardlayouttype" title="cpp/named req/StandardLayoutType">StandardLayoutType</a></span><span><span class="t-mark-rev t-since-cxx20">(since C++20)</span><span class="t-mark-rev t-until-cxx26">(until C++26)</span></span></span><span class="t-rev-inl t-since-cxx26"><span><a href="named_req/triviallycopyable" title="cpp/named req/TriviallyCopyable">TriviallyCopyable</a> and <a href="named_req/standardlayouttype" title="cpp/named req/StandardLayoutType">StandardLayoutType</a></span><span><span class="t-mark-rev t-since-cxx26">(since C++26)</span></span></span>.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>For any char-like type <code>T</code>, <code>std::is_trivially_default_constructible_v&lt;T&gt;</code> is <code>true</code>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <p>Therefore, characters are also referred as <i>char-like objects</i> in the strings library<span class="t-rev-inl t-since-cxx11"><span> and regular expressions library</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>.</p>
+<p>Some standard library components accept <i>character container types</i>. They, too, are types used to represent individual characters. Such types are used for one of the template arguments of <code><a href="string/char_traits" title="cpp/string/char traits">std::char_traits</a></code> and the class templates which use <code><a href="string/char_traits" title="cpp/string/char traits">std::char_traits</a></code>.</p>
+<h3 id="Library_components">Library components</h3> <p>The C++ strings library includes the following components:</p>
+<h4 id="Character_traits">Character traits</h4> <p>Many character-related class templates (such as <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code>) need a set of related types and functions to complete the definition of their semantics. These types and functions are provided as a set of member <span class="k">typedef</span> names and functions in the template parameter <code>Traits</code> used by each such template. The classes which are able to complete those semantics are <a href="named_req/chartraits" title="cpp/named req/CharTraits">CharTraits</a>.</p>
+<p>The string library provides the class template <code><a href="string/char_traits" title="cpp/string/char traits">std::char_traits</a></code> that defines types and functions for <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code><span class="t-rev-inl t-since-cxx17"><span> and <code><a href="string/basic_string_view" title="cpp/string/basic string view">std::basic_string_view</a></code></span><span><span class="t-mark-rev t-since-cxx17">(since C++17)</span></span></span>.</p>
+<p>The following specializations are defined, all of them satisfy the <a href="named_req/chartraits" title="cpp/named req/CharTraits">CharTraits</a> requirements:</p>
+<table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="header/string" title="cpp/header/string">&lt;string&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt;&gt; class char_traits&lt;char&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt;&gt; class char_traits&lt;wchar_t&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt;&gt; class char_traits&lt;char8_t&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">template&lt;&gt; class char_traits&lt;char16_t&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">template&lt;&gt; class char_traits&lt;char32_t&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>When a user-defined character container type for <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code><span class="t-rev-inl t-since-cxx17"><span> and <code><a href="string/basic_string_view" title="cpp/string/basic string view">std::basic_string_view</a></code></span><span><span class="t-mark-rev t-since-cxx17">(since C++17)</span></span></span> is used, it is also necessary to provide a corresponding character trait class (which can be a specialization of <code><a href="string/char_traits" title="cpp/string/char traits">std::char_traits</a></code>).</p>
+<h4 id="String_classes_(std::string_etc.)">String classes (<code><a href="string/basic_string" title="cpp/string/basic string">std::string</a></code> etc.)</h4> <p>The class template <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code> generalizes how sequences of characters are manipulated and stored. String creation, manipulation, and destruction are all handled by a convenient set of class methods and related functions.</p>
+<p>Several specializations of <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code> are provided for commonly-used types:</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="header/string" title="cpp/header/string">&lt;string&gt;</a></code>  </th>
+</tr> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>std::string</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::wstring</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u8string</code> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">char8_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u16string</code> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">char16_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u32string</code> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="kt">char32_t</span><span class="o">&gt;</span> </td>
+</tr> </table> <h4 id="String_view_classes_(std::string_view_etc.)_(since_C++17)">String view classes (<code><a href="string/basic_string_view" title="cpp/string/basic string view">std::string_view</a></code> etc.) <span class="t-mark-rev t-since-cxx17">(since C++17)</span>
+</h4> <p>The class template <code><a href="string/basic_string_view" title="cpp/string/basic string view">std::basic_string_view</a></code> provides a lightweight object that offers read-only access to a string or a part of a string using an interface similar to the interface of <code><a href="string/basic_string" title="cpp/string/basic string">std::basic_string</a></code>.</p>
+<p>Several specializations of <code><a href="string/basic_string_view" title="cpp/string/basic string view">std::basic_string_view</a></code> are provided for commonly-used types:</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="header/string_view" title="cpp/header/string view">&lt;string_view&gt;</a></code>  </th>
+</tr> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>std::string_view</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string_view</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::wstring_view</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string_view</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u8string_view</code> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string_view</span><span class="o">&lt;</span><span class="kt">char8_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u16string_view</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string_view</span><span class="o">&lt;</span><span class="kt">char16_t</span><span class="o">&gt;</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>std::u32string_view</code> </td> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">basic_string_view</span><span class="o">&lt;</span><span class="kt">char32_t</span><span class="o">&gt;</span> </td>
+</tr> </table> <h3 id="Relevant_libraries">Relevant libraries</h3> <p>The <a href="text" title="cpp/text">text processing library</a> provides support for localizations, string conversions (e.g. <a href="locale/toupper" title="cpp/locale/toupper"><code>std::toupper</code></a>), character classification functions (e.g. <a href="locale/isspace" title="cpp/locale/isspace"><code>std::isspace</code></a>), and text encoding recognition (<a href="text/text_encoding" title="cpp/text/text encoding"><code>std::text_encoding</code></a>).</p>
+<h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue1170">LWG 1170</a> </td> <td>C++98 </td> <td>char-like types could be array types </td> <td>prohibited </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td colspan="2">
+<span><a href="https://en.cppreference.com/c/string" title="c/string">C documentation</a></span> for <span class=""><span>Strings library</span></span> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/string" class="_attribution-link">https://en.cppreference.com/cpp/string</a>
+  </p>
+</div>

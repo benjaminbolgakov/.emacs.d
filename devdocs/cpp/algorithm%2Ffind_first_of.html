@@ -1,0 +1,160 @@
+   <h1 id="firstHeading" class="firstHeading">std::find_first_of</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/algorithm" title="cpp/header/algorithm">&lt;algorithm&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class InputIt, class ForwardIt &gt;
+InputIt find_first_of( InputIt first1, InputIt last1,
+                       ForwardIt first2, ForwardIt last2 );
+</pre>
+</td> <td> (1)</td> <td><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class InputIt, class ForwardIt, class BinaryPred &gt;
+InputIt find_first_of( InputIt first1, InputIt last1,
+                       ForwardIt first2, ForwardIt last2,
+                       BinaryPred p );
+</pre>
+</td> <td> (2)</td> <td><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span></td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class ExecutionPolicy, class ForwardIt1, class ForwardIt2 &gt;
+ForwardIt1 find_first_of( ExecutionPolicy&amp;&amp; policy,
+                          ForwardIt1 first1, ForwardIt1 last1,
+                          ForwardIt2 first2, ForwardIt2 last2 );
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class ExecutionPolicy,
+          class ForwardIt1, class ForwardIt2, class BinaryPred &gt;
+ForwardIt1 find_first_of( ExecutionPolicy&amp;&amp; policy,
+                          ForwardIt1 first1, ForwardIt last1,
+                          ForwardIt2 first2, ForwardIt2 last2,
+                          BinaryPred p );
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Searches the source range <code>[</code><code>first1</code><code>, </code><code>last1</code><code>)</code> for any of the elements in the target range <code>[</code><code>first2</code><code>, </code><code>last2</code><code>)</code>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Elements are compared using <span class="k">operator</span><span class="o">==</span>.</div> <div class="t-li1">
+<span class="t-li">2)</span> Elements are compared using the given binary predicate <code>p</code>.</div> <div class="t-li1">
+<span class="t-li">3,4)</span> Same as <span class="t-v">(1,2)</span>, but executed according to <code>policy</code>.</div> <div class="t-li1">
+ These overloads participate in overload resolution only if the value of the following expression is <code>true</code>: <table class="t-rev-begin"> <tr class="t-rev t-until-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-until-cxx20">(until C++20)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table>
+</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>first1, last1 </td> <td>- </td> <td>the pair of iterators defining the source <a href="../iterator#Ranges" title="cpp/iterator">range</a> </td>
+</tr> <tr class="t-par"> <td>first2, last2 </td> <td>- </td> <td>the pair of iterators defining the target <a href="../iterator#Ranges" title="cpp/iterator">range</a> </td>
+</tr> <tr class="t-par"> <td>p </td> <td>- </td> <td>binary predicate which returns ​<code>true</code> if the elements should be treated as equal. <br> <p>The signature of the predicate function should be equivalent to the following:</p>
+<p><span class="t-cc"><span class="kt">bool</span><span class="nf">pred</span><span class="p">(</span><span class="k">const</span><span class="n">Type1</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="k">const</span><span class="n">Type2</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span></span></p>
+<p>While the signature does not need to have <code>const &amp;</code>, the function must not modify the objects passed to it and must be able to accept all values of type (possibly const) <code>Type1</code> and <code>Type2</code> regardless of <a href="../language/value_category" title="cpp/language/value category">value category</a> (thus, <code>Type1 &amp;</code> is not allowed<span class="t-rev-inl t-since-cxx11"><span>, nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>).<br> The types <span class="n">Type1</span> and <span class="n">Type2</span> must be such that objects of types <span class="n">ForwardIt1</span> and <span class="n">ForwardIt2</span> can be dereferenced and then implicitly converted to <span class="n">Type1</span> and <span class="n">Type2</span> respectively. ​</p>
+</td>
+</tr> <tr class="t-par"> <td>policy </td> <td>- </td> <td>the <a href="execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">execution policy</a> to use </td>
+</tr> <tr class="t-par-hitem"> <td colspan="3">Type requirements </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>InputIt</code> must meet the requirements of <a href="../named_req/inputiterator" title="cpp/named req/InputIterator">LegacyInputIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>ForwardIt</code> must meet the requirements of <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>ForwardIt1</code> must meet the requirements of <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>ForwardIt2</code> must meet the requirements of <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>BinaryPred</code> must meet the requirements of <a href="../named_req/binarypredicate" title="cpp/named req/BinaryPredicate">BinaryPredicate</a>. </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>Iterator to the first element in the source range that matches an element from the target range.</p>
+<p>If the target range is empty or if no such element is found, <code>last1</code> is returned.</p>
+<h3 id="Complexity">Complexity</h3> <p>Given \(\scriptsize N_1\)N<sub>1</sub> as <code>std::distance(first1, last1)</code> and \(\scriptsize N_2\)N<sub>2</sub> as <code>std::distance(first2, last2)</code>:</p>
+<div class="t-li1">
+<span class="t-li">1)</span> At most \(\scriptsize N_1 \cdot N_2\)N<sub>1</sub>⋅N<sub>2</sub> comparisons using <span class="k">operator</span><span class="o">==</span>.</div> <div class="t-li1">
+<span class="t-li">2)</span> At most \(\scriptsize N_1 \cdot N_2\)N<sub>1</sub>⋅N<sub>2</sub> applications of <code>p</code>.</div> <div class="t-li1">
+<span class="t-li">3)</span> \(\scriptsize \mathcal{O}(N_1 \cdot N_2)\)𝓞(N<sub>1</sub>⋅N<sub>2</sub>) comparisons using <span class="k">operator</span><span class="o">==</span>.</div> <div class="t-li1">
+<span class="t-li">4)</span> \(\scriptsize \mathcal{O}(N_1 \cdot N_2)\)𝓞(N<sub>1</sub>⋅N<sub>2</sub>) applications of <code>p</code>.</div> <h3 id="Exceptions">Exceptions</h3> <span class="t-li">3,4)</span> During the execution process: <ul>
+<li>If the temporary memory resources required for parallelization are not available, <a href="../memory/new/bad_alloc" title="cpp/memory/new/bad alloc"><code>std::bad_alloc</code></a> is thrown.</li> <li>If an uncaught exception is thrown while accessing objects via an algorithm argument, the behavior is determined by the execution policy (for <a href="execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">standard policies</a>, <a href="../error/terminate" title="cpp/error/terminate"><code>std::terminate</code></a> is invoked).</li>
+</ul> <h3 id="Possible_implementation">Possible implementation</h3> <table class="eq-fun-cpp-table"> <tr> <th>
+<a href="#Version_1">find_first_of (1)</a> </th>
+</tr> <tr> <td> <pre data-language="c">template&lt;class InputIt, class ForwardIt&gt;
+InputIt find_first_of(InputIt first1, InputIt last1,
+                      ForwardIt first2, ForwardIt last2)
+{
+    for (; first1 != last1; ++first1)
+        for (ForwardIt it = first2; it != last2; ++it)
+            if (*first1 == *it)
+                return first1;
+    return last1;
+}
+</pre> </td>
+</tr> <tr> <th>
+<a href="#Version_2">find_first_of (2)</a> </th>
+</tr> <tr> <td> <pre data-language="c">template&lt;class InputIt, class ForwardIt, class BinaryPred&gt;
+InputIt find_first_of(InputIt first1, InputIt last1,
+                      ForwardIt first2, ForwardIt last2,
+                      BinaryPred p)
+{
+    for (; first1 != last1; ++first1)
+        for (ForwardIt it = first2; it != last2; ++it)
+            if (p(*first1, *it))
+                return first1;
+    return last1;
+}
+</pre> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example">
+<p>The following code searches for any of specified integers in a vector of integers:</p>
+<pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+auto print_sequence = [](const auto id, const auto&amp; seq, int pos = -1)
+{
+    std::cout &lt;&lt; id &lt;&lt; "{ ";
+    for (int i{}; const auto&amp; e : seq)
+    {
+        const bool mark{i == pos};
+        std::cout &lt;&lt; (i++ ? ", " : "");
+        std::cout &lt;&lt; (mark ? "[ " : "") &lt;&lt; e &lt;&lt; (mark ? " ]" : "");
+    }
+    std::cout &lt;&lt; " }\n";
+};
+
+int main()
+{
+    const std::vector&lt;int&gt; v{0, 2, 3, 25, 5};
+    const auto t1 = {19, 10, 3, 4};
+    const auto t2 = {1, 6, 7, 9};
+    
+    auto find_any_of = [](const auto&amp; v, const auto&amp; t)
+    {
+        const auto result = std::find_first_of(v.begin(), v.end(),
+                                               t.begin(), t.end());
+        if (result == v.end())
+        {
+            std::cout &lt;&lt; "No elements of v are equal to any element of ";
+            print_sequence("t = ", t);
+            print_sequence("v = ", v);
+        }
+        else
+        {
+            const auto pos = std::distance(v.begin(), result);
+            std::cout &lt;&lt; "Found a match (" &lt;&lt; *result &lt;&lt; ") at position " &lt;&lt; pos;
+            print_sequence(", where t = ", t);
+            print_sequence("v = ", v, pos);
+        }
+    };
+    
+    find_any_of(v, t1);
+    find_any_of(v, t2);
+}
+</pre> <p>Output:</p>
+<pre data-language="c">Found a match (3) at position 2, where t = { 19, 10, 3, 4 }
+v = { 0, 2, [ 3 ], 25, 5 }
+No elements of v are equal to any element of t = { 1, 6, 7, 9 }
+v = { 0, 2, 3, 25, 5 }
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue576">LWG 576</a> </td> <td>C++98 </td> <td>
+<code>first1</code> and <code>last1</code> needed to be <a href="../named_req/forwarditerator" title="cpp/named req/ForwardIterator">LegacyForwardIterators</a> </td> <td>they only need to be <a href="../named_req/inputiterator" title="cpp/named req/InputIterator">LegacyInputIterators</a> </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue1205">LWG 1205</a> </td> <td>C++98 </td> <td>the return value was unclear if the target range is empty </td> <td>returns <code>last1</code> in this case </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="ranges/find_first_of" title="cpp/algorithm/ranges/find first of"> <span class="t-lines"><span>ranges::find_first_of</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>searches for any one of a set of elements<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="find" title="cpp/algorithm/find"> <span class="t-lines"><span>find</span><span>find_if</span><span>find_if_not</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td rowspan="2">finds the first element satisfying specific criteria<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/find" title="cpp/algorithm/ranges/find"> <span class="t-lines"><span>ranges::find</span><span>ranges::find_if</span><span>ranges::find_if_not</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/algorithm/find_first_of" class="_attribution-link">https://en.cppreference.com/cpp/algorithm/find_first_of</a>
+  </p>
+</div>

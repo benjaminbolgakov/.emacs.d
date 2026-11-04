@@ -1,0 +1,36 @@
+   <h1 id="firstHeading" class="firstHeading">iter_move(ranges::zip_view::<i>iterator</i>)</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">friend constexpr auto iter_move( const iterator&amp; i ) noexcept(/* see below */);
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>Equivalent to: <code>return /*tuple-transform*/(ranges::iter_move, i.current_);</code>, where <a href="../iterator#Data_members" title="cpp/ranges/zip view/iterator"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>current_</i></code></a> denotes the underlying tuple-like object that holds iterators to elements of adapted views.</p>
+<p>This function is not visible to ordinary <a href="../../../language/unqualified_lookup" title="cpp/language/unqualified lookup">unqualified</a> or <a href="../../../language/qualified_lookup" title="cpp/language/qualified lookup">qualified lookup</a>, and can only be found by <a href="../../../language/adl" title="cpp/language/adl">argument-dependent lookup</a> when <code>zip_view::<i>iterator</i>&lt;Const&gt;</code> is an associated class of the arguments.</p>
+<h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>i </td> <td>- </td> <td>iterator </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>std::move(*i)</code> if <code>*i</code> is an lvalue reference, otherwise <code>*i</code></p>
+<h3 id="Exceptions">Exceptions</h3> <div class="t-noexcept-full">
+<a href="../../../language/noexcept_spec" title="cpp/language/noexcept spec"><code>noexcept</code></a> specification: <div> <pre data-language="c">noexcept(
+    (
+        noexcept
+        (
+            ranges::iter_move
+            (
+                declval&lt;const ranges::iterator_t&lt;/*maybe-const*/&lt;Const, Views&gt;&gt;&amp;&gt;()
+            )
+        )
+        and ...
+    )
+    and
+    (
+        std::is_nothrow_move_constructible_v
+        &lt;
+            ranges::range_rvalue_reference_t&lt;/*maybe-const*/&lt;Const, Views&gt;&gt;
+        &gt;
+        and ...
+    )
+)
+</pre>
+</div>
+</div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/zip_view/iterator/iter_move" class="_attribution-link">https://en.cppreference.com/cpp/ranges/zip_view/iterator/iter_move</a>
+  </p>
+</div>

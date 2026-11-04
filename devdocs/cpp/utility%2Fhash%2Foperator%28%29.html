@@ -1,0 +1,55 @@
+   <h1 id="firstHeading" class="firstHeading">std::<span class="t-dsc-small">hash&lt;Key&gt;::</span>operator()</h1>            <p>Specializations of <code><a href="../hash" title="cpp/utility/hash">std::hash</a></code> should define an <code>operator()</code> that:</p>
+<ul>
+<li>Takes a single argument <code>key</code> of type <code>Key</code>.</li> <li>Returns a value of type <code>std::size_t</code> that represents the hash value of <code>key</code>.</li> <li>For two parameters <code>k1</code> and <code>k2</code> that are equal, <code>std::hash&lt;Key&gt;()(k1) == std::hash&lt;Key&gt;()(k2)</code>.</li> <li>For two different parameters <code>k1</code> and <code>k2</code> that are not equal, the probability that <code>std::hash&lt;Key&gt;()(k1) == std::hash&lt;Key&gt;()(k2)</code> should be very small, approaching <code>1.0 / std::numeric_limits&lt;size_t&gt;::max()</code>.</li>
+</ul>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>key </td> <td>- </td> <td>the object to be hashed </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p>A <code>std::size_t</code> representing the hash value.</p>
+<h3 id="Exceptions">Exceptions</h3> <p>Hash functions should not throw exceptions.</p>
+<h3 id="Example">Example</h3> <div class="t-example">
+<p>The following code shows how to specialize the <code><a href="../hash" title="cpp/utility/hash">std::hash</a></code> template for a custom class. The hash function uses <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function" class="extiw" title="enwiki:Fowler–Noll–Vo hash function">Fowler–Noll–Vo</a> hash algorithm.</p>
+<pre data-language="c">#include &lt;cstddef&gt;
+#include &lt;functional&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+struct Employee
+{
+    std::string name;
+    std::size_t ID;
+};
+
+static_assert([](auto... sz) { return ((sizeof(std::size_t) == sz) or ...); }(4, 8));
+
+namespace std
+{
+    template &lt;&gt;
+    class hash&lt;Employee&gt;
+    {
+    public:
+        static constexpr std::size_t operator()(const Employee&amp; employee)
+        {
+             // Computes the hash of an employee using Fowler-Noll-Vo-1a hash function.
+             constexpr std::size_t prime{sizeof(size_t) &lt; 8 ? 0x01000193 : 0x100000001b3};
+             std::size_t result{sizeof(size_t) &lt; 8 ? 0x811c9dc5 : 0xcbf29ce484222325};
+
+             for (auto ch : employee.name)
+                 result = (result ^ ch) * prime;
+
+             return result ^ (employee.ID &lt;&lt; 1);
+         }
+    };
+}
+
+int main()
+{
+    std::hash&lt;Employee&gt; hash_fn;
+    std::cout &lt;&lt; std::hex &lt;&lt; hash_fn(Employee{"Zaphod Beeblebrox", 42}) &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">6fbb35ba06f7b013
+</pre> </div>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/hash/operator()" class="_attribution-link">https://en.cppreference.com/cpp/utility/hash/operator()</a>
+  </p>
+</div>

@@ -1,0 +1,14 @@
+   <h1 id="firstHeading" class="firstHeading">std::hash&lt;std::shared_ptr&gt;</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">template&lt; class T &gt;
+struct hash&lt;std::shared_ptr&lt;T&gt;&gt;;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>The template specialization of <code><a href="../../utility/hash" title="cpp/utility/hash">std::hash</a></code> for <code>std::shared_ptr&lt;T&gt;</code> allows users to obtain hashes of objects of type <code>std::shared_ptr&lt;T&gt;</code>.</p>
+<p>For a given <code>std::shared_ptr&lt;T&gt; p</code>, this specialization ensures that <code>std::hash&lt;std::shared_ptr&lt;T&gt;&gt;()(p) == std::hash&lt;decltype(p.get())&gt;()(p.get())</code>.</p>
+<h3 id="Example">Example</h3>  <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../utility/hash" title="cpp/utility/hash"> <span class="t-lines"><span>hash</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>hash function object <br> <span class="t-mark">(class template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/shared_ptr/hash" class="_attribution-link">https://en.cppreference.com/cpp/memory/shared_ptr/hash</a>
+  </p>
+</div>

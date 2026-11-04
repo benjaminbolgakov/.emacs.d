@@ -1,0 +1,120 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::subrange&lt;I,S,K&gt;::operator PairLike</h1>            <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; /*different-from*/&lt;subrange&gt; PairLike &gt;
+    requires /*pair-like-convertible-from*/&lt;PairLike, const I&amp;, const S&amp;&gt;
+constexpr operator PairLike() const;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr> <tr class="t-dcl-h"> <td> Helper concepts</td> <td></td> <td></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class T &gt;
+concept /*pair-like*/ = /* see description */;
+</pre>
+</td> <td> (2)</td> <td class="t-dcl-nopad"><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span></td> </tr> <tr class="t-dcl"> <td>
+<pre data-language="c">template&lt; class T, class U, class V &gt;
+concept /*pair-like-convertible-from*/ = /* see description */;
+</pre>
+</td> <td> (3)</td> <td class="t-dcl-nopad"><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span></td> </tr>  </table> <div class="t-li1">
+<span class="t-li">1)</span> Converts <code>subrange</code> to a pair-like type.</div> <div class="t-li1">
+ For the definition of <span class="cm">/*different-from*/</span>, see <code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i><a href="../../ranges#different-from" title="cpp/ranges">different-from</a></i></code> ﻿.</div> <div class="t-li1">
+<span class="t-li">2)</span> Determines whether a type is <i>pair-like</i> ﻿. <table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>Equivalent to:</p>
+<pre data-language="c">template&lt; class T &gt;
+concept /*pair-like*/ =
+    !std::is_reference_v&lt;T&gt; &amp;&amp; requires(T t)
+    {
+        typename std::tuple_size&lt;T&gt;::type;
+        requires std::derived_from&lt;std::tuple_size&lt;T&gt;,
+                                   std::integral_constant&lt;std::size_t, 2&gt;&gt;;
+        typename std::tuple_element_t&lt;0, std::remove_const_t&lt;T&gt;&gt;;
+        typename std::tuple_element_t&lt;1, std::remove_const_t&lt;T&gt;&gt;;
+        { std::get&lt;0&gt;(t) } -&gt; std::convertible_to&lt;
+                                  const std::tuple_element_t&lt;0, T&gt;&amp;&gt;;
+        { std::get&lt;1&gt;(t) } -&gt; std::convertible_to&lt;
+                                  const std::tuple_element_t&lt;1, T&gt;&amp;&gt;;
+    };
+</pre> </td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>This concept is equivalent to the library-wide exposition-only concept <a href="../../utility/tuple/tuple-like" title="cpp/utility/tuple/tuple-like"><code>pair-like</code></a>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table>
+</div> <div class="t-li1">
+<span class="t-li">3)</span> Determines whether a pair-like type can be constructed from two values of possibly different given types. <table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>Equivalent to:</p>
+<pre data-language="c">template&lt; class T, class U, class V &gt;
+concept /*pair-like-convertible-from*/ =
+    !ranges::range&lt;T&gt; &amp;&amp; /*pair-like*/&lt;T&gt; &amp;&amp;
+    std::constructible_from&lt;T, U, V&gt; &amp;&amp;
+    /*convertible-to-non-slicing*/&lt;U, std::tuple_element_t&lt;0, T&gt;&gt; &amp;&amp;
+    std::convertible_to&lt;V, std::tuple_element_t&lt;1, T&gt;&gt;;
+</pre> </td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>Equivalent to:</p>
+<pre data-language="c">template&lt; class T, class U, class V &gt;
+concept /*pair-like-convertible-from*/ =
+    !ranges::range&lt;T&gt; &amp;&amp; !std::is_reference_v&lt;T&gt; &amp;&amp; /*pair-like*/&lt;T&gt; &amp;&amp;
+    std::constructible_from&lt;T, U, V&gt; &amp;&amp;
+    /*convertible-to-non-slicing*/&lt;U, std::tuple_element_t&lt;0, T&gt;&gt; &amp;&amp;
+    std::convertible_to&lt;V, std::tuple_element_t&lt;1, T&gt;&gt;;
+</pre> </td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table>
+</div>  <h3 id="Return_value">Return value</h3> <p><code><span class="n">PairLike</span><span class="p">(</span><i><a href="../subrange#begin" title="cpp/ranges/subrange">begin_</a></i> ﻿<span class="p">,</span> <i><a href="../subrange#end" title="cpp/ranges/subrange">end_</a></i> ﻿<span class="p">)</span></code></p>
+<h3 id="Notes">Notes</h3> <p>Following types in the standard library are pair-like:</p>
+<ul>
+<li>
+<span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">U</span><span class="o">&gt;</span>
+</li> <li>
+<span class="n">std</span><span class="o">::</span><span class="n">tuple</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">U</span><span class="o">&gt;</span>
+</li> <li>
+<span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="mi">2</span><span class="o">&gt;</span>
+</li> <li>
+<span class="n">std</span><span class="o">::</span><span class="n">ranges</span><span class="o">::</span><span class="n">subrange</span><span class="o">&lt;</span><span class="n">I</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">K</span><span class="o">&gt;</span>
+</li>
+</ul> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <ul><li>
+<span class="n">std</span><span class="o">::</span><span class="n">complex</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
+</li></ul> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>A program-defined type derived from one of these types can be a pair-like type, if</p>
+<ul>
+<li>
+<a href="../../utility/tuple_size" title="cpp/utility/tuple size"><code>std::tuple_size</code></a> and <a href="../../utility/tuple_element" title="cpp/utility/tuple element"><code>std::tuple_element</code></a> are correctly specialized for it, and</li> <li>calls to <code>std::get&lt;0&gt;</code> and <code>std::get&lt;1&gt;</code> for its value are well-formed.</li>
+</ul> </td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> </table> <p>Since <code>subrange</code> specializations are <a href="../range" title="cpp/ranges/range"><code>range</code></a> types, conversion to them are not performed via this conversion function.</p>
+<p><code><a href="../../container/array" title="cpp/container/array">std::array</a></code> specializations cannot be converted from <code>subrange</code>, since they are <a href="../range" title="cpp/ranges/range"><code>range</code></a> types.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;ranges&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+
+using striter = std::string::const_iterator;
+
+using legacy_strview = std::pair&lt;striter, striter&gt;;
+
+void legacy_print(legacy_strview p)
+{
+    for (; p.first != p.second; ++p.first)
+        std::cout &lt;&lt; *p.first &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+}
+
+int main()
+{
+    std::string dat{"ABCDE"};
+    for (auto v{std::ranges::subrange{dat}}; v; v = {v.begin(), v.end() - 1})
+    {
+        /*...*/
+        legacy_print(legacy_strview{v});
+    }
+}
+</pre> <p>Output:</p>
+<pre data-language="c">A B C D E 
+A B C D 
+A B C 
+A B 
+A
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../../utility/tuple/tuple-like" title="cpp/utility/tuple/tuple-like"><i><span class="t-lines"><span>tuple-like</span><span>pair-like</span></span></i></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>specifies that a type implemented the <i>tuple protocol</i><br>(<a href="../../utility/tuple/get" title="cpp/utility/tuple/get"><code>std::get</code></a>, <a href="../../utility/tuple_element" title="cpp/utility/tuple element"><code>std::tuple_element</code></a>, <a href="../../utility/tuple_size" title="cpp/utility/tuple size"><code>std::tuple_size</code></a>)<br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition-only concept*</span>)</span> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/subrange/operator_PairLike" class="_attribution-link">https://en.cppreference.com/cpp/ranges/subrange/operator_PairLike</a>
+  </p>
+</div>

@@ -1,0 +1,61 @@
+   <h1 id="firstHeading" class="firstHeading">
+<code>break</code> statement</h1>            <p>Terminates specific enclosing statements.</p>
+<h3 id="Syntax">Syntax</h3> <table class="t-sdsc-begin">  <tr class="t-sdsc"> <td class="t-sdsc-nopad">
+<span class="t-spar">attr</span> ﻿<span class="t-mark">(optional)</span> <code>break</code> <code>;</code> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr> 
+</table> <table class="t-par-begin"> <tr class="t-par"> <td>
+<span class="t-spar">attr</span> </td> <td>- </td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> any number of <a href="attributes" title="cpp/language/attributes">attributes</a> </td>
+</tr>
+</table> <h3 id="Explanation">Explanation</h3> <p><span class="k">break</span> statements must be <a href="statements#Substatements" title="cpp/language/statements">enclosed</a> by any of the following statements:</p>
+<ul><li>
+<a href="statements#Iteration_statements" title="cpp/language/statements">iteration statements</a> (<a href="for" title="cpp/language/for"><code>for</code></a>, <a href="range-for" title="cpp/language/range-for">range-<code>for</code></a>, <a href="while" title="cpp/language/while"><code>while</code></a> or <a href="do" title="cpp/language/do"><code>do-while</code></a>)</li></ul> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <ul><li>
+<a href="statements#Expansion_statements" title="cpp/language/statements">expansion statements</a> (<a href="template_for" title="cpp/language/template for"><code>template for</code></a>)</li></ul> </td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <ul><li>
+<a href="switch" title="cpp/language/switch"><code>switch</code></a> statements</li></ul> <p>Executing a <span class="k">break</span> statement causes termination of the innermost such enclosing statement, then control passes to the statement following the terminated statement (if any).</p>
+<h3 id="Notes">Notes</h3> <p>As with any block exit, all automatic storage objects declared in enclosing compound statement or in the <span class="t-spar">condition</span> of a loop/switch are destroyed, in reverse order of construction, before the execution of the first line following the enclosing loop.</p>
+<p>A <span class="k">break</span> statement cannot be used to break out of multiple nested loops. The <a href="goto" title="cpp/language/goto"><code>goto</code></a> statement may be used for this purpose.</p>
+<h3 id="Keywords">Keywords</h3> <p><a href="../keyword/break" title="cpp/keyword/break"><code>break</code></a></p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+
+int main()
+{
+    int i = 2;
+    switch (i)
+    {
+        case 1: std::cout &lt;&lt; "1";   // &lt;---- maybe warning: fall through
+        case 2: std::cout &lt;&lt; "2";   // execution starts at this case label (+warning)
+        case 3: std::cout &lt;&lt; "3";   // &lt;---- maybe warning: fall through
+        case 4:                     // &lt;---- maybe warning: fall through
+        case 5: std::cout &lt;&lt; "45";  //
+                break;              // execution of subsequent statements is terminated
+        case 6: std::cout &lt;&lt; "6";
+    }
+    std::cout &lt;&lt; '\n';
+    
+    for (char c = 'a'; c &lt; 'c'; c++)
+    {
+        for (int i = 0; i &lt; 5; i++)      // only this loop is affected by break
+        {                                //
+            if (i == 2)                  //
+                break;                   //
+            std::cout &lt;&lt; c &lt;&lt; i &lt;&lt; ' ';  //
+        }
+    }
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">2345
+a0 a1 b0 b1
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span><code>[[<a href="attributes/fallthrough" title="cpp/language/attributes/fallthrough">fallthrough</a>]]</code></span></span></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx17">(C++17)</span></span></span></div> </td> <td>indicates that the fall through from the previous case label is intentional and should not be diagnosed by a compiler that warns on fall-through<br><span class="t-mark">(attribute specifier)</span> </td>
+</tr> <tr class="t-dsc"> <td colspan="2">
+<span><a href="https://en.cppreference.com/c/language/break" title="c/language/break">C documentation</a></span> for <code>break</code> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/language/break" class="_attribution-link">https://en.cppreference.com/cpp/language/break</a>
+  </p>
+</div>

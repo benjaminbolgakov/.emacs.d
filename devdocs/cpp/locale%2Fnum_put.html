@@ -1,0 +1,95 @@
+   <h1 id="firstHeading" class="firstHeading">std::num_put</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">template&lt; 
+    class CharT,
+    class OutputIt = std::ostreambuf_iterator&lt;CharT&gt;
+&gt; class num_put;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>Class <code>std::num_put</code> encapsulates the rules for formatting numeric values as strings. Specifically, the types <span class="kt">bool</span>, <span class="kt">long</span>, <span class="kt">unsigned</span><span class="kt">long</span><span class="t-rev-inl t-since-cxx11"><span>, <span class="kt">long</span><span class="kt">long</span>, <span class="kt">unsigned</span><span class="kt">long</span><span class="kt">long</span></span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>, <span class="kt">double</span>, <span class="kt">long</span><span class="kt">double</span>, <span class="kt">void</span><span class="o">*</span>, and of all types implicitly convertible to these (such as <span class="kt">int</span> or <span class="kt">float</span>) are supported. The standard formatting output operators (such as <code>cout &lt;&lt; n;</code>) use the <code>std::num_put</code> facet of the I/O stream's locale to generate text representation of numbers.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/a/a5/std-num_put-inheritance.svg" decoding="async" width="277" height="45" class="mw-file-element" usemap="#ImageMap_866186866defffa2"></span><map name="ImageMap_866186866defffa2"><area href="/cpp/locale/locale/facet" shape="rect" coords="5,6,107,39" alt="cpp/locale/locale/facet" title="cpp/locale/locale/facet"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div> <p>If a <code>std::num_put</code> specialization is not guaranteed to be provided by the standard library (see below), the behaviors of its <code><a href="num_put/put" title="cpp/locale/num put/put">put()</a></code> and <code><a href="num_put/put" title="cpp/locale/num put/put">do_put()</a></code> are not guaranteed as specified.</p>
+<h3 id="Specializations">Specializations</h3> <p>The standard library is guaranteed to provide the following specializations (they are <a href="locale" title="cpp/locale/locale">required to be implemented by any locale object</a>):</p>
+<table class="t-dsc-begin"> <tr class="t-dsc-header"> <th colspan="2">Defined in header <code><a href="../header/locale" title="cpp/header/locale">&lt;locale&gt;</a></code>  </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">num_put</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> </td> <td>creates narrow string representations of numbers </td>
+</tr> <tr class="t-dsc"> <td>
+<span class="n">std</span><span class="o">::</span><span class="n">num_put</span><span class="o">&lt;</span><span class="kt">wchar_t</span><span class="o">&gt;</span> </td> <td>creates wide string representations of numbers </td>
+</tr> </table> <p>In addition, the standard library is also guaranteed to provide every specialization that satisfies the following type requirements:</p>
+<ul>
+<li>
+<code>CharT</code> is one of <ul>
+<li>
+<span class="kt">char</span>,</li> <li>
+<span class="kt">wchar_t</span>, and</li> <li>any other implementation-defined <a href="../string" title="cpp/string">character container type</a> that meets the requirements for a character on which any of the <a href="../io" title="cpp/io">iostream components</a> can be instantiated; and</li>
+</ul>
+</li> <li>
+<code>OutputIt</code> must meet the requirements of <a href="../named_req/outputiterator" title="cpp/named req/OutputIterator">LegacyOutputIterator</a>.</li>
+</ul> <h3 id="Nested_types">Nested types</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Type </th> <th>Definition </th>
+</tr> <tr class="t-dsc"> <td>
+<code>char_type</code> </td> <td>
+<code>CharT</code> </td>
+</tr> <tr class="t-dsc"> <td>
+<code>iter_type</code> </td> <td>
+<code>OutputIt</code> </td>
+</tr> </table> <h3 id="Data_members">Data members</h3> <table class="t-dsc-begin"> <tr class="t-dsc-hitem"> <th>Member </th> <th>Description </th>
+</tr> <tr class="t-dsc"> <td>
+<span class="t-dsc-small"><code><a href="locale/id" title="cpp/locale/locale/id">std::locale::id</a></code></span> <code>id</code> <span class="t-cmark">[static]</span> </td> <td>the identifier of the <a href="locale/facet#Facet_class" title="cpp/locale/locale/facet">facet</a> </td>
+</tr> </table> <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="num_put/num_put" title="cpp/locale/num put/num put"> <span class="t-lines"><span>(constructor)</span></span></a></div> </td> <td>constructs a new <code>num_put</code> facet <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="num_put/put" title="cpp/locale/num put/put"> <span class="t-lines"><span>put</span></span></a></div> </td> <td>invokes <code>do_put</code> <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <h3 id="Protected_member_functions">Protected member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="num_put/~num_put" title="cpp/locale/num put/~num put"> <span class="t-lines"><span>(destructor)</span></span></a></div> </td> <td>destructs a <code>num_put</code> facet <br> <span class="t-mark">(protected member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="num_put/put" title="cpp/locale/num put/put"> <span class="t-lines"><span>do_put</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>formats a number and writes to output stream <br> <span class="t-mark">(virtual protected member function)</span> </td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;locale&gt;
+#include &lt;string&gt;
+
+int main()
+{
+    double n = 1234567.89;
+    std::cout.imbue(std::locale("de_DE.UTF-8"));
+    std::cout &lt;&lt; "Direct conversion to string:\n"
+              &lt;&lt; std::to_string(n) &lt;&lt; '\n'
+              &lt;&lt; "Output using a german locale:\n"
+              &lt;&lt; std::fixed &lt;&lt; n &lt;&lt; '\n'
+              &lt;&lt; "Output using an american locale:\n";
+    
+    // use the facet directly
+    std::cout.imbue(std::locale("en_US.UTF-8"));
+    auto&amp; f = std::use_facet&lt;std::num_put&lt;char&gt;&gt;(std::cout.getloc());
+    f.put(std::ostreambuf_iterator&lt;char&gt;(std::cout), std::cout, ' ', n);
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">Direct conversion to string:
+1234567.890000
+Output using a german locale:
+1.234.567,890000
+Output using an american locale:
+1,234,567.890000
+</pre> </div> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue427">LWG 427</a> </td> <td>C++98 </td> <td>
+<code>num_put</code> was guaranteed to accept any <code>CharT</code> that<br>meets the requirements for a character on which<br>any of the iostream components can be instantiated </td> <td>only guarantees to accept <span class="kt">char</span>,<br><span class="kt">wchar_t</span> and other implementation-<br>defined character types </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2392">LWG 2392</a> </td> <td>C++98 </td> <td>only character type <code>CharT</code> could be<br>guaranteed to be accepted by <code>num_put</code> </td> <td>can guarantee to accept implementation-<br>defined character container types </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="numpunct" title="cpp/locale/numpunct"> <span class="t-lines"><span>numpunct</span></span></a></div> </td> <td>defines numeric punctuation rules <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="num_get" title="cpp/locale/num get"> <span class="t-lines"><span>num_get</span></span></a></div> </td> <td>parses numeric values from an input character sequence <br> <span class="t-mark">(class template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../string/basic_string/to_string" title="cpp/string/basic string/to string"> <span class="t-lines"><span>to_string</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>converts an integral or floating-point value to <code>string</code> <br> <span class="t-mark">(function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../string/basic_string/to_wstring" title="cpp/string/basic string/to wstring"> <span class="t-lines"><span>to_wstring</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>converts an integral or floating-point value to <code>wstring</code> <br> <span class="t-mark">(function)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/locale/num_put" class="_attribution-link">https://en.cppreference.com/cpp/locale/num_put</a>
+  </p>
+</div>

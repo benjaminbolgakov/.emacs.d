@@ -1,0 +1,213 @@
+   <h1 id="firstHeading" class="firstHeading">Increment/decrement operators</h1>           <div id="mw-content-text"> <p>Increment/decrement operators increment or decrement the value of the object.</p>
+<table class="wikitable"> <tr> <th rowspan="2">Operator name </th> <th rowspan="2">Syntax </th> <th rowspan="2">
+<a href="operators" title="cpp/language/operators">Over​load​able</a> </th> <th colspan="2">Prototype examples (for <span class="k">class</span><span class="nc">T</span>) </th>
+</tr> <tr> <th>Inside class definition </th> <th>Outside class definition </th>
+</tr> <tr> <td>pre-increment </td> <td>
+<code>++a</code> </td> <td class="table-yes">Yes </td> <td>
+<code>T&amp; T::operator++();</code> </td> <td>
+<code>T&amp; operator++(T&amp; a);</code> </td>
+</tr> <tr> <td>pre-decrement </td> <td>
+<code>--a</code> </td> <td class="table-yes">Yes </td> <td>
+<code>T&amp; T::operator--();</code> </td> <td>
+<code>T&amp; operator--(T&amp; a);</code> </td>
+</tr> <tr> <td>post-increment </td> <td>
+<code>a++</code> </td> <td class="table-yes">Yes </td> <td>
+<code>T T::operator++(int);</code> </td> <td>
+<code>T operator++(T&amp; a, int);</code> </td>
+</tr> <tr> <td>post-decrement </td> <td>
+<code>a--</code> </td> <td class="table-yes">Yes </td> <td>
+<code>T T::operator--(int);</code> </td> <td>
+<code>T operator--(T&amp; a, int);</code> </td>
+</tr> <tr> <td colspan="5"> <b>Notes</b><br> <ul>
+<li>Prefix versions of the built-in operators return <i>references</i> and postfix versions return <i>values</i>, and typical <a href="operators" title="cpp/language/operators">user-defined overloads</a> follow the pattern so that the user-defined operators can be used in the same manner as the built-ins. However, in a user-defined operator overload, any type can be used as return type (including <span class="kt">void</span>).</li> <li>The <span class="kt">int</span> parameter is a dummy parameter used to differentiate between prefix and postfix versions of the operators. When the user-defined postfix operator is called, the value passed in that parameter is always zero, although it may be changed by calling the operator using function call notation (e.g., <code>a.operator++(2)</code> or <code>operator++(a, 2)</code>).</li>
+</ul> </td>
+</tr>
+</table>  <h3 id="Prefix_operators">Prefix operators</h3> <p>The prefix increment and decrement expressions have the form</p>
+<table class="t-sdsc-begin">  <tr class="t-sdsc"> <td class="t-sdsc-nopad">
+<code>++</code> <span class="t-spar">expression</span> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr>  <tr class="t-sdsc"> <td class="t-sdsc-nopad">
+<code>--</code> <span class="t-spar">expression</span> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr> 
+</table> <div class="t-li1">
+<span class="t-li">1)</span> prefix increment (pre-increment)</div> <div class="t-li1">
+<span class="t-li">2)</span> prefix decrement (pre-decrement)</div> <h4 id="Built-in_prefix_operators">Built-in prefix operators</h4> <div class="t-li1">
+<span class="t-li">1)</span> The expression <code>++x</code> is equivalent to <code>x += 1</code>, with the following exceptions: <table class="t-rev-begin"> <tr class="t-rev t-until-cxx17">
+<td> <ul><li>If the type of <span class="t-spar">expression</span> is (possibly volatile-qualified) <span class="kt">bool</span>, <span class="t-spar">expression</span> is set to <code>true</code>. Such a increment is deprecated.</li></ul> </td> <td><span class="t-mark-rev t-until-cxx17">(until C++17)</span></td>
+</tr> <tr class="t-rev t-since-cxx17">
+<td> <ul><li>If the type of <span class="t-spar">expression</span> is (possibly cv-qualified) <span class="kt">bool</span>, the program is ill-formed.</li></ul> </td> <td><span class="t-mark-rev t-since-cxx17">(since C++17)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <ul><li>If the type of <span class="t-spar">expression</span> is volatile-qualified, the increment is deprecated.</li></ul> </td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table>
+</div> <span class="t-li">2)</span> The expression <code>--x</code> is equivalent to <code>x -= 1</code>, with the following exceptions: <ul><li>If the type of <span class="t-spar">expression</span> is (possibly cv-qualified) <span class="kt">bool</span>, the program is ill-formed.</li></ul> <table class="t-rev-begin"> <tr class="t-rev t-since-cxx20">
+<td> <ul><li>If the type of <span class="t-spar">expression</span> is volatile-qualified, the decrement is deprecated.</li></ul> </td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table> <h4 id="Overloads">Overloads</h4> <p>In <a href="overload_resolution#Call_to_an_overloaded_operator" title="cpp/language/overload resolution">overload resolution against user-defined operators</a>, for every optionally volatile-qualified arithmetic type <code>A</code> other than <span class="kt">bool</span>, and for every optionally volatile-qualified pointer <code>P</code> to optionally cv-qualified object type, the following function signatures participate in overload resolution:</p>
+<table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">A&amp; operator++(A&amp;)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">bool&amp; operator++(bool&amp;)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark">(deprecated)</span><span class="t-mark-rev t-until-cxx17">(until C++17)</span> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">P&amp; operator++(P&amp;)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">A&amp; operator--(A&amp;)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">P&amp; operator--(P&amp;)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <h3 id="Postfix_operators">Postfix operators</h3> <p>The postfix increment and decrement expressions have the form</p>
+<table class="t-sdsc-begin">  <tr class="t-sdsc"> <td class="t-sdsc-nopad">
+<span class="t-spar">expression</span> <code>++</code> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr>  <tr class="t-sdsc"> <td class="t-sdsc-nopad">
+<span class="t-spar">expression</span> <code>--</code> </td> <td class="t-sdsc-nopad"> </td> <td class="t-sdsc-nopad"> </td>
+</tr> 
+</table> <div class="t-li1">
+<span class="t-li">1)</span> postfix increment (post-increment)</div> <div class="t-li1">
+<span class="t-li">2)</span> postfix decrement (post-decrement)</div> <h4 id="Built-in_postfix_operators">Built-in postfix operators</h4> <p>The result of postfix increment or decrement is the value obtained by applying the <a href="implicit_conversion#Lvalue-to-rvalue_conversion" title="cpp/language/implicit conversion">lvalue-to-rvalue conversion</a> to <span class="t-spar">expression</span> (before modification). The type of the result is the cv-unqualified version of the type of <span class="t-spar">expression</span>.</p>
+<p>If <span class="t-spar">expression</span> is not a modifiable lvalue of an arithmetic type<span class="t-rev-inl t-since-cxx17"><span> other than (possibly cv-qualified) <span class="kt">bool</span></span><span><span class="t-mark-rev t-since-cxx17">(since C++17)</span></span></span>, or a pointer to a complete object type, the program is ill-formed.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx20">
+<td> <p>If the type of <span class="t-spar">expression</span> is volatile-qualified, the increment or decrement is deprecated.</p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table> <div class="t-li1">
+<span class="t-li">1)</span> The value of <span class="t-spar">expression</span> is modified as if it were the operand of the prefix <code>++</code> operator.</div> <div class="t-li1">
+<span class="t-li">2)</span> The value of <span class="t-spar">expression</span> is modified as if it were the operand of the prefix <code>--</code> operator.</div> <p>The value computation of a postfix increment or decrement is <a href="eval_order" title="cpp/language/eval order">sequenced before</a> the modification of <span class="t-spar">expression</span>. With respect to an indeterminately-sequenced function call, the operation of a postfix increment or decrement is a single evaluation.</p>
+<h4 id="Overloads_2">Overloads</h4> <p>In <a href="overload_resolution#Call_to_an_overloaded_operator" title="cpp/language/overload resolution">overload resolution against user-defined operators</a>, for every optionally volatile-qualified arithmetic type <code>A</code> other than <span class="kt">bool</span>, and for every optionally volatile-qualified pointer <code>P</code> to optionally cv-qualified object type, the following function signatures participate in overload resolution:</p>
+<table class="t-dcl-begin"> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">A operator++(A&amp;, int)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">bool operator++(bool&amp;, int)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark">(deprecated)</span><span class="t-mark-rev t-until-cxx17">(until C++17)</span> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">P operator++(P&amp;, int)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">A operator--(A&amp;, int)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">P operator--(P&amp;, int)
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <h4 id="Example">Example</h4> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+
+int main()
+{
+    int n1 = 1;
+    int n2 = ++n1;
+    int n3 = ++ ++n1;
+    int n4 = n1++;
+//  int n5 = n1++ ++;   // error
+//  int n6 = n1 + ++n1; // undefined behavior
+    std::cout &lt;&lt; "n1 = " &lt;&lt; n1 &lt;&lt; '\n'
+              &lt;&lt; "n2 = " &lt;&lt; n2 &lt;&lt; '\n'
+              &lt;&lt; "n3 = " &lt;&lt; n3 &lt;&lt; '\n'
+              &lt;&lt; "n4 = " &lt;&lt; n4 &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">n1 = 5
+n2 = 2
+n3 = 4
+n4 = 4
+</pre> </div> <h3 id="Notes">Notes</h3> <p>Because of the side-effects involved, built-in increment and decrement operators must be used with care to avoid undefined behavior due to violations of <a href="eval_order" title="cpp/language/eval order">sequencing rules</a>.</p>
+<p>Because a temporary copy of the object is constructed during post-increment and post-decrement, pre-increment or pre-decrement operators are usually more efficient in contexts where the returned value is not used.</p>
+<h3 id="Standard_library">Standard library</h3> <p>Increment and decrement operators are overloaded for many standard library types. In particular, every <a href="../named_req/iterator" title="cpp/named req/Iterator">LegacyIterator</a> overloads <span class="k">operator</span><span class="o">++</span> and every <a href="../named_req/bidirectionaliterator" title="cpp/named req/BidirectionalIterator">LegacyBidirectionalIterator</a> overloads <span class="k">operator</span><span class="o">--</span>, even if those operators are no-ops for the particular iterator.</p>
+<table class="t-dsc-begin"> <tr> <td colspan="2">
+<h5 id="overloads_for_arithmetic_types"> overloads for arithmetic types </h5> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../atomic/atomic/operator_arith" title="cpp/atomic/atomic/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span><span>operator--</span><span>operator--<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>increments or decrements the atomic value by one <br> <span class="t-mark">(public member function of <code>std::atomic&lt;T&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../chrono/duration/operator_arith2" title="cpp/chrono/duration/operator arith2"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span><span>operator--</span><span>operator--<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>increments or decrements the tick count <br> <span class="t-mark">(public member function of <code>std::chrono::duration&lt;Rep,Period&gt;</code>)</span>  </td>
+</tr> <tr> <td colspan="2">
+<h5 id="overloads_for_iterator_types"> overloads for iterator types </h5> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../memory/raw_storage_iterator/operator_arith" title="cpp/memory/raw storage iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>advances the iterator <br> <span class="t-mark">(public member function of <code>std::raw_storage_iterator&lt;OutputIt,T&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/reverse_iterator/operator_arith" title="cpp/iterator/reverse iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span><span>operator+=</span><span>operator+</span><span>operator--</span><span>operator--<span class="t-dsc-small">(int)</span></span><span>operator-=</span><span>operator-</span></span></a></div> </td> <td>advances or decrements the <code>reverse_iterator</code> <br> <span class="t-mark">(public member function of <code>std::reverse_iterator&lt;Iter&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/move_iterator/operator_arith" title="cpp/iterator/move iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span><span>operator+=</span><span>operator+</span><span>operator--</span><span>operator--<span class="t-dsc-small">(int)</span></span><span>operator-=</span><span>operator-</span></span></a></div> </td> <td>advances or decrements the <code>move_iterator</code> <br> <span class="t-mark">(public member function of <code>std::move_iterator&lt;Iter&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/front_insert_iterator/operator_plus__plus_" title="cpp/iterator/front insert iterator/operator++"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>no-op <br> <span class="t-mark">(public member function of <code>std::front_insert_iterator&lt;Container&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/back_insert_iterator/operator_plus__plus_" title="cpp/iterator/back insert iterator/operator++"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>no-op <br> <span class="t-mark">(public member function of <code>std::back_insert_iterator&lt;Container&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/insert_iterator/operator_plus__plus_" title="cpp/iterator/insert iterator/operator++"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>no-op <br> <span class="t-mark">(public member function of <code>std::insert_iterator&lt;Container&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/istream_iterator/operator_arith" title="cpp/iterator/istream iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>advances the iterator <br> <span class="t-mark">(public member function of <code>std::istream_iterator&lt;T,CharT,Traits,Distance&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/ostream_iterator/operator_arith" title="cpp/iterator/ostream iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>no-op <br> <span class="t-mark">(public member function of <code>std::ostream_iterator&lt;T,CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/istreambuf_iterator/operator_arith" title="cpp/iterator/istreambuf iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>advances the iterator <br> <span class="t-mark">(public member function of <code>std::istreambuf_iterator&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/ostreambuf_iterator/operator_arith" title="cpp/iterator/ostreambuf iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>no-op <br> <span class="t-mark">(public member function of <code>std::ostreambuf_iterator&lt;CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../regex/regex_iterator/operator_arith" title="cpp/regex/regex iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>advances the iterator to the next match <br> <span class="t-mark">(public member function of <code>std::regex_iterator&lt;BidirIt,CharT,Traits&gt;</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../regex/regex_token_iterator/operator_arith" title="cpp/regex/regex token iterator/operator arith"> <span class="t-lines"><span>operator++</span><span>operator++<span class="t-dsc-small">(int)</span></span></span></a></div> </td> <td>advances the iterator to the next submatch <br> <span class="t-mark">(public member function of <code>std::regex_token_iterator&lt;BidirIt,CharT,Traits&gt;</code>)</span>  </td>
+</tr> </table> <h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2855.html">CWG 2855</a> </td> <td>C++98 </td> <td>usual arithmetic conversions are applied for built-in pre-increment and<br>pre-decrement, but were not applied for their postfix counterparts<sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span class="cite-bracket">[</span>1<span class="cite-bracket">]</span></a></sup> </td> <td>also applied </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/CWG/issues/2901.html">CWG 2901</a> </td> <td>C++98 </td> <td>lvalue-to-rvalue conversions were not applied<br>for built-in post-increment and post-decrement </td> <td>applied </td>
+</tr>
+</table> <div class="mw-references-wrap"><ol class="references"> <li id="cite_note-1"> <span class="reference-text">The prefix <code>++x</code> is equivalent to <code>x += 1</code>, and the latter is applicable for usual arithmetic conversions (i.e. yield a common type between <span class="k">decltype</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> and <span class="kt">int</span>). However, the effect of the postfix <code>x++</code> is simply “adding one to <code>x</code>”, there is no binary operator present, so no usual arithmetic conversions will take place.</span> </li> </ol></div> <h3 id="See_also">See also</h3> <p><a href="operator_precedence" title="cpp/language/operator precedence">Operator precedence</a></p>
+<p><a href="operators" title="cpp/language/operators">Operator overloading</a></p>
+<table class="wikitable"> <tr style="text-align:center"> <th colspan="7">Common operators </th>
+</tr> <tr style="text-align:center"> <td>
+<a href="operator_assignment" title="cpp/language/operator assignment">Assignment</a> </td> <td>
+<a class="mw-selflink selflink">Increment,<br>decrement</a> </td> <td>
+<a href="operator_arithmetic" title="cpp/language/operator arithmetic">Arithmetic</a> </td> <td>
+<a href="operator_logical" title="cpp/language/operator logical">Logical</a> </td> <td>
+<a href="operator_comparison" title="cpp/language/operator comparison">Comparison</a> </td> <td>
+<a href="operator_member_access" title="cpp/language/operator member access">Member<br>access</a> </td> <td>
+<a href="operator_other" title="cpp/language/operator other">Other</a> </td>
+</tr> <tr style="text-align:center"> <td rowspan="3"> <pre data-language="c">a = b
+a += b
+a -= b
+a *= b
+a /= b
+a %= b
+a &amp;= b
+a |= b
+a ^= b
+a &lt;&lt;= b
+a &gt;&gt;= b
+</pre> </td> <td rowspan="3"> <pre data-language="c">++a
+--a
+a++
+a--
+</pre> </td> <td rowspan="3"> <pre data-language="c">+a
+-a
+a + b
+a - b
+a * b
+a / b
+a % b
+~a
+a &amp; b
+a | b
+a ^ b
+a &lt;&lt; b
+a &gt;&gt; b
+</pre> </td> <td rowspan="3"> <pre data-language="c">!a
+a &amp;&amp; b
+a || b
+</pre> </td> <td rowspan="3"> <pre data-language="c">a == b
+a != b
+a &lt; b
+a &gt; b
+a &lt;= b
+a &gt;= b
+a &lt;=&gt; b
+</pre> </td> <td rowspan="3"> <pre data-language="c">a[...]
+*a
+&amp;a
+a-&gt;b
+a.b
+a-&gt;*b
+a.*b
+</pre> </td> <td>function call<br><br><code>a(...)</code> </td>
+</tr> <tr style="text-align:center"> <td>comma<br><br><code>a, b</code> </td>
+</tr> <tr style="text-align:center"> <td>conditional<br><br><code>a ? b : c</code> </td>
+</tr> <tr> <th colspan="7">Special operators </th>
+</tr> <tr> <td colspan="7"> <p><a href="static_cast" title="cpp/language/static cast"><code>static_cast</code></a> converts one type to another related type<br> <a href="dynamic_cast" title="cpp/language/dynamic cast"><code>dynamic_cast</code></a> converts within inheritance hierarchies<br> <a href="const_cast" title="cpp/language/const cast"><code>const_cast</code></a> adds or removes <a href="cv" title="cpp/language/cv">cv</a>-qualifiers<br> <a href="reinterpret_cast" title="cpp/language/reinterpret cast"><code>reinterpret_cast</code></a> converts type to unrelated type<br> <a href="explicit_cast" title="cpp/language/explicit cast">C-style cast</a> converts one type to another by a mix of <span class="k">static_cast</span>, <span class="k">const_cast</span>, and <span class="k">reinterpret_cast</span><br> <a href="new" title="cpp/language/new"><code>new</code></a> creates objects with dynamic storage duration<br> <a href="delete" title="cpp/language/delete"><code>delete</code></a> destructs objects previously created by the new expression and releases obtained memory area<br> <a href="sizeof" title="cpp/language/sizeof"><code>sizeof</code></a> queries the size of a type<br> <a href="sizeof..." title="cpp/language/sizeof..."><code>sizeof...</code></a> queries the size of a <a href="pack" title="cpp/language/pack">pack</a> <span class="t-mark-rev t-since-cxx11">(since C++11)</span><br> <a href="typeid" title="cpp/language/typeid"><code>typeid</code></a> queries the type information of a type<br> <a href="noexcept" title="cpp/language/noexcept"><code>noexcept</code></a> checks if an expression can throw an exception <span class="t-mark-rev t-since-cxx11">(since C++11)</span><br> <a href="alignof" title="cpp/language/alignof"><code>alignof</code></a> queries alignment requirements of a type <span class="t-mark-rev t-since-cxx11">(since C++11)</span><br> <a href="operator_reflection" title="cpp/language/operator reflection"><code>^^</code></a> produces a reflection value from a grammatical construct <span class="t-mark-rev t-since-cxx26">(since C++26)</span></p>
+</td>
+</tr>
+</table> <table class="t-dsc-begin"> <tr class="t-dsc"> <td colspan="2">
+<span><a href="https://en.cppreference.com/c/language/operator_incdec" title="c/language/operator incdec">C documentation</a></span> for <span class=""><span>Increment/decrement operators</span></span> </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/language/operator_incdec" class="_attribution-link">https://en.cppreference.com/cpp/language/operator_incdec</a>
+  </p>
+</div>

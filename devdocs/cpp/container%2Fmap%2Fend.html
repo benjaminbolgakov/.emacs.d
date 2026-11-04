@@ -1,0 +1,107 @@
+   <h1 id="firstHeading" class="firstHeading">std::map&lt;Key,T,Compare,Allocator&gt;::end, std::map&lt;Key,T,Compare,Allocator&gt;::cend</h1>           <div id="mw-content-text">
+  <table class="t-dcl-begin"> <tr class="t-dcl"> <td> <pre data-language="c">iterator end();
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr> <tr class="t-dcl"> <td> <pre data-language="c">const_iterator end() const;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx11">(noexcept since C++11)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">const_iterator cend() const noexcept;
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> </td> </tr>  </table> <p>Returns an iterator to the element following the last element of the <code>map</code>.</p>
+<p>This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<h3 id="Return_value">Return value</h3> <p>Iterator to the element following the last element.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Notes">Notes</h3> <p>libc++ backports <code>cend()</code> to C++98 mode.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;map&gt;
+ 
+int main()
+{
+    std::map&lt;int, float&gt; num_map;
+    num_map[4] = 4.13;
+    num_map[9] = 9.24;
+    num_map[1] = 1.09;
+    // Calls num_map.begin() and num_map.end()
+    for (auto it = num_map.begin(); it != num_map.end(); ++it)
+        std::cout &lt;&lt; it-&gt;first &lt;&lt; ", " &lt;&lt; it-&gt;second &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1, 1.09
+4, 4.13
+9, 9.24
+</pre> </div> <h4 id="Example_using_a_custom_comparison_function">Example using a custom comparison function</h4> <div class="t-example"> <pre data-language="c">#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+ 
+struct Point { double x, y; };
+
+// Compare the x-coordinates of two Point pointers.
+struct PointCmp
+{
+    bool operator()(const Point* lhs, const Point* rhs) const
+    {
+        return lhs-&gt;x &lt; rhs-&gt;x; 
+    }
+};
+ 
+int main()
+{
+    // Note that although the x-coordinates are out of order, the
+    // map will be iterated through by increasing x-coordinates.
+    Point points[3] = {{2, 0}, {1, 0}, {3, 0}};
+
+    // mag is a map sending the address of node to its magnitude in the x-y plane.
+    // Although the keys are pointers-to-Point, we want to order the map by the
+    // x-coordinates of the points and NOT by the addresses of the Points. This
+    // is done by using the PointCmp class's comparison method.
+    std::map&lt;Point*, double, PointCmp&gt; mag(
+        {{points, 2}, {points + 1, 1}, {points + 2, 3}}
+    );
+
+    // Change each y-coordinate from 0 to the magnitude.
+    for (auto iter = mag.begin(); iter != mag.end(); ++iter)
+    {
+        auto cur = iter-&gt;first; // Pointer to Node
+        cur-&gt;y = mag[cur]; // Could also have used cur-&gt;y = iter-&gt;second;
+    }
+ 
+    // Update and print the magnitude of each node.
+    for (auto iter = mag.begin(); iter != mag.end(); ++iter)
+    {
+        auto cur = iter-&gt;first;
+        mag[cur] = std::hypot(cur-&gt;x, cur-&gt;y);
+        std::cout &lt;&lt; "The magnitude of (" &lt;&lt; cur-&gt;x &lt;&lt; ", " &lt;&lt; cur-&gt;y &lt;&lt; ") is ";
+        std::cout &lt;&lt; iter-&gt;second &lt;&lt; '\n';
+    }
+ 
+    // Repeat the above with the range-based for loop.
+    for (auto i : mag)
+    {
+        auto cur = i.first;
+        cur-&gt;y = i.second;
+        mag[cur] = std::hypot(cur-&gt;x, cur-&gt;y);
+        std::cout &lt;&lt; "The magnitude of (" &lt;&lt; cur-&gt;x &lt;&lt; ", " &lt;&lt; cur-&gt;y &lt;&lt; ") is ";
+        std::cout &lt;&lt; mag[cur] &lt;&lt; '\n';
+        // Note that in contrast to std::cout &lt;&lt; iter-&gt;second &lt;&lt; '\n'; above, 
+        // std::cout &lt;&lt; i.second &lt;&lt; '\n'; will NOT print the updated magnitude.
+        // If auto &amp;i : mag was used instead, it will print the updated magnitude.
+    }
+}
+</pre> <p>Output:</p>
+<pre data-language="c">The magnitude of (1, 1) is 1.41421
+The magnitude of (2, 2) is 2.82843
+The magnitude of (3, 3) is 4.24264
+The magnitude of (1, 1.41421) is 1.73205
+The magnitude of (2, 2.82843) is 3.4641
+The magnitude of (3, 4.24264) is 5.19615
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="begin" title="cpp/container/map/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>returns an iterator to the beginning <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../../iterator/end" title="cpp/iterator/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the end of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/container/map/end" class="_attribution-link">https://en.cppreference.com/cpp/container/map/end</a>
+  </p>
+</div>

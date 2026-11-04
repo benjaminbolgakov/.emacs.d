@@ -1,0 +1,85 @@
+   <h1 id="firstHeading" class="firstHeading">std::bad_cast</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/typeinfo" title="cpp/header/typeinfo">&lt;typeinfo&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td class="t-dcl-nopad"> <pre data-language="c">class bad_cast : public std::exception;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td class="t-dcl-nopad"> </td> </tr>  </table> <p>An exception of this type is thrown when a <a href="../language/dynamic_cast" title="cpp/language/dynamic cast"><code>dynamic_cast</code></a> to a reference type fails the run-time check (e.g. because the types are not related by inheritance), and also from <code><a href="../locale/use_facet" title="cpp/locale/use facet">std::use_facet</a></code> if the requested facet does not exist in the locale.</p>
+<div class="t-inheritance-diagram"> <figure class="mw-default-size mw-halign-center noresize" typeof="mw:File"><span><img src="http://upload.cppreference.com/mwiki/images/0/08/std-bad_cast-inheritance.svg" decoding="async" width="243" height="40" class="mw-file-element" usemap="#ImageMap_03d43e23e22f8885"></span><map name="ImageMap_03d43e23e22f8885"><area href="/cpp/error/exception" shape="rect" coords="5,4,107,36" alt="cpp/error/exception" title="cpp/error/exception"></map></figure> <div style="text-align:center;"> <p>Inheritance diagram</p>
+</div> </div>  <h3 id="Member_functions">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>(constructor)</span></span></div> </td> <td>constructs a new <code>bad_cast</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>operator=</span></span></div> </td> <td>replaces the <code>bad_cast</code> object <br> <span class="t-mark">(public member function)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><span class="t-lines"><span>what</span></span></div> </td> <td>returns the explanatory string <br> <span class="t-mark">(public member function)</span> </td>
+</tr> </table> <div class="t-member"> <h2 id="std::bad_cast::bad_cast">std::bad_cast::bad_cast</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">bad_cast() throw();
+</pre>
+</td> <td rowspan="2"> (1)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">bad_cast() noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr> <tr class="t-dcl t-until-cxx11"> <td>
+<pre data-language="c">bad_cast( const bad_cast&amp; other ) throw();
+</pre>
+</td> <td rowspan="2"> (2)</td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">bad_cast( const bad_cast&amp; other ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <p>Constructs a new <code>bad_cast</code> object with an implementation-defined null-terminated byte string which is accessible through <a href="../error/exception/what" title="cpp/error/exception/what"><code>what()</code></a>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Default constructor.</div> <div class="t-li1">
+<span class="t-li">2)</span> Copy constructor. <span class="t-rev-inl t-since-cxx11"><span>If <code>*this</code> and <code>other</code> both have dynamic type <code>std::bad_cast</code> then <code>std::strcmp(what(), other.what()) == 0</code>.</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>
+</div> <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to copy </td>
+</tr>
+</table> </div> <div class="t-member"> <h2 id="std::bad_cast::operator=">std::bad_cast::operator=</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td><pre data-language="c">bad_cast&amp; operator=( const bad_cast&amp; other ) throw();
+</pre></td> <td rowspan="2" class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">bad_cast&amp; operator=( const bad_cast&amp; other ) noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td><span class="t-mark-rev t-since-cxx11">(since C++11)</span></td> </tr>  </table> <p>Assigns the contents with those of <code>other</code>.<span class="t-rev-inl t-since-cxx11"><span> If <code>*this</code> and <code>other</code> both have dynamic type <code>std::bad_cast</code> then <code>std::strcmp(what(), other.what()) == 0</code> after assignment.</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span></p>
+<h3 id="Parameters_2">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>other </td> <td>- </td> <td>another exception object to assign with </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>*this</code></p>
+</div> <div class="t-member"> <h2 id="std::bad_cast::what">std::bad_cast::what</h2> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx11"> <td><pre data-language="c">virtual const char* what() const throw();
+</pre></td> <td rowspan="2" class="t-dcl-nopad"> </td> <td><span class="t-mark-rev t-until-cxx11">(until C++11)</span></td> </tr> <tr class="t-dcl t-since-cxx11"> <td><pre data-language="c">virtual const char* what() const noexcept;
+</pre></td> <td aria-hidden="true" class="t-dcl-nopad t-dcl-dummy-num"> </td> <td>
+<span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx26">(constexpr since C++26)</span>
+</td> </tr>  </table> <p>Returns the explanatory string.</p>
+<h3 id="Return_value_2">Return value</h3> <p>Pointer to an implementation-defined null-terminated string with explanatory information. The string is suitable for conversion and display as a <code><a href="../string/basic_string" title="cpp/string/basic string">std::wstring</a></code>. The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function (e.g. copy assignment operator) on the exception object is called.</p>
+<table class="t-rev-begin"> <tr class="t-rev t-since-cxx26">
+<td> <p>The returned string is encoded with the ordinary literal encoding during constant evaluation.</p>
+</td> <td><span class="t-mark-rev t-since-cxx26">(since C++26)</span></td>
+</tr> </table> <h3 id="Notes">Notes</h3> <p>Implementations are allowed but not required to override <code>what()</code>.</p>
+</div> <div class="t-inherited"> <h2 id="Inherited_from_std::exception">Inherited from <a href="../error/exception" title="cpp/error/exception">std::exception</a>
+</h2> <h3 id="Member_functions_2">Member functions</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/~exception" title="cpp/error/exception/~exception"> <span class="t-lines"><span>(destructor)</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>destroys the exception object <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../error/exception/what" title="cpp/error/exception/what"> <span class="t-lines"><span>what</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[virtual]</span></span></span></div> </td> <td>returns an explanatory string <br> <span class="t-mark">(virtual public member function of <code>std::exception</code>)</span>  </td>
+</tr> </table> </div> <h3 id="Notes_2">Notes</h3> <table class="wikitable ftm-begin"> <tr> <th>
+<a href="../utility/feature_test" title="cpp/utility/feature test">Feature-test</a> macro</th> <th><abbr title="The year/month in which the feature was adopted. The hyperlink under each value opens a compiler support page with entry for given feature.">Value</abbr></th> <th><abbr title="Standard in which the feature is introduced; DR means defect report against that revision">Std</abbr></th> <th>Feature </th>
+</tr> <tr> <td><a href="../feature_test#cpp_lib_constexpr_exceptions" title="cpp/feature test"><code>__cpp_lib_constexpr_exceptions</code></a></td> <td><a href="../compiler_support/26#cpp_lib_constexpr_exceptions_202411L" title="cpp/compiler support/26"><code>202411L</code></a></td> <td><span class="t-mark">(C++26)</span></td> <td>
+<span class="k">constexpr</span> for exception types </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+ 
+struct Foo { virtual ~Foo() {} };
+struct Bar { virtual ~Bar() { std::cout &lt;&lt; "~Bar\n"; } };
+struct Pub : Bar { ~Pub() override { std::cout &lt;&lt; "~Pub\n"; } };
+ 
+int main()
+{
+    Pub pub;
+    try
+    {
+        [[maybe_unused]]
+        Bar&amp; r1 = dynamic_cast&lt;Bar&amp;&gt;(pub); // OK, upcast
+ 
+        [[maybe_unused]]
+        Foo&amp; r2 = dynamic_cast&lt;Foo&amp;&gt;(pub); // throws
+    }
+    catch (const std::bad_cast&amp; e)
+    {
+        std::cout &lt;&lt; "e.what(): " &lt;&lt; e.what() &lt;&lt; '\n';
+    }
+}
+</pre> <p>Possible output:</p>
+<pre data-language="c">e.what(): std::bad_cast
+~Pub
+~Bar
+</pre> </div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/types/bad_cast" class="_attribution-link">https://en.cppreference.com/cpp/types/bad_cast</a>
+  </p>
+</div>

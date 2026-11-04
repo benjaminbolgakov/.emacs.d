@@ -1,0 +1,25 @@
+   <h1 id="firstHeading" class="firstHeading">std::istrstream::~istrstream</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-until-cxx26"> <td> <pre data-language="c">virtual ~istrstream();
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark">(deprecated in C++98)</span> <br><span class="t-mark-rev t-until-cxx26">(removed in C++26)</span> </td> </tr>  </table> <p>Destroys a <code>std::istrstream</code> object, which also destroys the member <code><a href="../strstreambuf" title="cpp/io/strstreambuf">std::strstreambuf</a></code>.</p>
+<h3 id="Parameters">Parameters</h3> <p>(none)</p>
+<h3 id="Notes">Notes</h3> <p>The constructors of <code><a href="../istrstream" title="cpp/io/istrstream">std::istrstream</a></code> do not create the underlying <code><a href="../strstreambuf" title="cpp/io/strstreambuf">std::strstreambuf</a></code> in dynamically allocated mode, so the memory leaks that are possible with <code><a href="../ostrstream/~ostrstream" title="cpp/io/ostrstream/~ostrstream">std::ostrstream::~ostrstream</a></code> or <code><a href="../strstream/~strstream" title="cpp/io/strstream/~strstream">std::strstream::~strstream</a></code> do not apply.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;iostream&gt;
+#include &lt;strstream&gt;
+
+int main()
+{
+    {
+        std::istrstream s("1.234");
+        double d;
+        s &gt;&gt; d;
+        std::cout &lt;&lt; d &lt;&lt; '\n';
+    } // destructor called
+}
+</pre> <p>Output:</p>
+<pre data-language="c">1.234
+</pre> </div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/io/istrstream/~istrstream" class="_attribution-link">https://en.cppreference.com/cpp/io/istrstream/~istrstream</a>
+  </p>
+</div>

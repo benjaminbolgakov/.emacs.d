@@ -1,0 +1,85 @@
+   <h1 id="firstHeading" class="firstHeading">std::format_kind</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/format" title="cpp/header/format">&lt;format&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">template&lt; class R &gt;
+constexpr /* unspecified */ format_kind = /* unspecified */;
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr> <tr class="t-dcl t-since-cxx23"> <td> <pre data-language="c">template&lt; ranges::input_range R &gt;
+    requires std::same_as&lt;R, std::remove_cvref_t&lt;R&gt;&gt;
+constexpr range_format format_kind&lt;R&gt; = /* see description */;
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx23">(since C++23)</span> </td> </tr>  </table> <p>The variable template <code>format_kind</code> selects an appropriate <code>std::range_format</code> for a range <code>R</code>.</p>
+<p><code>std::format_kind&lt;R&gt;</code> is defined as follows:</p>
+<ul>
+<li>If <code>std::same_as&lt;std::remove_cvref_t&lt;ranges::range_reference_t&lt;R&gt;&gt;, R&gt;</code> is <code>true</code>, <code>std::format_kind&lt;R&gt;</code> is <code>std::range_format::disabled</code>.</li> <li>Otherwise, if <code>R::key_type</code> is valid and denotes a type: <ul><li>If <code>R::mapped_type</code> is valid and denotes a type, let <code>U</code> be <code>std::remove_cvref_t&lt;ranges::range_reference_t&lt;R&gt;&gt;</code>.</li></ul>
+</li>
+</ul> If either <code>U</code> is a specialization of <code><a href="../pair" title="cpp/utility/pair">std::pair</a></code> or <code>U</code> is a specialization of <code><a href="../tuple" title="cpp/utility/tuple">std::tuple</a></code> and <code>std::tuple_size_v&lt;U&gt; == 2</code>, <code>std::format_kind&lt;R&gt;</code> is <code>std::range_format::map</code>. <ul>
+<li>Otherwise, <code>std::format_kind&lt;R&gt;</code> is <code>std::range_format::set</code>.</li>
+<li>Otherwise, <code>std::format_kind&lt;R&gt;</code> is <code>std::range_format::sequence</code>.</li>
+</ul>  <p>A program that instantiates a primary template of the <code>format_kind</code> variable template is ill-formed.</p>
+<p>Given a cv-unqualified <a href="../../language/type#Program-defined_type" title="cpp/language/type">program-defined type</a> <code>T</code> that models <a href="../../ranges/input_range" title="cpp/ranges/input range"><code>input_range</code></a>, a program can specialize <code>format_kind</code> for <code>T</code>. Such specializations are usable in constant expressions, and have type <span class="k">const</span><span class="n">std</span><span class="o">::</span><span class="n">range_format</span>.</p>
+<h3 id="Possible_implementation">Possible implementation</h3> <table class="eq-fun-cpp-table"> <tr> <td> <pre data-language="c">namespace detail
+{
+    template&lt; typename &gt;
+    constexpr bool is_pair_or_tuple_2 = false;
+    
+    template&lt; typename T, typename U &gt;
+    constexpr bool is_pair_or_tuple_2&lt;std::pair&lt;T, U&gt;&gt; = true;
+    
+    template&lt; typename T, typename U &gt;
+    constexpr bool is_pair_or_tuple_2&lt;std::tuple&lt;T, U&gt;&gt; = true;
+    
+    template &lt; typename T &gt;
+        requires std::is_reference_v&lt;T&gt; || std::is_const_v&lt;T&gt;
+    constexpr bool is_pair_or_tuple_2&lt;T&gt; =
+        is_pair_or_tuple_2&lt;std::remove_cvref_t&lt;T&gt;&gt;;
+}
+
+template&lt; class R &gt;
+constexpr range_format format_kind = []
+{
+    static_assert(false, "instantiating a primary template is not allowed");
+    return range_format::disabled;
+}();
+
+template&lt; ranges::input_range R &gt;
+    requires std::same_as&lt;R, std::remove_cvref_t&lt;R&gt;&gt;
+constexpr range_format format_kind&lt;R&gt; = []
+{
+    if constexpr (std::same_as&lt;std::remove_cvref_t&lt;std::ranges::range_reference_t&lt;R&gt;&gt;, R&gt;)
+        return range_format::disabled;
+    else if constexpr (requires { typename R::key_type; })
+    {
+        if constexpr (requires { typename R::mapped_type; } &amp;&amp;
+                      detail::is_pair_or_tuple_2&lt;std::ranges::range_reference_t&lt;R&gt;&gt;)
+            return range_format::map;
+        else
+            return range_format::set;
+    }
+    else
+        return range_format::sequence;
+}();
+</pre> </td>
+</tr>
+</table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;filesystem&gt;
+#include &lt;format&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;vector&gt;
+
+struct A {};
+
+static_assert(std::format_kind&lt;std::vector&lt;int&gt;&gt; == std::range_format::sequence);
+static_assert(std::format_kind&lt;std::map&lt;int&gt;&gt; == std::range_format::map);
+static_assert(std::format_kind&lt;std::set&lt;int&gt;&gt; == std::range_format::set);
+static_assert(std::format_kind&lt;std::filesystem::path&gt; == std::range_format::disabled);
+// ill-formed:
+// static_assert(std::format_kind&lt;A&gt; == std::range_format::disabled);
+
+int main() {}
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="range_format" title="cpp/utility/format/range format"> <span class="t-lines"><span>range_format</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx23">(C++23)</span></span></span></div> </td> <td>specifies how a range should be formatted <br> <span class="t-mark">(enum)</span>  </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/utility/format/format_kind" class="_attribution-link">https://en.cppreference.com/cpp/utility/format/format_kind</a>
+  </p>
+</div>

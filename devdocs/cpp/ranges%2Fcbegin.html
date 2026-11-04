@@ -1,0 +1,69 @@
+   <h1 id="firstHeading" class="firstHeading">std::ranges::cbegin</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/ranges" title="cpp/header/ranges">&lt;ranges&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/iterator" title="cpp/header/iterator">&lt;iterator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">inline namespace /* unspecified */ {
+    inline constexpr /* unspecified */ cbegin = /* unspecified */;
+}
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> <br><span class="t-mark">(customization point object)</span> </td> </tr> <tr class="t-dcl-h"> <td> Call signature</td> <td></td> <td></td> </tr> <tr class="t-dcl t-since-cxx20"> <td> <pre data-language="c">template&lt; class T &gt;
+    requires /* see below */
+constexpr /* see below */ auto cbegin( T&amp;&amp; t );
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx20">(since C++20)</span> </td> </tr>  </table> <table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>Returns an iterator to the first element of the const-qualified argument.</p>
+</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>Returns a constant iterator to the first element of the argument.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table>  <p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p>Let <code>CT</code> be</p>
+<ul>
+<li>
+<code>const std::remove_reference_t&lt;T&gt;&amp;</code> if the argument is an lvalue (i.e. <code>T</code> is an lvalue reference type),</li> <li>
+<code>const T</code> otherwise.</li>
+</ul> <p>A call to <code>ranges::cbegin</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to <code>ranges::begin(static_cast&lt;CT&amp;&amp;&gt;(t))</code>.</p>
+</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <p>If the argument is an lvalue or <code>ranges::enable_borrowed_range&lt;std::remove_cv_t&lt;T&gt;&gt;</code> is <code>true</code>, then a call to <code>ranges::cbegin</code> is <a href="../language/expressions#Expression-equivalence" title="cpp/language/expressions">expression-equivalent</a> to:</p>
+<ul><li>
+<code>std::const_iterator&lt;decltype(U)&gt;(U)</code> for some expression <code>U</code> equivalent to <code><span class="n">ranges</span><span class="o">::</span><span class="n">begin</span><span class="p">(</span><i><a href="../ranges#possibly-const-range" title="cpp/ranges">possibly-const-range</a></i><span class="p">(</span><span class="n">t</span><span class="p">)</span></code>.</li></ul> <p>In all other cases, a call to <code>ranges::cbegin</code> is ill-formed, which can result in <a href="../language/sfinae" title="cpp/language/sfinae">substitution failure</a> when the call appears in the immediate context of a template instantiation.</p>
+</td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table> <p>The return type models <code><a href="../iterator/input_or_output_iterator" title="cpp/iterator/input or output iterator">std::input_or_output_iterator</a></code> <span class="t-rev-inl t-since-cxx23"><span> and <a href="constant_range" title="cpp/ranges/constant range"><code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>constant-iterator</i></code></a></span><span><span class="t-mark-rev t-since-cxx23">(since C++23)</span></span></span> in all cases.</p>
+<h3 id="Customization_point_objects">Customization point objects</h3> <p>The name <code>ranges::cbegin</code> denotes a <i>customization point object</i>, which is a const <a href="../named_req/functionobject" title="cpp/named req/FunctionObject">function object</a> of a <a href="../named_req/literaltype" title="cpp/named req/LiteralType">literal</a> <a href="../concepts/semiregular" title="cpp/concepts/semiregular"><code>semiregular</code></a> class type. See <a href="../named_req/customizationpointobject" title="cpp/named req/CustomizationPointObject">CustomizationPointObject</a> for details.</p>
+<h3 id="Notes">Notes</h3> <p>For an lvalue range <code>e</code> of type <code>T</code>, <code>ranges::cbegin(e)</code> is equivalent to</p>
+<table class="t-rev-begin"> <tr class="t-rev t-until-cxx23">
+<td> <p><code>ranges::begin(std::as_const(e))</code>.</p>
+</td> <td><span class="t-mark-rev t-until-cxx23">(until C++23)</span></td>
+</tr> <tr class="t-rev t-since-cxx23">
+<td> <ul>
+<li>
+<code>ranges::begin(e)</code> if <code>T</code> models <a href="constant_range" title="cpp/ranges/constant range"><code>constant_range</code></a>.</li> <li>Otherwise, <code>ranges::begin(std::as_const(e))</code> if <code>const T</code> models <a href="constant_range" title="cpp/ranges/constant range"><code>constant_range</code></a>.</li> <li>Otherwise, <code>std::basic_const_iterator(ranges::begin(e))</code>.</li>
+</ul> </td> <td><span class="t-mark-rev t-since-cxx23">(since C++23)</span></td>
+</tr> </table> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;cassert&gt;
+#include &lt;ranges&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector v{3, 1, 4};
+    auto vi = std::ranges::cbegin(v);
+    assert(3 == *vi);
+    ++vi; // OK, constant-iterator object is mutable
+    assert(1 == *vi);
+    // *vi = 13; // Error: constant-iterator points to an immutable element
+
+    int a[]{3, 1, 4};
+    auto ai = std::ranges::cbegin(a); // cbegin works with C-arrays as well
+    assert(3 == *ai and *(ai + 1) == 1);
+    // *ai = 13; // Error: read-only variable is not assignable
+}
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="begin" title="cpp/ranges/begin"> <span class="t-lines"><span>ranges::begin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>returns an iterator to the beginning of a range<br><span class="t-mark">(customization point object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../iterator/begin" title="cpp/iterator/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span><span><span class="t-mark-rev t-since-cxx14">(C++14)</span></span></span></div> </td> <td>returns an iterator to the beginning of a container or array <br> <span class="t-mark">(function template)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/ranges/cbegin" class="_attribution-link">https://en.cppreference.com/cpp/ranges/cbegin</a>
+  </p>
+</div>

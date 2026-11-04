@@ -1,0 +1,93 @@
+   <h1 id="firstHeading" class="firstHeading">std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...&gt;::construct</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../../header/scoped_allocator" title="cpp/header/scoped allocator">&lt;scoped_allocator&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl"> <td> <pre data-language="c">template&lt; class T, class... Args &gt;
+void construct( T* p, Args&amp;&amp;... args );
+</pre>
+</td> <td> (1) </td> <td class="t-dcl-nopad"> </td> </tr> <tr class="t-dcl t-until-cxx20"> <td> <pre data-language="c">template&lt; class T1, class T2, class... Args1, class... Args2 &gt;
+void construct( std::pair&lt;T1, T2&gt;* p, std::piecewise_construct_t,
+                std::tuple&lt;Args1...&gt; x, std::tuple&lt;Args2...&gt; y );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-until-cxx20">(until C++20)</span> </td> </tr> <tr class="t-dcl t-until-cxx20"> <td> <pre data-language="c">template&lt; class T1, class T2 &gt;
+void construct( std::pair&lt;T1, T2&gt;* p );
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-until-cxx20">(until C++20)</span> </td> </tr> <tr class="t-dcl t-until-cxx20"> <td> <pre data-language="c">template&lt; class T1, class T2, class U, class V &gt;
+void construct( std::pair&lt;T1, T2&gt;* p, U&amp;&amp; x, V&amp;&amp; y );
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-until-cxx20">(until C++20)</span> </td> </tr> <tr class="t-dcl t-until-cxx20"> <td> <pre data-language="c">template&lt; class T1, class T2, class U, class V &gt;
+void construct( std::pair&lt;T1, T2&gt;* p, const std::pair&lt;U, V&gt;&amp; xy );
+</pre>
+</td> <td> (5) </td> <td> <span class="t-mark-rev t-until-cxx20">(until C++20)</span> </td> </tr> <tr class="t-dcl t-until-cxx20"> <td> <pre data-language="c">template&lt; class T1, class T2, class U, class V &gt;
+void construct( std::pair&lt;T1, T2&gt;* p, std::pair&lt;U, V&gt;&amp;&amp; xy );
+</pre>
+</td> <td> (6) </td> <td> <span class="t-mark-rev t-until-cxx20">(until C++20)</span> </td> </tr> <tr class="t-dcl-h"> <td> Helper function templates</td> <td></td> <td></td> </tr> <tr class="t-dcl t-until-cxx20"> <td>
+<pre data-language="c">template &lt; class T, class... Args &gt;
+std::tuple&lt;/* see below */&gt; /*concat-args*/( std::tuple&lt;Args...&gt;&amp;&amp; tup );
+</pre>
+</td> <td> (7)</td> <td>
+<span class="t-mark-rev t-until-cxx20">(until C++20)</span> <br><span class="t-mark t-mark-expos">(<span title="This definition is for illustration purposes only. An implementation does not need to define an entity in this manner. The name of this entity is unspecified.">exposition only*</span>)</span>
+</td> </tr>  </table> <p>Constructs an object in allocated, but not initialized storage pointed to by <code>p</code> using the outer allocator and the provided constructor arguments. If the object is of a type that itself uses allocators<span class="t-rev-inl t-until-cxx20"><span>, or if it is <code><a href="../../utility/pair" title="cpp/utility/pair">std::pair</a></code></span><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span>, passes the inner allocator down to the constructed object.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> Constructs an object of type <code>T</code> by <a href="../uses_allocator#Uses-allocator_construction" title="cpp/memory/uses allocator">uses-allocator construction</a> at the uninitialized memory location indicated by <code>p</code> using the outermost allocator. <table class="t-rev-begin"> <tr class="t-rev t-until-cxx20">
+<td> <p>Given <code>std::uses_allocator&lt;T, inner_allocator_type&gt;::value</code> as <code>uses_inner</code>:</p>
+<ul>
+<li>If <code>uses_inner</code> is <code>false</code> and <code>std::is_constructible&lt;T, Args...&gt;::value</code> is <code>true</code>, calls <code><i><a href="helpers#outermost-construct" title="cpp/memory/scoped allocator adaptor/helpers">outermost-construct</a></i> ﻿<span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...)</span></code>.</li> <li>Otherwise, if <code>uses_inner</code> and <code>std::is_constructible&lt;T, std::allocator_arg_t,inner_allocator_type&amp;,Args...&gt;::value</code> are both <code>true</code>, calls <code><i><a href="helpers#outermost-construct" title="cpp/memory/scoped allocator adaptor/helpers">outermost-construct</a></i> ﻿<span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">allocator_arg</span><span class="p">,</span><br>                    <span class="n">inner_allocator</span><span class="p">(),</span><br>                    <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...)</span></code>.</li> <li>Otherwise, if <code>uses_inner</code> and <code>std::is_constructible&lt;T, Args..., inner_allocator_type&amp;&gt;::value</code> are both <code>true</code>, calls <code><i><a href="helpers#outermost-construct" title="cpp/memory/scoped allocator adaptor/helpers">outermost-construct</a></i> ﻿<span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...,</span><span class="n">inner_allocator</span><span class="p">())</span></code>.</li> <li>Otherwise, the program is ill-formed.</li>
+</ul> <p>This overload participates in overload resolution only if <code>T</code> is not a specialization of <code><a href="../../utility/pair" title="cpp/utility/pair">std::pair</a></code>.</p>
+</td> <td><span class="t-mark-rev t-until-cxx20">(until C++20)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <p>Equivalent to <code> <span class="n">std</span><span class="o">::</span><span class="n">apply</span><br> <span class="p">(</span><br>     <span class="p">[</span><span class="n">p</span><span class="p">,</span><span class="k">this</span><span class="p">](</span><span class="k">auto</span><span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">newargs</span><span class="p">)</span><br>     <span class="p">{</span><br>         <i><a href="helpers#outermost-construct" title="cpp/memory/scoped allocator adaptor/helpers">outermost-construct</a></i><br>             <span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="n">newargs</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="n">newargs</span><span class="p">)...);</span><br>     <span class="p">},</span><br>     <span class="n">std</span><span class="o">::</span><span class="n">uses_allocator_construction_args</span><br>         <span class="p">(</span><span class="n">inner_allocator</span><span class="p">(),</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Args</span><span class="o">&gt;</span><span class="p">(</span><span class="n">args</span><span class="p">)...)</span><br> <span class="p">);</span> </code>.</p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table> <div class="t-li1">
+<span class="t-li">2-6)</span> Constructs a <code><a href="../../utility/pair" title="cpp/utility/pair">std::pair</a></code> object by <a href="../uses_allocator#Uses-allocator_construction" title="cpp/memory/uses allocator">uses-allocator construction</a> at the uninitialized memory location indicated by <code>p</code> using the outermost allocator.</div> <div class="t-li2">
+<span class="t-li">2)</span> Let <code>xprime</code> be <code>concat-args ﻿&lt;T1&gt;(std::move(x))</code>, <code>yprime</code> be <code>concat-args ﻿&lt;T2&gt;(std::move(y))</code>, calls <code><i><a href="helpers#outermost-construct" title="cpp/memory/scoped allocator adaptor/helpers">outermost-construct</a></i> ﻿<span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">piecewise_construct</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">xprime</span><span class="p">),</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">yprime</span><span class="p">))</span></code>.</div> <div class="t-li2">
+<span class="t-li">3)</span> Equivalent to <code>construct(p, std::piecewise_construct, std::tuple&lt;&gt;(), std::tuple&lt;&gt;());</code>.</div> <div class="t-li2">
+<span class="t-li">4-6)</span> Equivalent to <code>construct(p, std::piecewise_construct,std::forward_as_tuple(xarg), std::forward_as_tuple(yarg));</code>, where <code>xarg</code> and <code>yarg</code> are defined as follows: <table class="wikitable"> <tr> <th> Overload </th> <th>
+<code>xarg</code> </th> <th>
+<code>yarg</code> </th>
+</tr> <tr> <td>
+<span class="t-v">(4)</span> </td> <td>
+<code>std::forward&lt;U&gt;(x)</code> </td> <td>
+<code>std::forward&lt;V&gt;(y)</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(5)</span> </td> <td>
+<code>xy.first</code> </td> <td>
+<code>xy.second</code> </td>
+</tr> <tr> <td>
+<span class="t-v">(6)</span> </td> <td>
+<code>std::forward&lt;U&gt;(xy.first)</code> </td> <td>
+<code>std::forward&lt;V&gt;(xy.second)</code> </td>
+</tr>
+</table>
+</div> <div class="t-li1">
+<span class="t-li">7)</span> Merges the arguments contained in <code>tup</code> and additional arguments required by <a href="../uses_allocator#Uses-allocator_construction" title="cpp/memory/uses allocator">uses-allocator construction</a> of an object of type <code>T</code>.</div>  Given <code>std::uses_allocator&lt;T, inner_allocator_type&gt;::value</code> as <code>uses_inner</code>: <ul>
+<li>If <code>uses_inner</code> is <code>false</code> and <code>std::is_constructible&lt;T, Args...&gt;::value</code> is <code>true</code>, returns <code>std::tuple&lt;Args&amp;&amp;...&gt;(std::move(tup))</code>.</li> <li>Otherwise, if <code>uses_inner</code> and <code>std::is_constructible&lt;T, std::allocator_arg_t,inner_allocator_type&amp;,Args...&gt;::value</code> are both <code>true</code>, returns <code>std::tuple_cat(std::tuple&lt;std::allocator_arg_t, inner_allocator_type&amp;&gt;(std::allocator_arg, inner_allocator()),std::tuple&lt;Args&amp;&amp;...&gt;(std::move(tup)))</code>.</li> <li>Otherwise, if <code>uses_inner</code> and <code>std::is_constructible&lt;T, Args..., inner_allocator_type&amp;&gt;::value</code> are both <code>true</code>, returns <code>std::tuple_cat(std::tuple&lt;Args&amp;&amp;...&gt;(std::move(tup)),std::tuple&lt;inner_allocator_type&amp;&gt;(inner_allocator())</code>.</li> <li>Otherwise, the program is ill-formed.</li>
+</ul>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>p </td> <td>- </td> <td>pointer to allocated, but not initialized storage </td>
+</tr> <tr class="t-par"> <td>args </td> <td>- </td> <td>the constructor arguments to pass to the constructor of <code>T</code> </td>
+</tr> <tr class="t-par"> <td>x </td> <td>- </td> <td>the constructor arguments to pass to the constructor of <code>T1</code> </td>
+</tr> <tr class="t-par"> <td>y </td> <td>- </td> <td>the constructor arguments to pass to the constructor of <code>T2</code> </td>
+</tr> <tr class="t-par"> <td>xy </td> <td>- </td> <td>the pair whose two members are the constructor arguments for <code>T1</code> and <code>T2</code> </td>
+</tr> <tr class="t-par"> <td>tup </td> <td>- </td> <td>the arguments to be merged </td>
+</tr>
+</table> <h3 id="Notes">Notes</h3> <p>This function is called (through <code><a href="../allocator_traits" title="cpp/memory/allocator traits">std::allocator_traits</a></code>) by any allocator-aware object, such as <code><a href="../../container/vector" title="cpp/container/vector">std::vector</a></code>, that was given a <code><a href="../scoped_allocator_adaptor" title="cpp/memory/scoped allocator adaptor">std::scoped_allocator_adaptor</a></code> as the allocator to use. Since <code>inner_allocator_type</code> is itself a specialization of <code><a href="../scoped_allocator_adaptor" title="cpp/memory/scoped allocator adaptor">std::scoped_allocator_adaptor</a></code>, this function will also be called when the allocator-aware objects constructed through this function start constructing their own members.</p>
+<h3 id="Defect_reports">Defect reports</h3> <p>The following behavior-changing defect reports were applied retroactively to previously published C++ standards.</p>
+<table class="dsctable"> <tr> <th>DR </th> <th>Applied to </th> <th>Behavior as published </th> <th>Correct behavior </th>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2203">LWG 2203</a> </td> <td>C++11 </td> <td>inner allocators were obtained by value-initializing<br>an <code>inner_allocator_type</code> object </td> <td>obtained by calling <a href="inner_allocator" title="cpp/memory/scoped allocator adaptor/inner allocator"><code>inner_allocator()</code></a> </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2511">LWG 2511</a><br>(<a rel="nofollow" class="external text" href="https://wg21.link/P0475R1">P0475R1</a>) </td> <td>C++11 </td> <td>
+<code style="white-space: pre; padding: 0; border: none; background-color: transparent;"><i>concat-args</i></code> might copy elements of <code><a href="../../utility/tuple" title="cpp/utility/tuple">std::tuple</a></code>s </td> <td>eliminated all element copy operations </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2586">LWG 2586</a> </td> <td>C++11 </td> <td>only constructions from<br><code>inner_allocator_type</code> rvalues were checked </td> <td>checks constructions from non-const<br><code>inner_allocator_type</code> lvalues instead </td>
+</tr> <tr> <td>
+<a rel="nofollow" class="external text" href="https://cplusplus.github.io/LWG/issue2975">LWG 2975</a> </td> <td>C++11 </td> <td>overload <span class="t-v">(1)</span> was not constrained </td> <td>constrained to refuse <code><a href="../../utility/pair" title="cpp/utility/pair">std::pair</a></code> </td>
+</tr>
+</table> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="../allocator_traits/construct" title="cpp/memory/allocator traits/construct"> <span class="t-lines"><span>construct</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-cmark">[static]</span></span></span></div> </td> <td>constructs an object in the allocated storage <br> <span class="t-mark">(function template)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../allocator/construct" title="cpp/memory/allocator/construct"> <span class="t-lines"><span>construct</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span></div> </td> <td>constructs an object in allocated storage <br> <span class="t-mark">(public member function of <code>std::allocator&lt;T&gt;</code>)</span>  </td>
+</tr> </table>
+</div>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/memory/scoped_allocator_adaptor/construct" class="_attribution-link">https://en.cppreference.com/cpp/memory/scoped_allocator_adaptor/construct</a>
+  </p>
+</div>

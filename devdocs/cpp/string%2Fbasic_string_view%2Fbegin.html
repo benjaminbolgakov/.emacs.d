@@ -1,0 +1,35 @@
+   <h1 id="firstHeading" class="firstHeading">std::basic_string_view&lt;CharT,Traits&gt;::begin, std::basic_string_view&lt;CharT,Traits&gt;::cbegin</h1>           <div id="mw-content-text"> <table class="t-dcl-begin"> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr const_iterator begin() const noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">constexpr const_iterator cbegin() const noexcept;
+</pre>
+</td> <td class="t-dcl-nopad"> </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Returns an iterator to the first character of the view.</p>
+<p><span class="mw-default-size" typeof="mw:File"><a href="https://en.cppreference.com/File:range-begin-end.svg" class="mw-file-description"><img src="http://upload.cppreference.com/mwiki/images/1/1b/range-begin-end.svg" decoding="async" width="546" height="157" class="mw-file-element"></a></span></p>
+<h3 id="Return_value">Return value</h3> <p><code>const_iterator</code> to the first character.</p>
+<h3 id="Complexity">Complexity</h3> <p>Constant.</p>
+<h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;concepts&gt;
+#include &lt;string_view&gt;
+
+int main()
+{
+    constexpr std::string_view str_view("abcd");
+
+    constexpr auto begin = str_view.begin();
+    constexpr auto cbegin = str_view.cbegin();
+    static_assert(
+        *begin == 'a' and
+        *cbegin == 'a' and
+        *begin == *cbegin and
+        begin == cbegin and
+        std::same_as&lt;decltype(begin), decltype(cbegin)&gt;);
+}
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="end" title="cpp/string/basic string view/end"> <span class="t-lines"><span>end</span><span>cend</span></span></a></div> </td> <td>returns an iterator to the end <br> <span class="t-mark">(public member function)</span>  </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="../basic_string/begin" title="cpp/string/basic string/begin"> <span class="t-lines"><span>begin</span><span>cbegin</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td>returns an iterator to the beginning <br> <span class="t-mark">(public member function of <code>std::basic_string&lt;CharT,Traits,Allocator&gt;</code>)</span>  </td>
+</tr> </table>    </div>     <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/string/basic_string_view/begin" class="_attribution-link">https://en.cppreference.com/cpp/string/basic_string_view/begin</a>
+  </p>
+</div>

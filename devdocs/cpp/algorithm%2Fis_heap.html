@@ -1,0 +1,109 @@
+   <h1 id="firstHeading" class="firstHeading">std::is_heap</h1>            <table class="t-dcl-begin"> <tr class="t-dsc-header"> <th> Defined in header <code><a href="../header/algorithm" title="cpp/header/algorithm">&lt;algorithm&gt;</a></code> </th> <th> </th> <th> </th> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">template&lt; class RandomIt &gt;
+bool is_heap( RandomIt first, RandomIt last );
+</pre>
+</td> <td> (1) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class ExecutionPolicy, class RandomIt &gt;
+bool is_heap( ExecutionPolicy&amp;&amp; policy,
+              RandomIt first, RandomIt last );
+</pre>
+</td> <td> (2) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr> <tr class="t-dcl t-since-cxx11"> <td> <pre data-language="c">template&lt; class RandomIt, class Compare &gt;
+bool is_heap( RandomIt first, RandomIt last, Compare comp );
+</pre>
+</td> <td> (3) </td> <td> <span class="t-mark-rev t-since-cxx11">(since C++11)</span> <br><span class="t-mark-rev t-since-cxx20">(constexpr since C++20)</span> </td> </tr> <tr class="t-dcl t-since-cxx17"> <td> <pre data-language="c">template&lt; class ExecutionPolicy, class RandomIt, class Compare &gt;
+bool is_heap( ExecutionPolicy&amp;&amp; policy,
+              RandomIt first, RandomIt last, Compare comp );
+</pre>
+</td> <td> (4) </td> <td> <span class="t-mark-rev t-since-cxx17">(since C++17)</span> </td> </tr>  </table> <p>Checks whether <code>[</code><code>first</code><code>, </code><code>last</code><code>)</code> is a <a href="../algorithm#Heap_operations" title="cpp/algorithm">heap</a>.</p>
+<div class="t-li1">
+<span class="t-li">1)</span> The heap property to be checked is with respect to <span class="t-rev-inl t-until-cxx20"><span><span class="k">operator</span><span class="o">&lt;</span></span><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span><span class="t-rev-inl t-since-cxx20"><span><code>std::less{}</code></span><span><span class="t-mark-rev t-since-cxx20">(since C++20)</span></span></span>.</div> <div class="t-li1">
+<span class="t-li">3)</span> The heap property to be checked is with respect to <code>comp</code>.</div> <div class="t-li1">
+<span class="t-li">2,4)</span> Same as <span class="t-v">(1,3)</span>, but executed according to <code>policy</code>.</div> <div class="t-li1">
+ These overloads participate in overload resolution only if the value of the following expression is <code>true</code>: <table class="t-rev-begin"> <tr class="t-rev t-until-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-until-cxx20">(until C++20)</span></td>
+</tr> <tr class="t-rev t-since-cxx20">
+<td> <p><code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code></p>
+</td> <td><span class="t-mark-rev t-since-cxx20">(since C++20)</span></td>
+</tr> </table>
+</div>  <h3 id="Parameters">Parameters</h3> <table class="t-par-begin"> <tr class="t-par"> <td>first, last </td> <td>- </td> <td>the pair of iterators defining the <a href="../iterator#Ranges" title="cpp/iterator">range</a> of elements to be checked </td>
+</tr> <tr class="t-par"> <td>policy </td> <td>- </td> <td>the <a href="execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">execution policy</a> to use </td>
+</tr> <tr class="t-par"> <td>comp </td> <td>- </td> <td>comparison function object (i.e. an object that satisfies the requirements of <a href="../named_req/compare" title="cpp/named req/Compare">Compare</a>) which returns <code>true</code> if the first argument is <i>less</i> than the second.<br> <p>The signature of the comparison function should be equivalent to the following:</p>
+<p><span class="t-cc"><span class="kt">bool</span><span class="nf">cmp</span><span class="p">(</span><span class="k">const</span><span class="n">Type1</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="k">const</span><span class="n">Type2</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span></span></p>
+<p>While the signature does not need to have <code>const&amp;</code>, the function must not modify the objects passed to it and must be able to accept all values of type (possibly const) <code>Type1</code> and <code>Type2</code> regardless of <a href="../language/value_category" title="cpp/language/value category">value category</a> (thus, <code>Type1&amp;</code> is not allowed<span class="t-rev-inl t-since-cxx11"><span>, nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</span><span><span class="t-mark-rev t-since-cxx11">(since C++11)</span></span></span>).<br> The types <span class="n">Type1</span> and <span class="n">Type2</span> must be such that an object of type <span class="n">RandomIt</span> can be dereferenced and then implicitly converted to both of them.</p>
+</td>
+</tr> <tr class="t-par-hitem"> <td colspan="3">Type requirements </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>RandomIt</code> must meet the requirements of <a href="../named_req/randomaccessiterator" title="cpp/named req/RandomAccessIterator">LegacyRandomAccessIterator</a>. </td>
+</tr> <tr class="t-par-req"> <td colspan="3">-<code>Compare</code> must meet the requirements of <a href="../named_req/compare" title="cpp/named req/Compare">Compare</a>. </td>
+</tr>
+</table> <h3 id="Return_value">Return value</h3> <p><code>true</code> if the range is a heap with respect to the corresponding comparator, <code>false</code> otherwise.</p>
+<h3 id="Complexity">Complexity</h3> <p>Given \(\scriptsize N\)N as <code>std::distance(first, last)</code>:</p>
+<div class="t-li1">
+<span class="t-li">1,2)</span> \(\scriptsize O(N)\)O(N) comparisons using <span class="t-rev-inl t-until-cxx20"><span><span class="k">operator</span><span class="o">&lt;</span></span><span><span class="t-mark-rev t-until-cxx20">(until C++20)</span></span></span><span class="t-rev-inl t-since-cxx20"><span><code>std::less{}</code></span><span><span class="t-mark-rev t-since-cxx20">(since C++20)</span></span></span>.</div> <div class="t-li1">
+<span class="t-li">3,4)</span> \(\scriptsize O(N)\)O(N) applications of the comparison function <code>comp</code>.</div> <h3 id="Exceptions">Exceptions</h3> <p>The overloads with a template parameter named <code>ExecutionPolicy</code> report errors as follows:</p>
+<ul>
+<li>If execution of a function invoked as part of the algorithm throws an exception and <code>ExecutionPolicy</code> is one of the <a href="execution_policy_tag_t" title="cpp/algorithm/execution policy tag t">standard policies</a>, <code><a href="../error/terminate" title="cpp/error/terminate">std::terminate</a></code> is called. For any other <code>ExecutionPolicy</code>, the behavior is implementation-defined.</li> <li>If the algorithm fails to allocate memory, <code><a href="../memory/new/bad_alloc" title="cpp/memory/new/bad alloc">std::bad_alloc</a></code> is thrown.</li>
+</ul> <h3 id="Example">Example</h3> <div class="t-example"> <pre data-language="c">#include &lt;algorithm&gt;
+#include &lt;bit&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+int main()
+{
+    std::vector&lt;int&gt; v{3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9};
+    
+    std::cout &lt;&lt; "initially, v:\n";
+    for (const auto&amp; i : v)
+        std::cout &lt;&lt; i &lt;&lt; ' ';
+    std::cout &lt;&lt; '\n';
+    
+    if (!std::is_heap(v.begin(), v.end()))
+    {
+        std::cout &lt;&lt; "making heap...\n";
+        std::make_heap(v.begin(), v.end());
+    }
+    
+    std::cout &lt;&lt; "after make_heap, v:\n";
+    for (auto t{1U}; const auto&amp; i : v)
+        std::cout &lt;&lt; i &lt;&lt; (std::has_single_bit(++t) ? " | " : " ");
+    std::cout &lt;&lt; '\n';
+}
+</pre> <p>Output:</p>
+<pre data-language="c">initially, v:
+3 1 4 1 5 9 2 6 5 3 5 8 9 7 9
+making heap...
+after make_heap, v:
+9 | 6 9 | 5 5 9 7 | 1 1 3 5 8 3 4 2 |
+</pre> </div> <h3 id="See_also">See also</h3> <table class="t-dsc-begin"> <tr class="t-dsc"> <td>
+<div><a href="is_heap_until" title="cpp/algorithm/is heap until"> <span class="t-lines"><span>is_heap_until</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx11">(C++11)</span></span></span></div> </td> <td rowspan="2">finds the largest subrange that is a max heap<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/is_heap_until" title="cpp/algorithm/ranges/is heap until"> <span class="t-lines"><span>ranges::is_heap_until</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="make_heap" title="cpp/algorithm/make heap"> <span class="t-lines"><span>make_heap</span></span></a></div> </td> <td rowspan="2">creates a max heap out of a range of elements<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/make_heap" title="cpp/algorithm/ranges/make heap"> <span class="t-lines"><span>ranges::make_heap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="push_heap" title="cpp/algorithm/push heap"> <span class="t-lines"><span>push_heap</span></span></a></div> </td> <td rowspan="2">adds an element to a max heap<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/push_heap" title="cpp/algorithm/ranges/push heap"> <span class="t-lines"><span>ranges::push_heap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="pop_heap" title="cpp/algorithm/pop heap"> <span class="t-lines"><span>pop_heap</span></span></a></div> </td> <td rowspan="2">removes the largest element from a max heap<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/pop_heap" title="cpp/algorithm/ranges/pop heap"> <span class="t-lines"><span>ranges::pop_heap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="sort_heap" title="cpp/algorithm/sort heap"> <span class="t-lines"><span>sort_heap</span></span></a></div> </td> <td rowspan="2">turns a max heap into a range of elements sorted in ascending order<br><span class="t-mark">(function template &amp; algorithm function object)</span> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/sort_heap" title="cpp/algorithm/ranges/sort heap"> <span class="t-lines"><span>ranges::sort_heap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td> </td>
+</tr> <tr class="t-dsc"> <td>
+<div><a href="ranges/is_heap" title="cpp/algorithm/ranges/is heap"> <span class="t-lines"><span>ranges::is_heap</span></span></a></div>
+<div><span class="t-lines"><span><span class="t-mark-rev t-since-cxx20">(C++20)</span></span></span></div> </td> <td>checks if the given range is a max heap<br><span class="t-mark">(algorithm function object)</span> </td>
+</tr> </table>         <div class="_attribution">
+  <p class="_attribution-p">
+    &copy; cppreference.com<br>Licensed under the Creative Commons Attribution-ShareAlike Unported License v3.0.<br>
+    <a href="https://en.cppreference.com/cpp/algorithm/is_heap" class="_attribution-link">https://en.cppreference.com/cpp/algorithm/is_heap</a>
+  </p>
+</div>

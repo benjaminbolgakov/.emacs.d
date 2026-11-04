@@ -44,7 +44,9 @@
   (which-key-setup-side-window-bottom))
 
 (use-package highlight-indent-guides
-  :ensure t)
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode))
+;; (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; Enables highlighting of TODO and other keywords in comments and strings.
 (use-package hl-todo
