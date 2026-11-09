@@ -96,6 +96,9 @@
 ;; Key-binding assistant:
 (require 'bind-key)
 
+;; Alda Music Language
+(require 'alda-mode)
+
 ;; Keybinding descriptor
 ;; (require 'helm-descbinds)
 ;; (helm-descbinds-mode)
