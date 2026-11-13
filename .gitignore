@@ -37,4 +37,4 @@ custom.el
 # Ignore API keys stored in secret.el
 settings/secret.el
 
-tree-sitter/*.so
+tree-sitter/
